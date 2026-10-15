@@ -153,6 +153,8 @@ export const AuthModal: React.FC = () => {
               id="auth-password-input"
               type="password"
               required
+              minLength={isRegister ? 6 : undefined}
+              autoComplete={isRegister ? 'new-password' : 'current-password'}
               placeholder="••••••••"
               value={password}
               onChange={e => setPassword(e.target.value)}
@@ -177,7 +179,8 @@ export const AuthModal: React.FC = () => {
               <button
                 type="button"
                 style={{ color: 'var(--primary)', background: 'none', fontWeight: 600 }}
-                onClick={() => setIsRegister(false)}
+                disabled={loading}
+                onClick={() => { setError(null); setIsRegister(false); }}
               >
                 Đăng nhập ngay
               </button>
@@ -188,7 +191,8 @@ export const AuthModal: React.FC = () => {
               <button
                 type="button"
                 style={{ color: 'var(--primary)', background: 'none', fontWeight: 600 }}
-                onClick={() => setIsRegister(true)}
+                disabled={loading}
+                onClick={() => { setError(null); setIsRegister(true); }}
               >
                 Đăng ký tài khoản bệnh nhân
               </button>

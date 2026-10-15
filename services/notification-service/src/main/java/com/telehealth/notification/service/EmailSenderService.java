@@ -31,6 +31,13 @@ public class EmailSenderService {
     @Value("${spring.mail.from:no-reply@telehealth.local}")
     private String mailFrom;
 
+    @Value("${spring.mail.properties.mail.smtp.auth:false}")
+    private boolean smtpAuth;
+    @Value("${spring.mail.username:}")
+    private String smtpUsername;
+    @Value("${spring.mail.password:}")
+    private String smtpPassword;
+
     @Transactional
     public EmailJobEntity queueEmail(UUID eventId, String recipient, String template, String payload) {
         // Idempotency: Deduplicate on (eventId, recipient, template)
@@ -57,7 +64,7 @@ public class EmailSenderService {
 
     @Transactional
     public boolean processJob(UUID jobId) {
-        EmailJobEntity job = emailJobRepository.findById(jobId)
+        EmailJobEntity job = emailJobRepository.findByIdWithLock(jobId)
                 .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy email job"));
 
         if ("SENT".equalsIgnoreCase(job.getStatus())) {
@@ -78,9 +85,16 @@ public class EmailSenderService {
         boolean success = false;
         String errorCode = null;
         String messageId = null;
+        boolean missingCredentials = smtpAuth && (smtpUsername.isBlank() || smtpPassword.isBlank());
 
         try {
+            if (missingCredentials) {
+                throw new IllegalStateException("Chưa cấu hình tài khoản SMTP hoặc mật khẩu ứng dụng. Email chưa được gửi.");
+            }
             MimeMessage message = mailSender.createMimeMessage();
+            // Resend recognizes this header and deduplicates a retry if SMTP
+            // accepted the previous message but its response timed out.
+            message.setHeader("Resend-Idempotency-Key", job.getEventId().toString());
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
             helper.setFrom(mailFrom);
             helper.setTo(job.getRecipient());
@@ -101,7 +115,8 @@ public class EmailSenderService {
             job.setStatus("FAILED");
             // Exponential backoff retry: 1m, 2m, 4m, 8m...
             long delayMinutes = (long) Math.pow(2, Math.min(currentAttempt, 6));
-            job.setNextAttemptAt(Instant.now().plus(delayMinutes, ChronoUnit.MINUTES));
+            job.setNextAttemptAt(missingCredentials ? Instant.now().plusSeconds(30)
+                    : Instant.now().plus(delayMinutes, ChronoUnit.MINUTES));
             log.warn("Failed to send email to {} (attempt {}): {}", job.getRecipient(), currentAttempt, errorCode);
         }
 

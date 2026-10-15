@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { api } from '../services/api';
 import { Specialty, Doctor, EmailLog, Slot, Appointment } from '../types';
-import { ShieldCheck, UserPlus, FolderPlus, Clock, Mail, CheckCircle, AlertCircle, ExternalLink, Trash2, RefreshCw } from 'lucide-react';
+import { ShieldCheck, UserPlus, FolderPlus, Clock, Mail, CheckCircle, AlertCircle, Trash2, RefreshCw } from 'lucide-react';
 import { addVietnamDays } from '../utils/date';
 
 export const AdminDashboard: React.FC = () => {
@@ -10,6 +10,7 @@ export const AdminDashboard: React.FC = () => {
   const [specialties, setSpecialties] = useState<Specialty[]>([]);
   const [doctors, setDoctors] = useState<Doctor[]>([]);
   const [emailLogs, setEmailLogs] = useState<EmailLog[]>([]);
+  const [emailLoading, setEmailLoading] = useState(false);
   const [adminSlots, setAdminSlots] = useState<Slot[]>([]);
   const [demoAppointments, setDemoAppointments] = useState<Appointment[]>([]);
   const [demoLoading, setDemoLoading] = useState(false);
@@ -84,11 +85,15 @@ export const AdminDashboard: React.FC = () => {
   };
 
   const loadEmailLogs = async () => {
+    setEmailLoading(true);
+    setError(null);
     try {
       const logs = await api.getEmailLogs();
       setEmailLogs(logs);
     } catch (err: any) {
-      console.warn('Could not load email logs:', err);
+      setError(err.message || 'Không thể tải nhật ký email');
+    } finally {
+      setEmailLoading(false);
     }
   };
 
@@ -684,17 +689,18 @@ export const AdminDashboard: React.FC = () => {
           <div className="card-header">
             <h3 className="card-title">
               <Mail size={18} color="var(--primary)" />
-              Nhật ký Email Xác Nhận (Spring Mail / Mailpit)
+              Nhật ký email xác nhận
             </h3>
-            <a
-              href="http://localhost:8025"
-              target="_blank"
-              rel="noreferrer"
+            <button
+              id="refresh-email-logs"
+              type="button"
+              onClick={loadEmailLogs}
+              disabled={emailLoading}
               className="btn btn-secondary"
               style={{ fontSize: '0.85rem', padding: '0.4rem 0.8rem' }}
             >
-              Mở Mailpit Web UI <ExternalLink size={14} />
-            </a>
+              <RefreshCw size={14} /> {emailLoading ? 'Đang tải...' : 'Làm mới'}
+            </button>
           </div>
 
           <div className="alert alert-info" style={{ fontSize: '0.85rem' }}>
@@ -714,6 +720,11 @@ export const AdminDashboard: React.FC = () => {
                     <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginTop: '0.2rem' }}>
                       Đến: {log.recipientEmail} • Lúc: {new Date(log.createdAt).toLocaleString('vi-VN')}
                     </div>
+                    {log.lastError && (
+                      <div style={{ fontSize: '0.8rem', color: 'var(--danger)', marginTop: '0.3rem' }} role="status">
+                        Chưa gửi được: {log.lastError}
+                      </div>
+                    )}
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                     <span className={`badge ${log.status === 'SENT' ? 'badge-confirmed' : 'badge-pending'}`}>

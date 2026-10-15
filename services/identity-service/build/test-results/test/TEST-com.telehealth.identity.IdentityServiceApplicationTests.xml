@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.telehealth.identity.IdentityServiceApplicationTests" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-10-15T03:57:54.085Z" hostname="THEVINH" time="1.673">
+<testsuite name="com.telehealth.identity.IdentityServiceApplicationTests" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-10-15T08:29:30.135Z" hostname="THEVINH" time="1.132">
   <properties/>
-  <testcase name="adminCanDeactivateDoctorAccount()" classname="com.telehealth.identity.IdentityServiceApplicationTests" time="0.776"/>
-  <testcase name="testDemoUsersSeeded()" classname="com.telehealth.identity.IdentityServiceApplicationTests" time="0.532"/>
-  <testcase name="testRegisterAndLogin()" classname="com.telehealth.identity.IdentityServiceApplicationTests" time="0.359"/>
-  <system-out><![CDATA[10:57:45.618 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.telehealth.identity.IdentityServiceApplicationTests]: IdentityServiceApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-10:57:45.781 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.telehealth.identity.IdentityServiceApplication for test class com.telehealth.identity.IdentityServiceApplicationTests
+  <testcase name="adminCanDeactivateDoctorAccount()" classname="com.telehealth.identity.IdentityServiceApplicationTests" time="0.458"/>
+  <testcase name="testDemoUsersSeeded()" classname="com.telehealth.identity.IdentityServiceApplicationTests" time="0.304"/>
+  <testcase name="notificationContactRequiresServiceTokenAndDoesNotExposeCredentials()" classname="com.telehealth.identity.IdentityServiceApplicationTests" time="0.167"/>
+  <testcase name="testRegisterAndLogin()" classname="com.telehealth.identity.IdentityServiceApplicationTests" time="0.2"/>
+  <system-out><![CDATA[15:29:23.506 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.telehealth.identity.IdentityServiceApplicationTests]: IdentityServiceApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+15:29:23.603 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.telehealth.identity.IdentityServiceApplication for test class com.telehealth.identity.IdentityServiceApplicationTests
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -16,40 +17,49 @@
 
  :: Spring Boot ::                (v3.3.5)
 
-2026-10-15T10:57:46.376+07:00  INFO 31680 --- [identity-service-test] [    Test worker] c.t.i.IdentityServiceApplicationTests    : Starting IdentityServiceApplicationTests using Java 17.0.12 with PID 31680 (started by Admin in D:\Workspace\Telehealth_Hospital_Management\services\identity-service)
-2026-10-15T10:57:46.376+07:00  INFO 31680 --- [identity-service-test] [    Test worker] c.t.i.IdentityServiceApplicationTests    : No active profile set, falling back to 1 default profile: "default"
-2026-10-15T10:57:46.376+07:00 DEBUG 31680 --- [identity-service-test] [    Test worker] o.s.boot.SpringApplication               : Loading source class com.telehealth.identity.IdentityServiceApplication
-2026-10-15T10:57:46.422+07:00 DEBUG 31680 --- [identity-service-test] [    Test worker] o.s.w.c.s.GenericWebApplicationContext   : Refreshing org.springframework.web.context.support.GenericWebApplicationContext@6c298dc
-2026-10-15T10:57:47.432+07:00  INFO 31680 --- [identity-service-test] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-10-15T10:57:47.463+07:00 DEBUG 31680 --- [identity-service-test] [    Test worker] o.s.b.a.AutoConfigurationPackages        : @EnableAutoConfiguration was declared on a class in the package 'com.telehealth.identity'. Automatic @Repository and @Entity scanning is enabled.
-2026-10-15T10:57:47.522+07:00  INFO 31680 --- [identity-service-test] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 73 ms. Found 2 JPA repository interfaces.
-2026-10-15T10:57:48.476+07:00  INFO 31680 --- [identity-service-test] [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2026-10-15T10:57:48.655+07:00  INFO 31680 --- [identity-service-test] [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
-2026-10-15T10:57:48.750+07:00  INFO 31680 --- [identity-service-test] [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2026-10-15T10:57:49.302+07:00  INFO 31680 --- [identity-service-test] [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-10-15T10:57:49.362+07:00  INFO 31680 --- [identity-service-test] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2026-10-15T10:57:49.633+07:00  INFO 31680 --- [identity-service-test] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:identity_test user=SA
-2026-10-15T10:57:49.633+07:00  INFO 31680 --- [identity-service-test] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2026-10-15T10:57:49.669+07:00  WARN 31680 --- [identity-service-test] [    Test worker] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2026-10-15T10:57:50.756+07:00  INFO 31680 --- [identity-service-test] [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2026-10-15T10:57:50.777+07:00 DEBUG 31680 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : drop table if exists refresh_sessions cascade 
-2026-10-15T10:57:50.788+07:00 DEBUG 31680 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : drop table if exists users cascade 
-2026-10-15T10:57:50.788+07:00 DEBUG 31680 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : create table refresh_sessions (created_at timestamp(6) with time zone not null, expires_at timestamp(6) with time zone not null, revoked_at timestamp(6) with time zone, id uuid not null, user_id uuid not null, token_hash varchar(255) not null unique, primary key (id))
-2026-10-15T10:57:50.796+07:00 DEBUG 31680 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : create table users (created_at timestamp(6) with time zone not null, updated_at timestamp(6) with time zone not null, id uuid not null, display_name varchar(255) not null, email varchar(255) not null unique, password_hash varchar(255) not null, status varchar(255) not null, role enum ('ADMIN','DOCTOR','PATIENT') not null, primary key (id))
-2026-10-15T10:57:50.804+07:00  INFO 31680 --- [identity-service-test] [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-10-15T10:57:51.495+07:00  WARN 31680 --- [identity-service-test] [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2026-10-15T10:57:51.532+07:00  WARN 31680 --- [identity-service-test] [    Test worker] .s.s.UserDetailsServiceAutoConfiguration : 
+2026-10-15T15:29:24.088+07:00  INFO 29264 --- [identity-service-test] [    Test worker] c.t.i.IdentityServiceApplicationTests    : Starting IdentityServiceApplicationTests using Java 17.0.12 with PID 29264 (started by Admin in D:\Workspace\Telehealth_Hospital_Management\services\identity-service)
+2026-10-15T15:29:24.089+07:00  INFO 29264 --- [identity-service-test] [    Test worker] c.t.i.IdentityServiceApplicationTests    : No active profile set, falling back to 1 default profile: "default"
+2026-10-15T15:29:24.090+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] o.s.boot.SpringApplication               : Loading source class com.telehealth.identity.IdentityServiceApplication
+2026-10-15T15:29:24.110+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] o.s.w.c.s.GenericWebApplicationContext   : Refreshing org.springframework.web.context.support.GenericWebApplicationContext@65bcf7c2
+2026-10-15T15:29:24.847+07:00  INFO 29264 --- [identity-service-test] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-10-15T15:29:24.865+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] o.s.b.a.AutoConfigurationPackages        : @EnableAutoConfiguration was declared on a class in the package 'com.telehealth.identity'. Automatic @Repository and @Entity scanning is enabled.
+2026-10-15T15:29:24.907+07:00  INFO 29264 --- [identity-service-test] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 48 ms. Found 2 JPA repository interfaces.
+2026-10-15T15:29:25.636+07:00  INFO 29264 --- [identity-service-test] [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-10-15T15:29:25.758+07:00  INFO 29264 --- [identity-service-test] [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2026-10-15T15:29:25.841+07:00  INFO 29264 --- [identity-service-test] [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-10-15T15:29:26.198+07:00  INFO 29264 --- [identity-service-test] [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-10-15T15:29:26.236+07:00  INFO 29264 --- [identity-service-test] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-10-15T15:29:26.418+07:00  INFO 29264 --- [identity-service-test] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:identity_test user=SA
+2026-10-15T15:29:26.418+07:00  INFO 29264 --- [identity-service-test] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-10-15T15:29:26.435+07:00  WARN 29264 --- [identity-service-test] [    Test worker] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-10-15T15:29:27.145+07:00  INFO 29264 --- [identity-service-test] [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-10-15T15:29:27.159+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : drop table if exists refresh_sessions cascade 
+2026-10-15T15:29:27.162+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : drop table if exists users cascade 
+2026-10-15T15:29:27.165+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : create table refresh_sessions (created_at timestamp(6) with time zone not null, expires_at timestamp(6) with time zone not null, revoked_at timestamp(6) with time zone, id uuid not null, user_id uuid not null, token_hash varchar(255) not null unique, primary key (id))
+2026-10-15T15:29:27.171+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : create table users (created_at timestamp(6) with time zone not null, updated_at timestamp(6) with time zone not null, id uuid not null, display_name varchar(255) not null, email varchar(255) not null unique, password_hash varchar(255) not null, status varchar(255) not null, role enum ('ADMIN','DOCTOR','PATIENT') not null, primary key (id))
+2026-10-15T15:29:27.177+07:00  INFO 29264 --- [identity-service-test] [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-10-15T15:29:27.953+07:00  WARN 29264 --- [identity-service-test] [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-10-15T15:29:27.998+07:00  WARN 29264 --- [identity-service-test] [    Test worker] .s.s.UserDetailsServiceAutoConfiguration : 
 
-Using generated security password: b4edf2bd-05c7-4dc0-a0d7-5ed973c60645
+Using generated security password: f096f719-5b1a-49aa-b29c-3bb5f16d3055
 
 This generated password is for development use only. Your security configuration must be updated before running your application in production.
 
-2026-10-15T10:57:51.543+07:00  INFO 31680 --- [identity-service-test] [    Test worker] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
-2026-10-15T10:57:51.756+07:00 DEBUG 31680 --- [identity-service-test] [    Test worker] s.w.s.m.m.a.RequestMappingHandlerMapping : 9 mappings in 'requestMappingHandlerMapping'
-2026-10-15T10:57:52.025+07:00 DEBUG 31680 --- [identity-service-test] [    Test worker] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
-2026-10-15T10:57:52.548+07:00 DEBUG 31680 --- [identity-service-test] [    Test worker] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
-2026-10-15T10:57:52.632+07:00 DEBUG 31680 --- [identity-service-test] [    Test worker] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
-2026-10-15T10:57:52.999+07:00 DEBUG 31680 --- [identity-service-test] [    Test worker] .s.b.a.l.ConditionEvaluationReportLogger : 
+2026-10-15T15:29:28.017+07:00  INFO 29264 --- [identity-service-test] [    Test worker] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2026-10-15T15:29:28.297+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] s.w.s.m.m.a.RequestMappingHandlerMapping : 10 mappings in 'requestMappingHandlerMapping'
+2026-10-15T15:29:28.685+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2026-10-15T15:29:29.197+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2026-10-15T15:29:29.253+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2026-10-15T15:29:29.437+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] o.s.b.w.s.ServletContextInitializerBeans : Mapping filters: springSecurityFilterChain urls=[/*] order=-100, characterEncodingFilter urls=[/*] order=-2147483648, formContentFilter urls=[/*] order=-9900, requestContextFilter urls=[/*] order=-105
+2026-10-15T15:29:29.437+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] o.s.b.w.s.ServletContextInitializerBeans : Mapping servlets: 
+2026-10-15T15:29:29.453+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] s.b.w.s.f.OrderedCharacterEncodingFilter : Filter 'characterEncodingFilter' configured for use
+2026-10-15T15:29:29.453+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] o.s.b.w.s.f.OrderedFormContentFilter     : Filter 'formContentFilter' configured for use
+2026-10-15T15:29:29.454+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] o.s.b.w.s.f.OrderedRequestContextFilter  : Filter 'requestContextFilter' configured for use
+2026-10-15T15:29:29.454+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] .DelegatingFilterProxyRegistrationBean$1 : Filter 'springSecurityFilterChain' configured for use
+2026-10-15T15:29:29.455+07:00  INFO 29264 --- [identity-service-test] [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-15T15:29:29.456+07:00  INFO 29264 --- [identity-service-test] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-15T15:29:29.457+07:00  INFO 29264 --- [identity-service-test] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2026-10-15T15:29:29.492+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] .s.b.a.l.ConditionEvaluationReportLogger : 
 
 
 ============================
@@ -258,6 +268,15 @@ Positive matches:
 
    LifecycleAutoConfiguration#defaultLifecycleProcessor matched:
       - @ConditionalOnMissingBean (names: lifecycleProcessor; SearchStrategy: current) did not find any beans (OnBeanCondition)
+
+   MockMvcAutoConfiguration matched:
+      - found 'session' scope (OnWebApplicationCondition)
+
+   MockMvcAutoConfiguration#mockMvc matched:
+      - @ConditionalOnMissingBean (types: org.springframework.test.web.servlet.MockMvc; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   MockMvcAutoConfiguration#mockMvcBuilder matched:
+      - @ConditionalOnMissingBean (types: org.springframework.test.web.servlet.MockMvcBuilder; SearchStrategy: all) did not find any beans (OnBeanCondition)
 
    MultipartAutoConfiguration matched:
       - @ConditionalOnClass found required classes 'jakarta.servlet.Servlet', 'org.springframework.web.multipart.support.StandardServletMultipartResolver', 'jakarta.servlet.MultipartConfigElement' (OnClassCondition)
@@ -819,6 +838,30 @@ Negative matches:
       Did not match:
          - ResourceBundle did not find bundle with basename messages (MessageSourceAutoConfiguration.ResourceBundleCondition)
 
+   MockMvcAutoConfiguration#dispatcherServlet:
+      Did not match:
+         - @ConditionalOnMissingBean (types: org.springframework.web.servlet.DispatcherServlet; SearchStrategy: all) found beans of type 'org.springframework.web.servlet.DispatcherServlet' dispatcherServlet (OnBeanCondition)
+
+   MockMvcAutoConfiguration#dispatcherServletPath:
+      Did not match:
+         - @ConditionalOnMissingBean (types: org.springframework.boot.autoconfigure.web.servlet.DispatcherServletPath; SearchStrategy: all) found beans of type 'org.springframework.boot.autoconfigure.web.servlet.DispatcherServletPath' dispatcherServletRegistration (OnBeanCondition)
+
+   MockMvcAutoConfiguration.WebTestClientMockMvcConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.web.reactive.function.client.WebClient' (OnClassCondition)
+
+   MockMvcSecurityConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors' (OnClassCondition)
+
+   MockMvcWebClientAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'com.gargoylesoftware.htmlunit.WebClient' (OnClassCondition)
+
+   MockMvcWebDriverAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.openqa.selenium.htmlunit.HtmlUnitDriver' (OnClassCondition)
+
    MongoAutoConfiguration:
       Did not match:
          - @ConditionalOnClass did not find required class 'com.mongodb.client.MongoClient' (OnClassCondition)
@@ -1144,6 +1187,10 @@ Negative matches:
       Did not match:
          - @ConditionalOnClass did not find required class 'io.undertow.websockets.jsr.Bootstrap' (OnClassCondition)
 
+   WebTestClientAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.web.reactive.function.client.WebClient' (OnClassCondition)
+
    XADataSourceAutoConfiguration:
       Did not match:
          - @ConditionalOnBean (types: org.springframework.boot.jdbc.XADataSourceWrapper; SearchStrategy: all) did not find any beans of type org.springframework.boot.jdbc.XADataSourceWrapper (OnBeanCondition)
@@ -1164,9 +1211,9 @@ Unconditional classes:
 
     org.springframework.boot.autoconfigure.ssl.SslAutoConfiguration
 
-    org.springframework.boot.autoconfigure.context.LifecycleAutoConfiguration
-
     org.springframework.boot.autoconfigure.context.PropertyPlaceholderAutoConfiguration
+
+    org.springframework.boot.autoconfigure.context.LifecycleAutoConfiguration
 
     org.springframework.boot.autoconfigure.availability.ApplicationAvailabilityAutoConfiguration
 
@@ -1174,53 +1221,67 @@ Unconditional classes:
 
 
 
-2026-10-15T10:57:53.065+07:00  INFO 31680 --- [identity-service-test] [    Test worker] c.t.i.IdentityServiceApplicationTests    : Started IdentityServiceApplicationTests in 7.047 seconds (process running for 9.14)
-2026-10-15T10:57:53.074+07:00 DEBUG 31680 --- [identity-service-test] [    Test worker] o.s.b.a.ApplicationAvailabilityBean      : Application availability state LivenessState changed to CORRECT
-2026-10-15T10:57:53.480+07:00 DEBUG 31680 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : select ue1_0.id,ue1_0.created_at,ue1_0.display_name,ue1_0.email,ue1_0.password_hash,ue1_0.role,ue1_0.status,ue1_0.updated_at from users ue1_0 where upper(ue1_0.email)=upper(?)
-2026-10-15T10:57:53.705+07:00 DEBUG 31680 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : select ue1_0.id,ue1_0.created_at,ue1_0.display_name,ue1_0.email,ue1_0.password_hash,ue1_0.role,ue1_0.status,ue1_0.updated_at from users ue1_0 where ue1_0.id=?
-2026-10-15T10:57:53.743+07:00 DEBUG 31680 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : insert into users (created_at,display_name,email,password_hash,role,status,updated_at,id) values (?,?,?,?,?,?,?,?)
-2026-10-15T10:57:53.758+07:00  INFO 31680 --- [identity-service-test] [    Test worker] c.t.identity.service.DataInitializer     : Seeded demo user: admin@demo.com (ADMIN)
-2026-10-15T10:57:53.758+07:00 DEBUG 31680 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : select ue1_0.id,ue1_0.created_at,ue1_0.display_name,ue1_0.email,ue1_0.password_hash,ue1_0.role,ue1_0.status,ue1_0.updated_at from users ue1_0 where upper(ue1_0.email)=upper(?)
-2026-10-15T10:57:53.831+07:00 DEBUG 31680 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : select ue1_0.id,ue1_0.created_at,ue1_0.display_name,ue1_0.email,ue1_0.password_hash,ue1_0.role,ue1_0.status,ue1_0.updated_at from users ue1_0 where ue1_0.id=?
-2026-10-15T10:57:53.834+07:00 DEBUG 31680 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : insert into users (created_at,display_name,email,password_hash,role,status,updated_at,id) values (?,?,?,?,?,?,?,?)
-2026-10-15T10:57:53.834+07:00  INFO 31680 --- [identity-service-test] [    Test worker] c.t.identity.service.DataInitializer     : Seeded demo user: doctor.anh@demo.com (DOCTOR)
-2026-10-15T10:57:53.838+07:00 DEBUG 31680 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : select ue1_0.id,ue1_0.created_at,ue1_0.display_name,ue1_0.email,ue1_0.password_hash,ue1_0.role,ue1_0.status,ue1_0.updated_at from users ue1_0 where upper(ue1_0.email)=upper(?)
-2026-10-15T10:57:53.908+07:00 DEBUG 31680 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : select ue1_0.id,ue1_0.created_at,ue1_0.display_name,ue1_0.email,ue1_0.password_hash,ue1_0.role,ue1_0.status,ue1_0.updated_at from users ue1_0 where ue1_0.id=?
-2026-10-15T10:57:53.911+07:00 DEBUG 31680 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : insert into users (created_at,display_name,email,password_hash,role,status,updated_at,id) values (?,?,?,?,?,?,?,?)
-2026-10-15T10:57:53.911+07:00  INFO 31680 --- [identity-service-test] [    Test worker] c.t.identity.service.DataInitializer     : Seeded demo user: doctor.binh@demo.com (DOCTOR)
-2026-10-15T10:57:53.916+07:00 DEBUG 31680 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : select ue1_0.id,ue1_0.created_at,ue1_0.display_name,ue1_0.email,ue1_0.password_hash,ue1_0.role,ue1_0.status,ue1_0.updated_at from users ue1_0 where upper(ue1_0.email)=upper(?)
-2026-10-15T10:57:53.979+07:00 DEBUG 31680 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : select ue1_0.id,ue1_0.created_at,ue1_0.display_name,ue1_0.email,ue1_0.password_hash,ue1_0.role,ue1_0.status,ue1_0.updated_at from users ue1_0 where ue1_0.id=?
-2026-10-15T10:57:53.979+07:00 DEBUG 31680 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : insert into users (created_at,display_name,email,password_hash,role,status,updated_at,id) values (?,?,?,?,?,?,?,?)
-2026-10-15T10:57:53.979+07:00  INFO 31680 --- [identity-service-test] [    Test worker] c.t.identity.service.DataInitializer     : Seeded demo user: patient1@demo.com (PATIENT)
-2026-10-15T10:57:53.979+07:00 DEBUG 31680 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : select ue1_0.id,ue1_0.created_at,ue1_0.display_name,ue1_0.email,ue1_0.password_hash,ue1_0.role,ue1_0.status,ue1_0.updated_at from users ue1_0 where upper(ue1_0.email)=upper(?)
-2026-10-15T10:57:54.059+07:00 DEBUG 31680 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : select ue1_0.id,ue1_0.created_at,ue1_0.display_name,ue1_0.email,ue1_0.password_hash,ue1_0.role,ue1_0.status,ue1_0.updated_at from users ue1_0 where ue1_0.id=?
-2026-10-15T10:57:54.059+07:00 DEBUG 31680 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : insert into users (created_at,display_name,email,password_hash,role,status,updated_at,id) values (?,?,?,?,?,?,?,?)
-2026-10-15T10:57:54.064+07:00  INFO 31680 --- [identity-service-test] [    Test worker] c.t.identity.service.DataInitializer     : Seeded demo user: patient2@demo.com (PATIENT)
-2026-10-15T10:57:54.066+07:00 DEBUG 31680 --- [identity-service-test] [    Test worker] o.s.b.a.ApplicationAvailabilityBean      : Application availability state ReadinessState changed to ACCEPTING_TRAFFIC
-2026-10-15T10:57:54.716+07:00 DEBUG 31680 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : select ue1_0.id from users ue1_0 where upper(ue1_0.email)=upper(?) fetch first ? rows only
-2026-10-15T10:57:54.796+07:00 DEBUG 31680 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : select ue1_0.id,ue1_0.created_at,ue1_0.display_name,ue1_0.email,ue1_0.password_hash,ue1_0.role,ue1_0.status,ue1_0.updated_at from users ue1_0 where ue1_0.id=?
-2026-10-15T10:57:54.800+07:00 DEBUG 31680 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : insert into users (created_at,display_name,email,password_hash,role,status,updated_at,id) values (?,?,?,?,?,?,?,?)
-2026-10-15T10:57:54.807+07:00 DEBUG 31680 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : select ue1_0.id,ue1_0.created_at,ue1_0.display_name,ue1_0.email,ue1_0.password_hash,ue1_0.role,ue1_0.status,ue1_0.updated_at from users ue1_0 where ue1_0.id=?
-2026-10-15T10:57:54.821+07:00 DEBUG 31680 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : select rse1_0.id,rse1_0.created_at,rse1_0.expires_at,rse1_0.revoked_at,rse1_0.token_hash,rse1_0.user_id from refresh_sessions rse1_0 where rse1_0.user_id=?
-2026-10-15T10:57:54.827+07:00 DEBUG 31680 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : update users set display_name=?,email=?,password_hash=?,role=?,status=?,updated_at=? where id=?
-2026-10-15T10:57:54.833+07:00 DEBUG 31680 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : select ue1_0.id,ue1_0.created_at,ue1_0.display_name,ue1_0.email,ue1_0.password_hash,ue1_0.role,ue1_0.status,ue1_0.updated_at from users ue1_0 where upper(ue1_0.email)=upper(?)
-2026-10-15T10:57:54.866+07:00 DEBUG 31680 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : select ue1_0.id,ue1_0.created_at,ue1_0.display_name,ue1_0.email,ue1_0.password_hash,ue1_0.role,ue1_0.status,ue1_0.updated_at from users ue1_0 where upper(ue1_0.email)=upper(?)
-2026-10-15T10:57:55.174+07:00 DEBUG 31680 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : select rse1_0.id,rse1_0.created_at,rse1_0.expires_at,rse1_0.revoked_at,rse1_0.token_hash,rse1_0.user_id from refresh_sessions rse1_0 where rse1_0.id=?
-2026-10-15T10:57:55.178+07:00 DEBUG 31680 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : insert into refresh_sessions (created_at,expires_at,revoked_at,token_hash,user_id,id) values (?,?,?,?,?,?)
-2026-10-15T10:57:55.186+07:00 DEBUG 31680 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : select ue1_0.id,ue1_0.created_at,ue1_0.display_name,ue1_0.email,ue1_0.password_hash,ue1_0.role,ue1_0.status,ue1_0.updated_at from users ue1_0 where upper(ue1_0.email)=upper(?)
-2026-10-15T10:57:55.283+07:00 DEBUG 31680 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : select rse1_0.id,rse1_0.created_at,rse1_0.expires_at,rse1_0.revoked_at,rse1_0.token_hash,rse1_0.user_id from refresh_sessions rse1_0 where rse1_0.id=?
-2026-10-15T10:57:55.287+07:00 DEBUG 31680 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : insert into refresh_sessions (created_at,expires_at,revoked_at,token_hash,user_id,id) values (?,?,?,?,?,?)
-2026-10-15T10:57:55.296+07:00 DEBUG 31680 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : select ue1_0.id,ue1_0.created_at,ue1_0.display_name,ue1_0.email,ue1_0.password_hash,ue1_0.role,ue1_0.status,ue1_0.updated_at from users ue1_0 where upper(ue1_0.email)=upper(?)
-2026-10-15T10:57:55.391+07:00 DEBUG 31680 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : select rse1_0.id,rse1_0.created_at,rse1_0.expires_at,rse1_0.revoked_at,rse1_0.token_hash,rse1_0.user_id from refresh_sessions rse1_0 where rse1_0.id=?
-2026-10-15T10:57:55.393+07:00 DEBUG 31680 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : insert into refresh_sessions (created_at,expires_at,revoked_at,token_hash,user_id,id) values (?,?,?,?,?,?)
-2026-10-15T10:57:55.410+07:00 DEBUG 31680 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : select ue1_0.id from users ue1_0 where upper(ue1_0.email)=upper(?) fetch first ? rows only
-2026-10-15T10:57:55.533+07:00 DEBUG 31680 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : select ue1_0.id,ue1_0.created_at,ue1_0.display_name,ue1_0.email,ue1_0.password_hash,ue1_0.role,ue1_0.status,ue1_0.updated_at from users ue1_0 where ue1_0.id=?
-2026-10-15T10:57:55.539+07:00 DEBUG 31680 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : insert into users (created_at,display_name,email,password_hash,role,status,updated_at,id) values (?,?,?,?,?,?,?,?)
-2026-10-15T10:57:55.551+07:00 DEBUG 31680 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : select ue1_0.id from users ue1_0 where upper(ue1_0.email)=upper(?) fetch first ? rows only
-2026-10-15T10:57:55.561+07:00 DEBUG 31680 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : select ue1_0.id,ue1_0.created_at,ue1_0.display_name,ue1_0.email,ue1_0.password_hash,ue1_0.role,ue1_0.status,ue1_0.updated_at from users ue1_0 where upper(ue1_0.email)=upper(?)
-2026-10-15T10:57:55.662+07:00 DEBUG 31680 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : select ue1_0.id,ue1_0.created_at,ue1_0.display_name,ue1_0.email,ue1_0.password_hash,ue1_0.role,ue1_0.status,ue1_0.updated_at from users ue1_0 where upper(ue1_0.email)=upper(?)
-2026-10-15T10:57:55.749+07:00 DEBUG 31680 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : select rse1_0.id,rse1_0.created_at,rse1_0.expires_at,rse1_0.revoked_at,rse1_0.token_hash,rse1_0.user_id from refresh_sessions rse1_0 where rse1_0.id=?
-2026-10-15T10:57:55.749+07:00 DEBUG 31680 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : insert into refresh_sessions (created_at,expires_at,revoked_at,token_hash,user_id,id) values (?,?,?,?,?,?)
+2026-10-15T15:29:29.532+07:00  INFO 29264 --- [identity-service-test] [    Test worker] c.t.i.IdentityServiceApplicationTests    : Started IdentityServiceApplicationTests in 5.764 seconds (process running for 7.046)
+2026-10-15T15:29:29.535+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] o.s.b.a.ApplicationAvailabilityBean      : Application availability state LivenessState changed to CORRECT
+2026-10-15T15:29:29.723+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : select ue1_0.id,ue1_0.created_at,ue1_0.display_name,ue1_0.email,ue1_0.password_hash,ue1_0.role,ue1_0.status,ue1_0.updated_at from users ue1_0 where upper(ue1_0.email)=upper(?)
+2026-10-15T15:29:29.829+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : select ue1_0.id,ue1_0.created_at,ue1_0.display_name,ue1_0.email,ue1_0.password_hash,ue1_0.role,ue1_0.status,ue1_0.updated_at from users ue1_0 where ue1_0.id=?
+2026-10-15T15:29:29.864+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : insert into users (created_at,display_name,email,password_hash,role,status,updated_at,id) values (?,?,?,?,?,?,?,?)
+2026-10-15T15:29:29.865+07:00  INFO 29264 --- [identity-service-test] [    Test worker] c.t.identity.service.DataInitializer     : Seeded demo user: admin@demo.com (ADMIN)
+2026-10-15T15:29:29.865+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : select ue1_0.id,ue1_0.created_at,ue1_0.display_name,ue1_0.email,ue1_0.password_hash,ue1_0.role,ue1_0.status,ue1_0.updated_at from users ue1_0 where upper(ue1_0.email)=upper(?)
+2026-10-15T15:29:29.931+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : select ue1_0.id,ue1_0.created_at,ue1_0.display_name,ue1_0.email,ue1_0.password_hash,ue1_0.role,ue1_0.status,ue1_0.updated_at from users ue1_0 where ue1_0.id=?
+2026-10-15T15:29:29.931+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : insert into users (created_at,display_name,email,password_hash,role,status,updated_at,id) values (?,?,?,?,?,?,?,?)
+2026-10-15T15:29:29.931+07:00  INFO 29264 --- [identity-service-test] [    Test worker] c.t.identity.service.DataInitializer     : Seeded demo user: doctor.anh@demo.com (DOCTOR)
+2026-10-15T15:29:29.931+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : select ue1_0.id,ue1_0.created_at,ue1_0.display_name,ue1_0.email,ue1_0.password_hash,ue1_0.role,ue1_0.status,ue1_0.updated_at from users ue1_0 where upper(ue1_0.email)=upper(?)
+2026-10-15T15:29:29.994+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : select ue1_0.id,ue1_0.created_at,ue1_0.display_name,ue1_0.email,ue1_0.password_hash,ue1_0.role,ue1_0.status,ue1_0.updated_at from users ue1_0 where ue1_0.id=?
+2026-10-15T15:29:29.995+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : insert into users (created_at,display_name,email,password_hash,role,status,updated_at,id) values (?,?,?,?,?,?,?,?)
+2026-10-15T15:29:29.996+07:00  INFO 29264 --- [identity-service-test] [    Test worker] c.t.identity.service.DataInitializer     : Seeded demo user: doctor.binh@demo.com (DOCTOR)
+2026-10-15T15:29:29.997+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : select ue1_0.id,ue1_0.created_at,ue1_0.display_name,ue1_0.email,ue1_0.password_hash,ue1_0.role,ue1_0.status,ue1_0.updated_at from users ue1_0 where upper(ue1_0.email)=upper(?)
+2026-10-15T15:29:30.057+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : select ue1_0.id,ue1_0.created_at,ue1_0.display_name,ue1_0.email,ue1_0.password_hash,ue1_0.role,ue1_0.status,ue1_0.updated_at from users ue1_0 where ue1_0.id=?
+2026-10-15T15:29:30.059+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : insert into users (created_at,display_name,email,password_hash,role,status,updated_at,id) values (?,?,?,?,?,?,?,?)
+2026-10-15T15:29:30.059+07:00  INFO 29264 --- [identity-service-test] [    Test worker] c.t.identity.service.DataInitializer     : Seeded demo user: patient1@demo.com (PATIENT)
+2026-10-15T15:29:30.061+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : select ue1_0.id,ue1_0.created_at,ue1_0.display_name,ue1_0.email,ue1_0.password_hash,ue1_0.role,ue1_0.status,ue1_0.updated_at from users ue1_0 where upper(ue1_0.email)=upper(?)
+2026-10-15T15:29:30.121+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : select ue1_0.id,ue1_0.created_at,ue1_0.display_name,ue1_0.email,ue1_0.password_hash,ue1_0.role,ue1_0.status,ue1_0.updated_at from users ue1_0 where ue1_0.id=?
+2026-10-15T15:29:30.122+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : insert into users (created_at,display_name,email,password_hash,role,status,updated_at,id) values (?,?,?,?,?,?,?,?)
+2026-10-15T15:29:30.123+07:00  INFO 29264 --- [identity-service-test] [    Test worker] c.t.identity.service.DataInitializer     : Seeded demo user: patient2@demo.com (PATIENT)
+2026-10-15T15:29:30.124+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] o.s.b.a.ApplicationAvailabilityBean      : Application availability state ReadinessState changed to ACCEPTING_TRAFFIC
+2026-10-15T15:29:30.496+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : select ue1_0.id from users ue1_0 where upper(ue1_0.email)=upper(?) fetch first ? rows only
+2026-10-15T15:29:30.557+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : select ue1_0.id,ue1_0.created_at,ue1_0.display_name,ue1_0.email,ue1_0.password_hash,ue1_0.role,ue1_0.status,ue1_0.updated_at from users ue1_0 where ue1_0.id=?
+2026-10-15T15:29:30.559+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : insert into users (created_at,display_name,email,password_hash,role,status,updated_at,id) values (?,?,?,?,?,?,?,?)
+2026-10-15T15:29:30.562+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : select ue1_0.id,ue1_0.created_at,ue1_0.display_name,ue1_0.email,ue1_0.password_hash,ue1_0.role,ue1_0.status,ue1_0.updated_at from users ue1_0 where ue1_0.id=?
+2026-10-15T15:29:30.565+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : select rse1_0.id,rse1_0.created_at,rse1_0.expires_at,rse1_0.revoked_at,rse1_0.token_hash,rse1_0.user_id from refresh_sessions rse1_0 where rse1_0.user_id=?
+2026-10-15T15:29:30.565+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : update users set display_name=?,email=?,password_hash=?,role=?,status=?,updated_at=? where id=?
+2026-10-15T15:29:30.577+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : select ue1_0.id,ue1_0.created_at,ue1_0.display_name,ue1_0.email,ue1_0.password_hash,ue1_0.role,ue1_0.status,ue1_0.updated_at from users ue1_0 where upper(ue1_0.email)=upper(?)
+2026-10-15T15:29:30.597+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : select ue1_0.id,ue1_0.created_at,ue1_0.display_name,ue1_0.email,ue1_0.password_hash,ue1_0.role,ue1_0.status,ue1_0.updated_at from users ue1_0 where upper(ue1_0.email)=upper(?)
+2026-10-15T15:29:30.752+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : select rse1_0.id,rse1_0.created_at,rse1_0.expires_at,rse1_0.revoked_at,rse1_0.token_hash,rse1_0.user_id from refresh_sessions rse1_0 where rse1_0.id=?
+2026-10-15T15:29:30.762+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : insert into refresh_sessions (created_at,expires_at,revoked_at,token_hash,user_id,id) values (?,?,?,?,?,?)
+2026-10-15T15:29:30.764+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : select ue1_0.id,ue1_0.created_at,ue1_0.display_name,ue1_0.email,ue1_0.password_hash,ue1_0.role,ue1_0.status,ue1_0.updated_at from users ue1_0 where upper(ue1_0.email)=upper(?)
+2026-10-15T15:29:30.829+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : select rse1_0.id,rse1_0.created_at,rse1_0.expires_at,rse1_0.revoked_at,rse1_0.token_hash,rse1_0.user_id from refresh_sessions rse1_0 where rse1_0.id=?
+2026-10-15T15:29:30.829+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : insert into refresh_sessions (created_at,expires_at,revoked_at,token_hash,user_id,id) values (?,?,?,?,?,?)
+2026-10-15T15:29:30.829+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : select ue1_0.id,ue1_0.created_at,ue1_0.display_name,ue1_0.email,ue1_0.password_hash,ue1_0.role,ue1_0.status,ue1_0.updated_at from users ue1_0 where upper(ue1_0.email)=upper(?)
+2026-10-15T15:29:30.895+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : select rse1_0.id,rse1_0.created_at,rse1_0.expires_at,rse1_0.revoked_at,rse1_0.token_hash,rse1_0.user_id from refresh_sessions rse1_0 where rse1_0.id=?
+2026-10-15T15:29:30.896+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : insert into refresh_sessions (created_at,expires_at,revoked_at,token_hash,user_id,id) values (?,?,?,?,?,?)
+2026-10-15T15:29:30.932+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.telehealth.identity.controller.InternalNotificationContactController#getContact(UUID, String)
+2026-10-15T15:29:30.978+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2026-10-15T15:29:30.988+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [ApiResponse(success=false, message=Không có quy?n ??c liên h?., data=null, timestamp=2026-10-15T08:2 (truncated)...]
+2026-10-15T15:29:31.006+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.telehealth.identity.controller.InternalNotificationContactController#getContact(UUID, String)
+2026-10-15T15:29:31.013+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2026-10-15T15:29:31.014+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [ApiResponse(success=false, message=Không có quy?n ??c liên h?., data=null, timestamp=2026-10-15T08:2 (truncated)...]
+2026-10-15T15:29:31.016+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.telehealth.identity.controller.InternalNotificationContactController#getContact(UUID, String)
+2026-10-15T15:29:31.019+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : select ue1_0.id,ue1_0.created_at,ue1_0.display_name,ue1_0.email,ue1_0.password_hash,ue1_0.role,ue1_0.status,ue1_0.updated_at from users ue1_0 where ue1_0.id=?
+2026-10-15T15:29:31.021+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2026-10-15T15:29:31.023+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [ApiResponse(success=true, message=null, data=Contact[id=33333333-3333-3333-3333-333333333333, email= (truncated)...]
+2026-10-15T15:29:31.061+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.telehealth.identity.controller.InternalNotificationContactController#getContact(UUID, String)
+2026-10-15T15:29:31.062+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : select ue1_0.id,ue1_0.created_at,ue1_0.display_name,ue1_0.email,ue1_0.password_hash,ue1_0.role,ue1_0.status,ue1_0.updated_at from users ue1_0 where ue1_0.id=?
+2026-10-15T15:29:31.063+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2026-10-15T15:29:31.064+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [ApiResponse(success=false, message=Ng??i nh?n ph?i là b?nh nhân., data=null, timestamp=2026-10-15T08 (truncated)...]
+2026-10-15T15:29:31.071+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : select ue1_0.id from users ue1_0 where upper(ue1_0.email)=upper(?) fetch first ? rows only
+2026-10-15T15:29:31.132+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : select ue1_0.id,ue1_0.created_at,ue1_0.display_name,ue1_0.email,ue1_0.password_hash,ue1_0.role,ue1_0.status,ue1_0.updated_at from users ue1_0 where ue1_0.id=?
+2026-10-15T15:29:31.132+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : insert into users (created_at,display_name,email,password_hash,role,status,updated_at,id) values (?,?,?,?,?,?,?,?)
+2026-10-15T15:29:31.132+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : select ue1_0.id from users ue1_0 where upper(ue1_0.email)=upper(?) fetch first ? rows only
+2026-10-15T15:29:31.140+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : select ue1_0.id,ue1_0.created_at,ue1_0.display_name,ue1_0.email,ue1_0.password_hash,ue1_0.role,ue1_0.status,ue1_0.updated_at from users ue1_0 where upper(ue1_0.email)=upper(?)
+2026-10-15T15:29:31.198+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : select ue1_0.id,ue1_0.created_at,ue1_0.display_name,ue1_0.email,ue1_0.password_hash,ue1_0.role,ue1_0.status,ue1_0.updated_at from users ue1_0 where upper(ue1_0.email)=upper(?)
+2026-10-15T15:29:31.264+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : select rse1_0.id,rse1_0.created_at,rse1_0.expires_at,rse1_0.revoked_at,rse1_0.token_hash,rse1_0.user_id from refresh_sessions rse1_0 where rse1_0.id=?
+2026-10-15T15:29:31.265+07:00 DEBUG 29264 --- [identity-service-test] [    Test worker] org.hibernate.SQL                        : insert into refresh_sessions (created_at,expires_at,revoked_at,token_hash,user_id,id) values (?,?,?,?,?,?)
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

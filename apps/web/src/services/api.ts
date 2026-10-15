@@ -94,7 +94,8 @@ class ApiService {
   }
 
   async register(data: { email: string; password: string; fullName: string; phone?: string; role?: string }): Promise<{ accessToken: string; user: User }> {
-    const res = await this.request<{ accessToken: string; user: User }>('/auth/register', {
+    // Registration creates a patient but returns only UserResponse, not a session.
+    await this.request<User>('/auth/register', {
       method: 'POST',
       body: JSON.stringify({
         email: data.email,
@@ -102,8 +103,11 @@ class ApiService {
         displayName: data.fullName
       })
     });
-    this.setToken(res.accessToken);
-    return res;
+    try {
+      return await this.login(data.email, data.password);
+    } catch {
+      throw new Error('Tài khoản đã được tạo nhưng chưa đăng nhập được. Vui lòng chọn Đăng nhập và dùng email, mật khẩu vừa đăng ký.');
+    }
   }
 
   async getMe(): Promise<User> {

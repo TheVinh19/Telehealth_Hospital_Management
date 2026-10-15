@@ -24,5 +24,7 @@ spring:
     enabled: false
 
 services:
+  notification:
+    delivery-enabled: false
   realtime:
     close-delivery-enabled: false

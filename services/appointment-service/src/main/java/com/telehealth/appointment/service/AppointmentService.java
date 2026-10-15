@@ -248,7 +248,7 @@ public class AppointmentService {
 
     @Transactional
     public void confirmAppointment(UUID appointmentId, Long amountVnd, String paymentCode) {
-        AppointmentEntity appointment = appointmentRepository.findById(appointmentId)
+        AppointmentEntity appointment = appointmentRepository.findByIdWithLock(appointmentId)
                 .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy lịch hẹn để xác nhận"));
 
         if (appointment.getStatus() == AppointmentStatus.CONFIRMED) {
@@ -282,8 +282,7 @@ public class AppointmentService {
         DoctorEntity doctor = doctorRepository.findById(appointment.getDoctorId()).orElse(null);
         SlotEntity slot = slotRepository.findById(appointment.getSlotId()).orElse(null);
 
-        saveOutboxEvent("AppointmentConfirmed", appointment.getId(), appointment.getVersion(),
-                AppointmentConfirmedEvent.builder()
+        var confirmedEvent = AppointmentConfirmedEvent.builder()
                         .appointmentId(appointment.getId())
                         .patientId(appointment.getPatientId())
                         .doctorId(appointment.getDoctorId())
@@ -292,14 +291,16 @@ public class AppointmentService {
                         .startsAt(slot != null ? slot.getStartsAt() : null)
                         .confirmedAt(now)
                         .amountVnd(appointment.getAmountVnd())
-                        .build());
+                        .build();
+        saveOutboxEvent("AppointmentConfirmed", appointment.getId(), appointment.getVersion(), confirmedEvent);
+        saveEmailRequest(PatientNotificationDelivery.CONFIRMED, appointment, confirmedEvent);
 
         log.info("Appointment {} confirmed successfully", appointmentId);
     }
 
     @Transactional
     public AppointmentResponse reschedule(UUID appointmentId, UUID patientId, UUID newSlotId) {
-        AppointmentEntity appointment = appointmentRepository.findById(appointmentId)
+        AppointmentEntity appointment = appointmentRepository.findByIdWithLock(appointmentId)
                 .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy lịch hẹn"));
 
         if (!appointment.getPatientId().equals(patientId)) {
@@ -385,8 +386,7 @@ public class AppointmentService {
 
         // 6. Outbox event
         DoctorEntity doctor = doctorRepository.findById(appointment.getDoctorId()).orElse(null);
-        saveOutboxEvent("AppointmentRescheduled", appointment.getId(), appointment.getVersion(),
-                AppointmentRescheduledEvent.builder()
+        var rescheduledEvent = AppointmentRescheduledEvent.builder()
                         .appointmentId(appointment.getId())
                         .patientId(patientId)
                         .doctorId(appointment.getDoctorId())
@@ -396,7 +396,9 @@ public class AppointmentService {
                         .oldStartsAt(oldSlot.getStartsAt())
                         .newStartsAt(newSlot.getStartsAt())
                         .changedAt(Instant.now())
-                        .build());
+                        .build();
+        saveOutboxEvent("AppointmentRescheduled", appointment.getId(), appointment.getVersion(), rescheduledEvent);
+        saveEmailRequest(PatientNotificationDelivery.RESCHEDULED, appointment, rescheduledEvent);
 
         log.info("Appointment {} successfully rescheduled to slot {}", appointmentId, newSlotId);
         return mapToResponse(appointment);
@@ -536,6 +538,20 @@ public class AppointmentService {
                 .canReschedule(canReschedule)
                 .demo(appointment.isDemo())
                 .build();
+    }
+
+    private void saveEmailRequest(String eventType, AppointmentEntity appointment, Object payload) {
+        try {
+            UUID eventId = UUID.randomUUID();
+            outboxEventRepository.save(OutboxEventEntity.builder()
+                    .eventId(eventId).eventType(eventType).aggregateId(appointment.getId())
+                    .aggregateVersion(appointment.getVersion()).payload(objectMapper.writeValueAsString(payload))
+                    .occurredAt(Instant.now()).nextAttemptAt(Instant.now()).build());
+            applicationEventPublisher.publishEvent(new PatientNotificationRequested(eventId));
+        } catch (com.fasterxml.jackson.core.JsonProcessingException exception) {
+            // Booking and its email request must commit together; never silently lose a notification.
+            throw new IllegalStateException("Không lưu được yêu cầu gửi email", exception);
+        }
     }
 
     private void saveOutboxEvent(String eventType, UUID aggregateId, int version, Object payload) {

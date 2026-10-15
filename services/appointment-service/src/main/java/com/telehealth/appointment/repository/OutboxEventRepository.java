@@ -19,6 +19,8 @@ public interface OutboxEventRepository extends JpaRepository<OutboxEventEntity, 
 
     List<OutboxEventEntity> findTop20ByEventTypeAndPublishedAtIsNullAndNextAttemptAtLessThanEqualOrderByOccurredAtAsc(String eventType, Instant now);
 
+    List<OutboxEventEntity> findTop20ByEventTypeInAndPublishedAtIsNullAndNextAttemptAtLessThanEqualOrderByOccurredAtAsc(List<String> eventTypes, Instant now);
+
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("SELECT e FROM OutboxEventEntity e WHERE e.eventId = :id")
     Optional<OutboxEventEntity> findByEventIdWithLock(@Param("id") UUID id);

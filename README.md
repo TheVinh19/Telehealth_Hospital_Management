@@ -68,7 +68,7 @@ Hệ thống được thiết kế theo đúng tiêu chuẩn microservices: **M�
 - **Caching & Locking:** Redis 7 (Pessimistic locking & atomic transactions).
 - **Message Broker:** RabbitMQ 3 (AMQP Outbox Pattern, Deduplication).
 - **Giao tiếp Realtime:** Spring WebSocket (TextWebSocketHandler), WebRTC 1-1, Coturn (STUN/TURN relay server).
-- **Email Server:** Spring Mail, Mailpit (SMTP `:1025`, Web UI `:8025`).
+- **Email:** Spring Mail qua SMTP (bản demo dùng Resend). Mailpit là công cụ thử tùy chọn, không tham gia luồng gửi thư thật.
 - **Container hóa & CI/CD:** Dockerfile đa tầng, Docker Compose, GitHub Actions CI & GitHub Container Registry (GHCR).
 
 ---
@@ -116,7 +116,7 @@ Tất cả các service chạy với tài khoản database riêng biệt, không
 5. Nhấn **Mô phỏng Thanh toán Thành công**:
    - `billing-service` ghi nhận giao dịch idempotency, kiểm tra thời hạn 7 phút.
    - Kích hoạt sự kiện xác nhận `appointment-service` chuyển lịch sang `CONFIRMED`.
-   - `notification-service` nhận event từ RabbitMQ và gửi email xác nhận đặt lịch thành công qua Spring Mail/Mailpit.
+   - Yêu cầu gửi email được lưu cùng giao dịch xác nhận, sau commit được chuyển tới `notification-service` qua API nội bộ; Spring Mail gửi bằng SMTP đã cấu hình.
 
 ### B. Quy Tắc Đổi Ca Khám (Reschedule)
 - Bệnh nhân không được tự ý hủy lịch (theo yêu cầu nghiệp vụ).
@@ -156,7 +156,30 @@ Tất cả các service chạy với tài khoản database riêng biệt, không
   1. Xác nhận đặt lịch khám thành công sau thanh toán.
   2. Xác nhận đổi ca khám thành công (ghi rõ thời gian ca cũ và ca mới).
 - **Nguyên tắc bảo vệ dữ liệu y tế**: Email thông báo tuyệt đối **không chứa triệu chứng, chẩn đoán, bệnh sử hay đơn thuốc** của bệnh nhân.
-- Môi trường phát triển cục bộ tích hợp sẵn **Mailpit** để nhận và kiểm tra toàn bộ email mà không cần tài khoản SMTP thật.
+- Bản demo hiện gửi qua **Resend**, người gửi `onboarding@resend.dev`. **Mailpit** chỉ dùng khi cần thử email offline, không cần chạy khi dùng SMTP thật.
+- Chỉ có hai loại thư: xác nhận thanh toán/đặt lịch và xác nhận đổi ca; không có thư kích hoạt tài khoản.
+- Sau khi giao dịch thành công, yêu cầu gửi được lưu trong outbox và gửi sau commit. Nếu dịch vụ email tạm lỗi, hệ thống thử lại; mỗi lần đổi ca có mã sự kiện riêng để tránh gửi trùng khi thử lại.
+- Người nhận mặc định lấy từ tài khoản bệnh nhân trong identity database. Đặt `DEMO_NOTIFICATION_EMAIL` để chuyển riêng thông báo của hai bệnh nhân demo sang một hộp thư thật; không đổi email đăng nhập và không ảnh hưởng bệnh nhân khác.
+- Với cấu hình mẫu Mailpit, mở [Mailpit](http://localhost:8025) để đọc thư thử (không gửi ra Internet). SMTP trong Docker là `mailpit:1025`, không cần tài khoản/mật khẩu.
+- Quản trị viên có thể xem trạng thái ở **Nhật ký Email & Vận hành**. Chỉ các giao dịch mới phát sinh sau khi bật tính năng mới tạo thư, không tự gửi bù lịch demo cũ.
+- Kiểm tra cả hai bệnh nhân demo: `node tools/appointment-email-smoke.mjs`. Công cụ tạo và dọn lịch thử riêng, giữ thư mẫu trong Mailpit để xem.
+
+#### Nhận thông báo demo ở Gmail thật
+
+- File `.env` cục bộ đã được Git bỏ qua; chỉ commit `.env.example`. Không gửi mật khẩu vào chat hoặc đưa lên GitHub.
+- Đặt `DEMO_NOTIFICATION_EMAIL` thành email nhận thư. Hai email đăng nhập demo vẫn giữ nguyên.
+- Với Resend: host `smtp.resend.com`, cổng `587`, username `resend`, password là API key Resend, `MAIL_FROM=onboarding@resend.dev`; bật xác thực và STARTTLS (cả `ENABLE` và `REQUIRED`). Người nhận demo phải là email đăng ký tài khoản Resend khi dùng địa chỉ gửi thử này.
+- Gmail SMTP: `SPRING_MAIL_HOST=smtp.gmail.com`, `SPRING_MAIL_PORT=587`, bật `SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH`, `SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE` và `SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_REQUIRED` thành `true`.
+- `SPRING_MAIL_USERNAME` là tài khoản gửi; `SPRING_MAIL_PASSWORD` là **mật khẩu ứng dụng** của tài khoản đó, không phải mật khẩu đăng nhập Gmail. `MAIL_FROM` dùng cùng email tài khoản gửi. Xem [hướng dẫn Google về mật khẩu ứng dụng](https://support.google.com/mail/answer/185833?hl=vi).
+- Sau khi điền thông tin trên máy, áp dụng bằng `docker compose up -d --no-deps notification-service`. Compose cần tạo lại container để đọc `.env`; chỉ `restart` không cập nhật biến môi trường.
+- Khi thiếu thông tin SMTP, thư mới được giữ ở `FAILED` để thử lại, không bị báo nhầm `SENT`. Nhật ký quản trị hiện lý do lỗi. Thư đã gửi vào Mailpit trước đó không tự gửi lại ra Gmail.
+- Công cụ smoke phía trên chỉ chạy với Mailpit và sẽ từ chối tạo thư thử khi đang dùng SMTP thật.
+
+#### Mailpit tùy chọn, không chạy cùng bản gửi thư thật
+
+- Service `mailpit` thuộc profile `mailpit`; `notification-service` không phụ thuộc vào nó.
+- Để thử offline, dùng các giá trị SMTP Mailpit trong `.env.example`, đặt `COMPOSE_PROFILES=mailpit` rồi chạy Compose. Hoặc bật riêng bằng `docker compose --profile mailpit up -d mailpit`.
+- Khi dùng Resend, không đặt `COMPOSE_PROFILES=mailpit`. Nhật ký trên giao diện chỉ có nút **Làm mới**, không dẫn tới hộp thư thử.
 
 ---
 
@@ -166,7 +189,9 @@ Tất cả các service chạy với tài khoản database riêng biệt, không
 
 Yêu cầu: Docker Desktop đã bật và hoạt động.
 
-1. Khởi chạy tất cả hạ tầng (Postgres 6 DBs, Redis, RabbitMQ, Mailpit, Coturn), 7 backend microservices và web frontend:
+Lần đầu chạy, sao chép `.env.example` thành `.env` để chọn chế độ email: bản mẫu bật profile Mailpit để thử offline; nếu dùng Resend/SMTP thật thì bỏ `COMPOSE_PROFILES=mailpit` và điền cấu hình gửi riêng. Không ghi đè `.env` nếu đã có API key.
+
+1. Khởi chạy hạ tầng (Postgres 6 DBs, Redis, RabbitMQ, Coturn), backend microservices và web frontend. Mailpit chỉ chạy nếu bật profile thử mail:
    ```bash
    docker compose up --build -d
    ```
@@ -177,7 +202,7 @@ Yêu cầu: Docker Desktop đã bật và hoạt động.
 3. Truy cập các địa chỉ dịch vụ:
    - **Giao diện Web Ứng dụng:** [http://localhost:5173](http://localhost:5173) hoặc [http://localhost:3000](http://localhost:3000)
    - **API Gateway:** [http://localhost:8080](http://localhost:8080)
-   - **Mailpit Web UI (Hộp thư kiểm tra):** [http://localhost:8025](http://localhost:8025)
+   - **Mailpit Web UI (chỉ khi bật profile thử mail):** [http://localhost:8025](http://localhost:8025)
    - **RabbitMQ Management Dashboard:** [http://localhost:15672](http://localhost:15672) (User: `guest`, Pass: `guest`)
 
 ---
@@ -188,8 +213,9 @@ Nếu muốn chạy hạ tầng trên Docker và chạy mã nguồn Java / React
 
 1. Khởi động hạ tầng nền tảng:
    ```bash
-   docker compose up postgres redis rabbitmq mailpit -d
+   docker compose up postgres redis rabbitmq -d
    ```
+   Nếu cần hộp thư thử offline: `docker compose --profile mailpit up -d mailpit`. Không cần bước này khi dùng Resend.
 2. Chạy lần lượt các backend microservices (sử dụng Gradle Wrapper trên Java 17):
    ```bash
    # Terminal 1: Identity Service

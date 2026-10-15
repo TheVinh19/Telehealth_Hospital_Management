@@ -32,5 +32,9 @@ spring:
 
 services:
   internal-token: ${INTERNAL_SERVICE_TOKEN:telehealth-local-internal-token-2026}
+  identity:
+    url: ${IDENTITY_SERVICE_URL:http://localhost:8081}
+  notification:
+    url: ${NOTIFICATION_SERVICE_URL:http://localhost:8086}
   realtime:
     url: ${REALTIME_SERVICE_URL:http://localhost:8085}

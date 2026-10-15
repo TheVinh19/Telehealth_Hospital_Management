@@ -6,12 +6,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 
 import java.time.Instant;
 import java.util.List;
 
 @Slf4j
 @Component
+@ConditionalOnProperty(name = "notifications.delivery-enabled", havingValue = "true", matchIfMissing = true)
 @RequiredArgsConstructor
 public class EmailJobScheduler {
 

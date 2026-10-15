@@ -58,6 +58,7 @@ services:
       - telehealth-net
 
   mailpit:
+    profiles: ["mailpit"]
     image: axllent/mailpit:latest
     container_name: telehealth-mailpit
     restart: unless-stopped
@@ -90,6 +91,7 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/identity_db
       SPRING_DATASOURCE_USERNAME: identity_user
       SPRING_DATASOURCE_PASSWORD: identity_pass
+      INTERNAL_SERVICE_TOKEN: ${INTERNAL_SERVICE_TOKEN:-telehealth-local-internal-token-2026}
       JWT_SECRET: ${JWT_SECRET:-telehealth-super-secret-jwt-key-2026-min-32-chars-long!}
     ports:
       - "8081:8081"
@@ -115,6 +117,8 @@ services:
       SPRING_DATA_REDIS_HOST: redis
       SPRING_RABBITMQ_HOST: rabbitmq
       REALTIME_SERVICE_URL: http://realtime-service:8085
+      IDENTITY_SERVICE_URL: http://identity-service:8081
+      NOTIFICATION_SERVICE_URL: http://notification-service:8086
       INTERNAL_SERVICE_TOKEN: ${INTERNAL_SERVICE_TOKEN:-telehealth-local-internal-token-2026}
       JWT_SECRET: ${JWT_SECRET:-telehealth-super-secret-jwt-key-2026-min-32-chars-long!}
     ports:
@@ -199,15 +203,25 @@ services:
         condition: service_healthy
       rabbitmq:
         condition: service_healthy
-      mailpit:
-        condition: service_started
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/notification_db
       SPRING_DATASOURCE_USERNAME: notification_user
       SPRING_DATASOURCE_PASSWORD: notification_pass
+      INTERNAL_SERVICE_TOKEN: ${INTERNAL_SERVICE_TOKEN:-telehealth-local-internal-token-2026}
       SPRING_RABBITMQ_HOST: rabbitmq
-      SPRING_MAIL_HOST: mailpit
-      SPRING_MAIL_PORT: 1025
+      SPRING_MAIL_HOST: ${SPRING_MAIL_HOST:-mailpit}
+      SPRING_MAIL_PORT: ${SPRING_MAIL_PORT:-1025}
+      SPRING_MAIL_USERNAME: ${SPRING_MAIL_USERNAME:-}
+      SPRING_MAIL_PASSWORD: ${SPRING_MAIL_PASSWORD:-}
+      MAIL_FROM: ${MAIL_FROM:-no-reply@telehealth.local}
+      SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH: ${SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH:-false}
+      SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: ${SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE:-false}
+      SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_REQUIRED: ${SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_REQUIRED:-false}
+      SPRING_MAIL_PROPERTIES_MAIL_SMTP_SSL_ENABLE: ${SPRING_MAIL_PROPERTIES_MAIL_SMTP_SSL_ENABLE:-false}
+      SPRING_MAIL_PROPERTIES_MAIL_SMTP_CONNECTIONTIMEOUT: ${SPRING_MAIL_PROPERTIES_MAIL_SMTP_CONNECTIONTIMEOUT:-10000}
+      SPRING_MAIL_PROPERTIES_MAIL_SMTP_TIMEOUT: ${SPRING_MAIL_PROPERTIES_MAIL_SMTP_TIMEOUT:-20000}
+      SPRING_MAIL_PROPERTIES_MAIL_SMTP_WRITETIMEOUT: ${SPRING_MAIL_PROPERTIES_MAIL_SMTP_WRITETIMEOUT:-20000}
+      DEMO_NOTIFICATION_EMAIL: ${DEMO_NOTIFICATION_EMAIL:-}
       JWT_SECRET: ${JWT_SECRET:-telehealth-super-secret-jwt-key-2026-min-32-chars-long!}
     ports:
       - "8086:8086"

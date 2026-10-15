@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.telehealth.notification.SmtpConfigurationTests" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-10-15T09:04:09.302Z" hostname="THEVINH" time="0.255">
+  <properties/>
+  <testcase name="onlyTheTwoDedicatedDemoPatientsUseTheConfiguredInbox()" classname="com.telehealth.notification.SmtpConfigurationTests" time="0.001"/>
+  <testcase name="missingSmtpPasswordDoesNotContactTheProviderOrPretendTheEmailWasSent()" classname="com.telehealth.notification.SmtpConfigurationTests" time="0.247"/>
+  <testcase name="blankOverrideKeepsDemoLoginEmailAsTheRecipient()" classname="com.telehealth.notification.SmtpConfigurationTests" time="0.002"/>
+  <system-out><![CDATA[2026-10-15T16:04:09.542+07:00  WARN 24764 --- [notification-service-test] [    Test worker] c.t.n.service.EmailSenderService         : Failed to send email to recipient@gmail.com (attempt 1): Ch?a c?u hình tài kho?n SMTP ho?c m?t kh?u ?ng d?ng. Email ch?a ???c g?i.
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

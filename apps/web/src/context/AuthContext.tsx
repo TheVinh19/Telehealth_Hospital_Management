@@ -33,23 +33,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const login = async (email: string, pass: string) => {
-    setLoading(true);
-    try {
-      const res = await api.login(email, pass);
-      setUser(res.user);
-    } finally {
-      setLoading(false);
-    }
+    // `loading` is only for the initial session check. AuthModal owns submit
+    // loading so a failed request cannot unmount it and erase its form/error.
+    const res = await api.login(email, pass);
+    setUser(res.user);
   };
 
   const register = async (data: { email: string; password: string; fullName: string; phone?: string; role?: string }) => {
-    setLoading(true);
-    try {
-      const res = await api.register(data);
-      setUser(res.user);
-    } finally {
-      setLoading(false);
-    }
+    const res = await api.register(data);
+    setUser(res.user);
   };
 
   const switchDemoUser = async (demoKey: 'ADMIN' | 'DOCTOR' | 'DOCTOR_2' | 'PATIENT_1' | 'PATIENT_2') => {

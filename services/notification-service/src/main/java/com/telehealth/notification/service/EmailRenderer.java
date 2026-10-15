@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.text.NumberFormat;
+import java.util.Locale;
+import org.springframework.web.util.HtmlUtils;
 
 @Service
 @RequiredArgsConstructor
@@ -28,6 +31,9 @@ public class EmailRenderer {
             String doctorName = root.has("doctorName") ? root.get("doctorName").asText() : "Bác sĩ phụ trách";
             String startsAtStr = root.has("startsAt") ? root.get("startsAt").asText() : "";
             String timeFormatted = formatTime(startsAtStr);
+            String amount = root.hasNonNull("amountVnd")
+                    ? NumberFormat.getIntegerInstance(Locale.forLanguageTag("vi-VN")).format(root.get("amountVnd").asLong()) + " VNĐ"
+                    : "Đã thanh toán";
 
             String subject = "[Telehealth] Xác nhận đặt lịch khám thành công - Mã #" + code;
             String html = """
@@ -43,6 +49,7 @@ public class EmailRenderer {
                         <p style="margin: 6px 0;"><strong>Bác sĩ khám:</strong> %s</p>
                         <p style="margin: 6px 0;"><strong>Thời gian bắt đầu:</strong> <span style="color: #1e40af; font-weight: bold;">%s (Giờ Việt Nam)</span></p>
                         <p style="margin: 6px 0;"><strong>Trạng thái:</strong> <span style="color: #16a34a; font-weight: bold;">ĐÃ XÁC NHẬN</span></p>
+                        <p style="margin: 6px 0;"><strong>Thanh toán:</strong> %s</p>
                     </div>
                     <p><strong>Hướng dẫn tham gia:</strong></p>
                     <ul>
@@ -53,7 +60,7 @@ public class EmailRenderer {
                         <em>* Nhằm bảo đảm an toàn dữ liệu y tế, email chỉ thông báo thời gian ca hẹn và không bao gồm nội dung thăm khám y khoa.</em>
                     </div>
                 </div>
-                """.formatted(code, doctorName, timeFormatted);
+                """.formatted(html(code), html(doctorName), html(timeFormatted), amount);
 
             return new RenderedEmail(subject, html);
         } catch (Exception e) {
@@ -87,12 +94,16 @@ public class EmailRenderer {
                     </div>
                     <p>Thanh toán và biểu mẫu trước khám của Quý khách được giữ nguyên sang ca khám mới.</p>
                 </div>
-                """.formatted(code, doctorName, oldStartsAt, newStartsAt);
+                """.formatted(html(code), html(doctorName), html(oldStartsAt), html(newStartsAt));
 
             return new RenderedEmail(subject, html);
         } catch (Exception e) {
             throw new RuntimeException("Failed to render rescheduled email", e);
         }
+    }
+
+    private String html(String value) {
+        return HtmlUtils.htmlEscape(value, "UTF-8");
     }
 
     private String formatTime(String isoString) {

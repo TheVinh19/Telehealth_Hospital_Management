@@ -1,0 +1,4 @@
+# Local credentials. Commit .env.example only.
+.env
+.env.*
+!.env.example

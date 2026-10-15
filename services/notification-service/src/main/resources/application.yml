@@ -34,6 +34,18 @@ spring:
     properties:
       mail:
         smtp:
-          auth: false
+          auth: ${SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH:false}
+          connectiontimeout: ${SPRING_MAIL_PROPERTIES_MAIL_SMTP_CONNECTIONTIMEOUT:10000}
+          timeout: ${SPRING_MAIL_PROPERTIES_MAIL_SMTP_TIMEOUT:20000}
+          writetimeout: ${SPRING_MAIL_PROPERTIES_MAIL_SMTP_WRITETIMEOUT:20000}
           starttls:
-            enable: false
+            enable: ${SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE:false}
+            required: ${SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_REQUIRED:false}
+          ssl:
+            enable: ${SPRING_MAIL_PROPERTIES_MAIL_SMTP_SSL_ENABLE:false}
+
+notifications:
+  demo-recipient: ${DEMO_NOTIFICATION_EMAIL:}
+
+services:
+  internal-token: ${INTERNAL_SERVICE_TOKEN:telehealth-local-internal-token-2026}

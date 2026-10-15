@@ -32,8 +32,22 @@ jobs:
       - name: Make Gradle Wrapper Executable
         run: chmod +x ./gradlew
 
+      - name: Show Gradle Version
+        run: ./gradlew --version
+
       - name: Run Backend Tests
-        run: ./gradlew test --no-daemon
+        run: ./gradlew clean test --no-daemon
+
+      - name: Archive Backend Test Reports
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-test-reports
+          path: |
+            services/*/build/reports/tests/test/**
+            services/*/build/test-results/test/*.xml
+          if-no-files-found: ignore
+          retention-days: 14
 
       - name: Build Executable BootJars
         run: ./gradlew bootJar --no-daemon
@@ -66,6 +80,10 @@ jobs:
       - name: Install Frontend Dependencies
         working-directory: apps/web
         run: npm ci
+
+      - name: Run Frontend Tests
+        working-directory: apps/web
+        run: npm test
 
       - name: Build Production Frontend
         working-directory: apps/web

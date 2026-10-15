@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.953s</div>
+<div class="counter">0.998s</div>
 <p>duration</p>
 </div>
 </td>
@@ -79,17 +79,17 @@
 </thead>
 <tr>
 <td class="success">contextLoads()</td>
-<td class="success">0.002s</td>
+<td class="success">0.001s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">whenInvalidToken_thenReturns401()</td>
-<td class="success">0.061s</td>
+<td class="success">0.058s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">whenUnauthorizedRequestToProtectedEndpoint_thenReturns401()</td>
-<td class="success">0.890s</td>
+<td class="success">0.939s</td>
 <td class="success">passed</td>
 </tr>
 </table>
@@ -97,8 +97,8 @@
 <div class="tab">
 <h2>Standard output</h2>
 <span class="code">
-<pre>10:58:18.311 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.telehealth.gateway.ApiGatewayApplicationTests]: ApiGatewayApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-10:58:18.422 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.telehealth.gateway.ApiGatewayApplication for test class com.telehealth.gateway.ApiGatewayApplicationTests
+<pre>16:17:57.607 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.telehealth.gateway.ApiGatewayApplicationTests]: ApiGatewayApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+16:17:57.747 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.telehealth.gateway.ApiGatewayApplication for test class com.telehealth.gateway.ApiGatewayApplicationTests
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -109,31 +109,31 @@
 
  :: Spring Boot ::                (v3.3.5)
 
-2026-10-15T10:58:19.014+07:00  INFO 12952 --- [api-gateway] [    Test worker] c.t.gateway.ApiGatewayApplicationTests   : Starting ApiGatewayApplicationTests using Java 17.0.12 with PID 12952 (started by Admin in D:\Workspace\Telehealth_Hospital_Management\services\api-gateway)
-2026-10-15T10:58:19.014+07:00  INFO 12952 --- [api-gateway] [    Test worker] c.t.gateway.ApiGatewayApplicationTests   : No active profile set, falling back to 1 default profile: &quot;default&quot;
-2026-10-15T10:58:19.014+07:00 DEBUG 12952 --- [api-gateway] [    Test worker] o.s.boot.SpringApplication               : Loading source class com.telehealth.gateway.ApiGatewayApplication
-2026-10-15T10:58:19.035+07:00 DEBUG 12952 --- [api-gateway] [    Test worker] onfigReactiveWebServerApplicationContext : Refreshing org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext@44de94c3
-2026-10-15T10:58:19.827+07:00  INFO 12952 --- [api-gateway] [    Test worker] o.s.cloud.context.scope.GenericScope     : BeanFactory id=10478ecd-5179-39b2-b56d-467c65527124
-2026-10-15T10:58:20.174+07:00 DEBUG 12952 --- [api-gateway] [    Test worker] o.s.b.a.AutoConfigurationPackages        : @EnableAutoConfiguration was declared on a class in the package 'com.telehealth.gateway'. Automatic @Repository and @Entity scanning is enabled.
-2026-10-15T10:58:20.780+07:00  INFO 12952 --- [api-gateway] [    Test worker] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [After]
-2026-10-15T10:58:20.780+07:00  INFO 12952 --- [api-gateway] [    Test worker] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Before]
-2026-10-15T10:58:20.780+07:00  INFO 12952 --- [api-gateway] [    Test worker] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Between]
-2026-10-15T10:58:20.780+07:00  INFO 12952 --- [api-gateway] [    Test worker] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Cookie]
-2026-10-15T10:58:20.780+07:00  INFO 12952 --- [api-gateway] [    Test worker] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Header]
-2026-10-15T10:58:20.780+07:00  INFO 12952 --- [api-gateway] [    Test worker] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Host]
-2026-10-15T10:58:20.780+07:00  INFO 12952 --- [api-gateway] [    Test worker] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Method]
-2026-10-15T10:58:20.780+07:00  INFO 12952 --- [api-gateway] [    Test worker] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Path]
-2026-10-15T10:58:20.780+07:00  INFO 12952 --- [api-gateway] [    Test worker] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Query]
-2026-10-15T10:58:20.780+07:00  INFO 12952 --- [api-gateway] [    Test worker] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [ReadBody]
-2026-10-15T10:58:20.780+07:00  INFO 12952 --- [api-gateway] [    Test worker] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [RemoteAddr]
-2026-10-15T10:58:20.780+07:00  INFO 12952 --- [api-gateway] [    Test worker] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [XForwardedRemoteAddr]
-2026-10-15T10:58:20.780+07:00  INFO 12952 --- [api-gateway] [    Test worker] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Weight]
-2026-10-15T10:58:20.780+07:00  INFO 12952 --- [api-gateway] [    Test worker] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [CloudFoundryRouteService]
-2026-10-15T10:58:20.890+07:00 DEBUG 12952 --- [api-gateway] [    Test worker] o.s.w.r.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
-2026-10-15T10:58:20.943+07:00 DEBUG 12952 --- [api-gateway] [    Test worker] o.s.w.r.r.m.a.ControllerMethodResolver   : ControllerAdvice beans: none
-2026-10-15T10:58:20.985+07:00 DEBUG 12952 --- [api-gateway] [    Test worker] o.s.w.s.adapter.HttpWebHandlerAdapter    : enableLoggingRequestDetails='false': form data and headers will be masked to prevent unsafe logging of potentially sensitive data
-2026-10-15T10:58:21.334+07:00  INFO 12952 --- [api-gateway] [    Test worker] o.s.b.web.embedded.netty.NettyWebServer  : Netty started on port 55085 (http)
-2026-10-15T10:58:21.581+07:00 DEBUG 12952 --- [api-gateway] [    Test worker] .s.b.a.l.ConditionEvaluationReportLogger : 
+2026-10-15T16:17:58.386+07:00  INFO 31840 --- [api-gateway] [    Test worker] c.t.gateway.ApiGatewayApplicationTests   : Starting ApiGatewayApplicationTests using Java 17.0.12 with PID 31840 (started by Admin in D:\Workspace\Telehealth_Hospital_Management\services\api-gateway)
+2026-10-15T16:17:58.387+07:00  INFO 31840 --- [api-gateway] [    Test worker] c.t.gateway.ApiGatewayApplicationTests   : No active profile set, falling back to 1 default profile: &quot;default&quot;
+2026-10-15T16:17:58.388+07:00 DEBUG 31840 --- [api-gateway] [    Test worker] o.s.boot.SpringApplication               : Loading source class com.telehealth.gateway.ApiGatewayApplication
+2026-10-15T16:17:58.406+07:00 DEBUG 31840 --- [api-gateway] [    Test worker] onfigReactiveWebServerApplicationContext : Refreshing org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext@2257fadf
+2026-10-15T16:17:59.181+07:00  INFO 31840 --- [api-gateway] [    Test worker] o.s.cloud.context.scope.GenericScope     : BeanFactory id=10478ecd-5179-39b2-b56d-467c65527124
+2026-10-15T16:17:59.471+07:00 DEBUG 31840 --- [api-gateway] [    Test worker] o.s.b.a.AutoConfigurationPackages        : @EnableAutoConfiguration was declared on a class in the package 'com.telehealth.gateway'. Automatic @Repository and @Entity scanning is enabled.
+2026-10-15T16:18:00.066+07:00  INFO 31840 --- [api-gateway] [    Test worker] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [After]
+2026-10-15T16:18:00.066+07:00  INFO 31840 --- [api-gateway] [    Test worker] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Before]
+2026-10-15T16:18:00.066+07:00  INFO 31840 --- [api-gateway] [    Test worker] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Between]
+2026-10-15T16:18:00.066+07:00  INFO 31840 --- [api-gateway] [    Test worker] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Cookie]
+2026-10-15T16:18:00.066+07:00  INFO 31840 --- [api-gateway] [    Test worker] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Header]
+2026-10-15T16:18:00.066+07:00  INFO 31840 --- [api-gateway] [    Test worker] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Host]
+2026-10-15T16:18:00.067+07:00  INFO 31840 --- [api-gateway] [    Test worker] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Method]
+2026-10-15T16:18:00.067+07:00  INFO 31840 --- [api-gateway] [    Test worker] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Path]
+2026-10-15T16:18:00.067+07:00  INFO 31840 --- [api-gateway] [    Test worker] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Query]
+2026-10-15T16:18:00.067+07:00  INFO 31840 --- [api-gateway] [    Test worker] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [ReadBody]
+2026-10-15T16:18:00.067+07:00  INFO 31840 --- [api-gateway] [    Test worker] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [RemoteAddr]
+2026-10-15T16:18:00.067+07:00  INFO 31840 --- [api-gateway] [    Test worker] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [XForwardedRemoteAddr]
+2026-10-15T16:18:00.067+07:00  INFO 31840 --- [api-gateway] [    Test worker] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Weight]
+2026-10-15T16:18:00.067+07:00  INFO 31840 --- [api-gateway] [    Test worker] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [CloudFoundryRouteService]
+2026-10-15T16:18:00.206+07:00 DEBUG 31840 --- [api-gateway] [    Test worker] o.s.w.r.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2026-10-15T16:18:00.261+07:00 DEBUG 31840 --- [api-gateway] [    Test worker] o.s.w.r.r.m.a.ControllerMethodResolver   : ControllerAdvice beans: none
+2026-10-15T16:18:00.299+07:00 DEBUG 31840 --- [api-gateway] [    Test worker] o.s.w.s.adapter.HttpWebHandlerAdapter    : enableLoggingRequestDetails='false': form data and headers will be masked to prevent unsafe logging of potentially sensitive data
+2026-10-15T16:18:00.717+07:00  INFO 31840 --- [api-gateway] [    Test worker] o.s.b.web.embedded.netty.NettyWebServer  : Netty started on port 52258 (http)
+2026-10-15T16:18:01.028+07:00 DEBUG 31840 --- [api-gateway] [    Test worker] .s.b.a.l.ConditionEvaluationReportLogger : 
 
 
 ============================
@@ -1465,18 +1465,18 @@ Unconditional classes:
 
 
 
-2026-10-15T10:58:21.700+07:00  INFO 12952 --- [api-gateway] [    Test worker] c.t.gateway.ApiGatewayApplicationTests   : Started ApiGatewayApplicationTests in 3.136 seconds (process running for 4.46)
-2026-10-15T10:58:21.700+07:00 DEBUG 12952 --- [api-gateway] [    Test worker] o.s.b.a.ApplicationAvailabilityBean      : Application availability state LivenessState changed to CORRECT
-2026-10-15T10:58:21.711+07:00 DEBUG 12952 --- [api-gateway] [    Test worker] o.s.b.a.ApplicationAvailabilityBean      : Application availability state ReadinessState changed to ACCEPTING_TRAFFIC
-2026-10-15T10:58:22.391+07:00 DEBUG 12952 --- [api-gateway] [    Test worker] o.s.w.r.f.client.ExchangeFunctions       : [582ea164] HTTP GET http://localhost:55085/api/v1/appointments/my
-2026-10-15T10:58:22.566+07:00 DEBUG 12952 --- [api-gateway] [flux-http-nio-2] o.s.w.s.adapter.HttpWebHandlerAdapter    : [920a0129-1] HTTP GET &quot;/api/v1/appointments/my&quot;
-2026-10-15T10:58:22.597+07:00 DEBUG 12952 --- [api-gateway] [flux-http-nio-2] o.s.w.s.adapter.HttpWebHandlerAdapter    : [920a0129-1] Completed 401 UNAUTHORIZED
-2026-10-15T10:58:22.614+07:00 DEBUG 12952 --- [api-gateway] [ctor-http-nio-2] o.s.w.r.f.client.ExchangeFunctions       : [582ea164] [86d4abb9-1, L:/127.0.0.1:55088 - R:localhost/127.0.0.1:55085] Response 401 UNAUTHORIZED
-2026-10-15T10:58:22.622+07:00 DEBUG 12952 --- [api-gateway] [    Test worker] o.s.w.r.f.client.ExchangeFunctions       : [3f33bb6f] HTTP GET http://localhost:55085/api/v1/appointments/my
-2026-10-15T10:58:22.622+07:00 DEBUG 12952 --- [api-gateway] [flux-http-nio-2] o.s.w.s.adapter.HttpWebHandlerAdapter    : [920a0129-2] HTTP GET &quot;/api/v1/appointments/my&quot;
-2026-10-15T10:58:22.684+07:00  WARN 12952 --- [api-gateway] [flux-http-nio-2] c.t.g.filter.JwtAuthenticationFilter     : JWT validation failed for path /api/v1/appointments/my: Invalid compact JWT string: Compact JWSs must contain exactly 2 period characters, and compact JWEs must contain exactly 4.  Found: 0
-2026-10-15T10:58:22.684+07:00 DEBUG 12952 --- [api-gateway] [flux-http-nio-2] o.s.w.s.adapter.HttpWebHandlerAdapter    : [920a0129-2] Completed 401 UNAUTHORIZED
-2026-10-15T10:58:22.684+07:00 DEBUG 12952 --- [api-gateway] [ctor-http-nio-2] o.s.w.r.f.client.ExchangeFunctions       : [3f33bb6f] [86d4abb9-2, L:/127.0.0.1:55088 - R:localhost/127.0.0.1:55085] Response 401 UNAUTHORIZED
+2026-10-15T16:18:01.150+07:00  INFO 31840 --- [api-gateway] [    Test worker] c.t.gateway.ApiGatewayApplicationTests   : Started ApiGatewayApplicationTests in 3.21 seconds (process running for 4.567)
+2026-10-15T16:18:01.152+07:00 DEBUG 31840 --- [api-gateway] [    Test worker] o.s.b.a.ApplicationAvailabilityBean      : Application availability state LivenessState changed to CORRECT
+2026-10-15T16:18:01.155+07:00 DEBUG 31840 --- [api-gateway] [    Test worker] o.s.b.a.ApplicationAvailabilityBean      : Application availability state ReadinessState changed to ACCEPTING_TRAFFIC
+2026-10-15T16:18:01.880+07:00 DEBUG 31840 --- [api-gateway] [    Test worker] o.s.w.r.f.client.ExchangeFunctions       : [9746157] HTTP GET http://localhost:52258/api/v1/appointments/my
+2026-10-15T16:18:02.068+07:00 DEBUG 31840 --- [api-gateway] [flux-http-nio-2] o.s.w.s.adapter.HttpWebHandlerAdapter    : [3e1c457b-1] HTTP GET &quot;/api/v1/appointments/my&quot;
+2026-10-15T16:18:02.101+07:00 DEBUG 31840 --- [api-gateway] [flux-http-nio-2] o.s.w.s.adapter.HttpWebHandlerAdapter    : [3e1c457b-1] Completed 401 UNAUTHORIZED
+2026-10-15T16:18:02.106+07:00 DEBUG 31840 --- [api-gateway] [ctor-http-nio-2] o.s.w.r.f.client.ExchangeFunctions       : [9746157] [8807f308-1, L:/127.0.0.1:52259 - R:localhost/127.0.0.1:52258] Response 401 UNAUTHORIZED
+2026-10-15T16:18:02.124+07:00 DEBUG 31840 --- [api-gateway] [    Test worker] o.s.w.r.f.client.ExchangeFunctions       : [7d3815f7] HTTP GET http://localhost:52258/api/v1/appointments/my
+2026-10-15T16:18:02.126+07:00 DEBUG 31840 --- [api-gateway] [flux-http-nio-2] o.s.w.s.adapter.HttpWebHandlerAdapter    : [3e1c457b-2] HTTP GET &quot;/api/v1/appointments/my&quot;
+2026-10-15T16:18:02.177+07:00  WARN 31840 --- [api-gateway] [flux-http-nio-2] c.t.g.filter.JwtAuthenticationFilter     : JWT validation failed for path /api/v1/appointments/my: Invalid compact JWT string: Compact JWSs must contain exactly 2 period characters, and compact JWEs must contain exactly 4.  Found: 0
+2026-10-15T16:18:02.179+07:00 DEBUG 31840 --- [api-gateway] [flux-http-nio-2] o.s.w.s.adapter.HttpWebHandlerAdapter    : [3e1c457b-2] Completed 401 UNAUTHORIZED
+2026-10-15T16:18:02.180+07:00 DEBUG 31840 --- [api-gateway] [ctor-http-nio-2] o.s.w.r.f.client.ExchangeFunctions       : [7d3815f7] [8807f308-2, L:/127.0.0.1:52259 - R:localhost/127.0.0.1:52258] Response 401 UNAUTHORIZED
 </pre>
 </span>
 </div>
@@ -1488,7 +1488,7 @@ Unconditional classes:
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="https://www.gradle.org">Gradle 8.14</a> at Oct 15, 2026, 10:58:25 AM</p>
+<a href="https://www.gradle.org">Gradle 8.14</a> at Oct 15, 2026, 4:18:04 PM</p>
 </div>
 </div>
 </body>

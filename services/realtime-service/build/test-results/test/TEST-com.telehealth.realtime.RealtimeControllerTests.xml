@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.telehealth.realtime.RealtimeControllerTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-10-15T07:46:44.372Z" hostname="THEVINH" time="0.237">
+<testsuite name="com.telehealth.realtime.RealtimeControllerTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-10-15T09:19:26.594Z" hostname="THEVINH" time="0.24">
   <properties/>
-  <testcase name="roomCloseRequiresTheServiceCredentialRatherThanBrowserRoleHeaders()" classname="com.telehealth.realtime.RealtimeControllerTests" time="0.237"/>
-  <system-out><![CDATA[14:46:40.561 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.telehealth.realtime.RealtimeControllerTests]: RealtimeControllerTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-14:46:40.680 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.telehealth.realtime.RealtimeServiceApplication for test class com.telehealth.realtime.RealtimeControllerTests
+  <testcase name="roomCloseRequiresTheServiceCredentialRatherThanBrowserRoleHeaders()" classname="com.telehealth.realtime.RealtimeControllerTests" time="0.24"/>
+  <system-out><![CDATA[16:19:23.398 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.telehealth.realtime.RealtimeControllerTests]: RealtimeControllerTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+16:19:23.532 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.telehealth.realtime.RealtimeServiceApplication for test class com.telehealth.realtime.RealtimeControllerTests
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -14,24 +14,24 @@
 
  :: Spring Boot ::                (v3.3.5)
 
-2026-10-15T14:46:41.165+07:00  INFO 10144 --- [realtime-service-test] [    Test worker] c.t.realtime.RealtimeControllerTests     : Starting RealtimeControllerTests using Java 17.0.12 with PID 10144 (started by Admin in D:\Workspace\Telehealth_Hospital_Management\services\realtime-service)
-2026-10-15T14:46:41.166+07:00  INFO 10144 --- [realtime-service-test] [    Test worker] c.t.realtime.RealtimeControllerTests     : No active profile set, falling back to 1 default profile: "default"
-2026-10-15T14:46:41.166+07:00 DEBUG 10144 --- [realtime-service-test] [    Test worker] o.s.boot.SpringApplication               : Loading source class com.telehealth.realtime.RealtimeServiceApplication
-2026-10-15T14:46:41.187+07:00 DEBUG 10144 --- [realtime-service-test] [    Test worker] o.s.w.c.s.GenericWebApplicationContext   : Refreshing org.springframework.web.context.support.GenericWebApplicationContext@33f98231
-2026-10-15T14:46:43.597+07:00 DEBUG 10144 --- [realtime-service-test] [    Test worker] s.w.s.m.m.a.RequestMappingHandlerMapping : 6 mappings in 'requestMappingHandlerMapping'
-2026-10-15T14:46:43.647+07:00 DEBUG 10144 --- [realtime-service-test] [    Test worker] o.s.b.a.AutoConfigurationPackages        : @EnableAutoConfiguration was declared on a class in the package 'com.telehealth.realtime'. Automatic @Repository and @Entity scanning is enabled.
-2026-10-15T14:46:43.821+07:00 DEBUG 10144 --- [realtime-service-test] [    Test worker] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
-2026-10-15T14:46:44.069+07:00 DEBUG 10144 --- [realtime-service-test] [    Test worker] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
-2026-10-15T14:46:44.130+07:00 DEBUG 10144 --- [realtime-service-test] [    Test worker] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
-2026-10-15T14:46:44.264+07:00 DEBUG 10144 --- [realtime-service-test] [    Test worker] o.s.b.w.s.ServletContextInitializerBeans : Mapping filters: characterEncodingFilter urls=[/*] order=-2147483648, formContentFilter urls=[/*] order=-9900, requestContextFilter urls=[/*] order=-105
-2026-10-15T14:46:44.264+07:00 DEBUG 10144 --- [realtime-service-test] [    Test worker] o.s.b.w.s.ServletContextInitializerBeans : Mapping servlets: 
-2026-10-15T14:46:44.272+07:00 DEBUG 10144 --- [realtime-service-test] [    Test worker] s.b.w.s.f.OrderedCharacterEncodingFilter : Filter 'characterEncodingFilter' configured for use
-2026-10-15T14:46:44.272+07:00 DEBUG 10144 --- [realtime-service-test] [    Test worker] o.s.b.w.s.f.OrderedFormContentFilter     : Filter 'formContentFilter' configured for use
-2026-10-15T14:46:44.272+07:00 DEBUG 10144 --- [realtime-service-test] [    Test worker] o.s.b.w.s.f.OrderedRequestContextFilter  : Filter 'requestContextFilter' configured for use
-2026-10-15T14:46:44.279+07:00  INFO 10144 --- [realtime-service-test] [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
-2026-10-15T14:46:44.279+07:00  INFO 10144 --- [realtime-service-test] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2026-10-15T14:46:44.289+07:00  INFO 10144 --- [realtime-service-test] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
-2026-10-15T14:46:44.327+07:00 DEBUG 10144 --- [realtime-service-test] [    Test worker] .s.b.a.l.ConditionEvaluationReportLogger : 
+2026-10-15T16:19:23.997+07:00  INFO 33360 --- [realtime-service-test] [    Test worker] c.t.realtime.RealtimeControllerTests     : Starting RealtimeControllerTests using Java 17.0.12 with PID 33360 (started by Admin in D:\Workspace\Telehealth_Hospital_Management\services\realtime-service)
+2026-10-15T16:19:23.998+07:00  INFO 33360 --- [realtime-service-test] [    Test worker] c.t.realtime.RealtimeControllerTests     : No active profile set, falling back to 1 default profile: "default"
+2026-10-15T16:19:23.998+07:00 DEBUG 33360 --- [realtime-service-test] [    Test worker] o.s.boot.SpringApplication               : Loading source class com.telehealth.realtime.RealtimeServiceApplication
+2026-10-15T16:19:24.019+07:00 DEBUG 33360 --- [realtime-service-test] [    Test worker] o.s.w.c.s.GenericWebApplicationContext   : Refreshing org.springframework.web.context.support.GenericWebApplicationContext@1bd0b0e5
+2026-10-15T16:19:26.095+07:00 DEBUG 33360 --- [realtime-service-test] [    Test worker] s.w.s.m.m.a.RequestMappingHandlerMapping : 6 mappings in 'requestMappingHandlerMapping'
+2026-10-15T16:19:26.141+07:00 DEBUG 33360 --- [realtime-service-test] [    Test worker] o.s.b.a.AutoConfigurationPackages        : @EnableAutoConfiguration was declared on a class in the package 'com.telehealth.realtime'. Automatic @Repository and @Entity scanning is enabled.
+2026-10-15T16:19:26.238+07:00 DEBUG 33360 --- [realtime-service-test] [    Test worker] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2026-10-15T16:19:26.388+07:00 DEBUG 33360 --- [realtime-service-test] [    Test worker] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2026-10-15T16:19:26.428+07:00 DEBUG 33360 --- [realtime-service-test] [    Test worker] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2026-10-15T16:19:26.509+07:00 DEBUG 33360 --- [realtime-service-test] [    Test worker] o.s.b.w.s.ServletContextInitializerBeans : Mapping filters: characterEncodingFilter urls=[/*] order=-2147483648, formContentFilter urls=[/*] order=-9900, requestContextFilter urls=[/*] order=-105
+2026-10-15T16:19:26.510+07:00 DEBUG 33360 --- [realtime-service-test] [    Test worker] o.s.b.w.s.ServletContextInitializerBeans : Mapping servlets: 
+2026-10-15T16:19:26.512+07:00 DEBUG 33360 --- [realtime-service-test] [    Test worker] s.b.w.s.f.OrderedCharacterEncodingFilter : Filter 'characterEncodingFilter' configured for use
+2026-10-15T16:19:26.512+07:00 DEBUG 33360 --- [realtime-service-test] [    Test worker] o.s.b.w.s.f.OrderedFormContentFilter     : Filter 'formContentFilter' configured for use
+2026-10-15T16:19:26.512+07:00 DEBUG 33360 --- [realtime-service-test] [    Test worker] o.s.b.w.s.f.OrderedRequestContextFilter  : Filter 'requestContextFilter' configured for use
+2026-10-15T16:19:26.526+07:00  INFO 33360 --- [realtime-service-test] [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-15T16:19:26.527+07:00  INFO 33360 --- [realtime-service-test] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-15T16:19:26.530+07:00  INFO 33360 --- [realtime-service-test] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2026-10-15T16:19:26.559+07:00 DEBUG 33360 --- [realtime-service-test] [    Test worker] .s.b.a.l.ConditionEvaluationReportLogger : 
 
 
 ============================
@@ -390,16 +390,16 @@ Unconditional classes:
 
 
 
-2026-10-15T14:46:44.357+07:00  INFO 10144 --- [realtime-service-test] [    Test worker] c.t.realtime.RealtimeControllerTests     : Started RealtimeControllerTests in 3.596 seconds (process running for 4.759)
-2026-10-15T14:46:44.439+07:00 DEBUG 10144 --- [realtime-service-test] [    Test worker] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.telehealth.realtime.controller.RealtimeController#closeRoom(UUID, String)
-2026-10-15T14:46:44.507+07:00 DEBUG 10144 --- [realtime-service-test] [    Test worker] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
-2026-10-15T14:46:44.512+07:00 DEBUG 10144 --- [realtime-service-test] [    Test worker] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [ApiResponse(success=false, message=Không có quy?n ?óng phòng., data=null, timestamp=2026-10-15T07:46 (truncated)...]
-2026-10-15T14:46:44.536+07:00 DEBUG 10144 --- [realtime-service-test] [    Test worker] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.telehealth.realtime.controller.RealtimeController#closeRoom(UUID, String)
-2026-10-15T14:46:44.549+07:00 DEBUG 10144 --- [realtime-service-test] [    Test worker] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
-2026-10-15T14:46:44.549+07:00 DEBUG 10144 --- [realtime-service-test] [    Test worker] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [ApiResponse(success=false, message=Không có quy?n ?óng phòng., data=null, timestamp=2026-10-15T07:46 (truncated)...]
-2026-10-15T14:46:44.556+07:00 DEBUG 10144 --- [realtime-service-test] [    Test worker] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.telehealth.realtime.controller.RealtimeController#closeRoom(UUID, String)
-2026-10-15T14:46:44.585+07:00 DEBUG 10144 --- [realtime-service-test] [    Test worker] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
-2026-10-15T14:46:44.586+07:00 DEBUG 10144 --- [realtime-service-test] [    Test worker] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [ApiResponse(success=true, message=?ã ?óng phòng khám, data=null, timestamp=2026-10-15T07:46:44.58526 (truncated)...]
+2026-10-15T16:19:26.574+07:00  INFO 33360 --- [realtime-service-test] [    Test worker] c.t.realtime.RealtimeControllerTests     : Started RealtimeControllerTests in 2.95 seconds (process running for 4.244)
+2026-10-15T16:19:26.655+07:00 DEBUG 33360 --- [realtime-service-test] [    Test worker] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.telehealth.realtime.controller.RealtimeController#closeRoom(UUID, String)
+2026-10-15T16:19:26.713+07:00 DEBUG 33360 --- [realtime-service-test] [    Test worker] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2026-10-15T16:19:26.721+07:00 DEBUG 33360 --- [realtime-service-test] [    Test worker] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [ApiResponse(success=false, message=Không có quy?n ?óng phòng., data=null, timestamp=2026-10-15T09:19 (truncated)...]
+2026-10-15T16:19:26.732+07:00 DEBUG 33360 --- [realtime-service-test] [    Test worker] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.telehealth.realtime.controller.RealtimeController#closeRoom(UUID, String)
+2026-10-15T16:19:26.755+07:00 DEBUG 33360 --- [realtime-service-test] [    Test worker] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2026-10-15T16:19:26.755+07:00 DEBUG 33360 --- [realtime-service-test] [    Test worker] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [ApiResponse(success=false, message=Không có quy?n ?óng phòng., data=null, timestamp=2026-10-15T09:19 (truncated)...]
+2026-10-15T16:19:26.759+07:00 DEBUG 33360 --- [realtime-service-test] [    Test worker] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.telehealth.realtime.controller.RealtimeController#closeRoom(UUID, String)
+2026-10-15T16:19:26.795+07:00 DEBUG 33360 --- [realtime-service-test] [    Test worker] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2026-10-15T16:19:26.796+07:00 DEBUG 33360 --- [realtime-service-test] [    Test worker] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [ApiResponse(success=true, message=?ã ?óng phòng khám, data=null, timestamp=2026-10-15T09:19:26.79541 (truncated)...]
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

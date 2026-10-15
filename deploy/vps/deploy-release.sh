@@ -103,7 +103,7 @@ wait_app() {
     startup_logs=$(docker logs "$cid" 2>&1) || return 1
     if grep -qE 'Started [[:alnum:]_.$]+ in ' <<< "$startup_logs"; then
       response=$(docker exec "$cid" sh -c "wget -S -T 5 -O /dev/null http://127.0.0.1:$port/ 2>&1" || true)
-      if [[ $response =~ HTTP/[0-9.]+\ [234][0-9][0-9] ]]; then return 0; fi
+      if [[ $response =~ HTTP/[0-9.]+\ [2-5][0-9][0-9] ]]; then return 0; fi
     fi
     sleep 3
   done

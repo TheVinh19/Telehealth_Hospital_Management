@@ -8,6 +8,7 @@
 **/dist/
 *.tsbuildinfo
 .gradle/
+.gradle-local/
 **/build/
 /common-contracts/bin/
 /services/*/bin/

@@ -2,3 +2,15 @@
 .env
 .env.*
 !.env.example
+
+# Dependencies and generated build outputs.
+**/node_modules/
+**/dist/
+*.tsbuildinfo
+.gradle/
+**/build/
+/common-contracts/bin/
+/services/*/bin/
+
+# Local encrypted report storage (not source code).
+/storage/clinical-reports/

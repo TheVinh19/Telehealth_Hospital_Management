@@ -1,0 +1,11 @@
+# Keep dependencies installed by npm ci inside the Linux build stage.
+node_modules
+dist
+*.tsbuildinfo
+
+# Local metadata and environment files are not build inputs.
+.git
+.env
+.env.*
+!.env.example
+npm-debug.log*

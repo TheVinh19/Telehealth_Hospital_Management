@@ -39,6 +39,7 @@ webrtc:
   stun:
     url: stun:stun.l.google.com:19302
   turn:
-    url: turn:${TURN_HOST:localhost}:${TURN_PORT:3478}
+    url: turn:${TURN_HOST:localhost}:${TURN_PORT:3478}?transport=udp
+    tcp-url: turn:${TURN_HOST:localhost}:${TURN_PORT:3478}?transport=tcp
     username: telehealth
     credential: ${TURN_SECRET:telehealth_turn_shared_secret_2026}

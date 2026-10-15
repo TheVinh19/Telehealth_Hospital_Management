@@ -1,0 +1,43 @@
+# Reference fragment. The coturn service is also included in compose.yml so CD
+# preserves activation through COMPOSE_PROFILES=turn in the server's .env.
+services:
+  coturn:
+    image: coturn/coturn:4.18.0-r0-alpine
+    profiles: [turn]
+    restart: unless-stopped
+    network_mode: host
+    # Match the owner of the mode-600 config generated on the Linux VPS.
+    user: '${TURN_UID:-1000}:${TURN_GID:-1000}'
+    cap_drop: [ALL]
+    # The upstream turnserver executable carries this file capability; excluding
+    # it from the capability bounding set prevents the binary from executing.
+    cap_add: [NET_BIND_SERVICE]
+    security_opt: [no-new-privileges:true]
+    read_only: true
+    mem_limit: 96m
+    memswap_limit: 128m
+    pids_limit: 32
+    # Fail closed if the private config cannot be read; never use image defaults.
+    entrypoint: [/bin/sh, /etc/coturn/turn-entrypoint.sh]
+    command: []
+    volumes:
+      - type: bind
+        source: ./turn-entrypoint.sh
+        target: /etc/coturn/turn-entrypoint.sh
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ./.env.turnserver.conf
+        target: /etc/coturn/turnserver.conf
+        read_only: true
+        bind:
+          create_host_path: false
+    tmpfs:
+      - /tmp:size=8m,mode=1777
+      - /var/lib/coturn:size=4m,mode=0700,uid=${TURN_UID:-1000},gid=${TURN_GID:-1000}
+    logging:
+      driver: json-file
+      options:
+        max-size: 5m
+        max-file: '2'

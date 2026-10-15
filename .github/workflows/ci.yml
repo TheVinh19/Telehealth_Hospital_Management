@@ -154,8 +154,9 @@ jobs:
       - name: Prepare Backend Jar Directory
         if: ${{ matrix.is_backend }}
         run: |
-          mkdir -p ${{ matrix.context }}/build/libs
-          cp services/${{ matrix.service }}/build/libs/${{ matrix.service }}.jar ${{ matrix.context }}/build/libs/ || true
+          # download-artifact restores the original service/build/libs tree.
+          # Fail here if it is missing instead of hiding errors before Docker COPY.
+          test -s '${{ matrix.context }}/build/libs/${{ matrix.service }}.jar'
 
       - name: Set Up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -188,3 +189,84 @@ jobs:
             ${{ steps.image_info.outputs.image_name }}:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+  deploy-vps:
+    name: Deploy VPS
+    needs: [docker-build]
+    if: >-
+      vars.CD_ENABLED == 'true' &&
+      (github.event_name == 'push' || github.event_name == 'workflow_dispatch') &&
+      (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    environment:
+      name: vps
+      url: https://thevinh19.duckdns.org
+    permissions:
+      contents: read
+    concurrency:
+      group: telehealth-vps-deployment
+      cancel-in-progress: false
+    env:
+      VPS_HOST: ${{ secrets.VPS_HOST }}
+      VPS_USER: ${{ secrets.VPS_USER }}
+      VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
+      VPS_KNOWN_HOSTS: ${{ secrets.VPS_KNOWN_HOSTS }}
+      VPS_PATH: ${{ vars.VPS_PATH || '/home/thevinh19/telehealth' }}
+    steps:
+      - name: Checkout Exact Tested Commit
+        uses: actions/checkout@v4
+
+      - name: Skip Superseded Commit
+        id: current
+        shell: bash
+        run: |
+          remote_sha=$(git ls-remote origin "refs/heads/$GITHUB_REF_NAME" | cut -f1)
+          if [[ "$remote_sha" == "$GITHUB_SHA" ]]; then
+            echo 'deploy=true' >> "$GITHUB_OUTPUT"
+          else
+            echo 'A newer commit is already on this branch; skipping this deployment.'
+            echo 'deploy=false' >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Prepare Strict SSH Connection and Configuration Bundle
+        if: steps.current.outputs.deploy == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          : "${VPS_HOST:?Set secret VPS_HOST}" "${VPS_USER:?Set secret VPS_USER}"
+          : "${VPS_SSH_KEY:?Set secret VPS_SSH_KEY}" "${VPS_KNOWN_HOSTS:?Set secret VPS_KNOWN_HOSTS}"
+          [[ "$VPS_HOST" =~ ^[a-zA-Z0-9][a-zA-Z0-9.-]*$ ]]
+          [[ "$VPS_USER" =~ ^[a-z_][a-z0-9_-]*$ ]]
+          [[ "$VPS_PATH" =~ ^/(home|opt|srv)/[a-zA-Z0-9_./-]+$ && "$VPS_PATH" != *..* ]]
+          install -d -m 700 "$HOME/.ssh"
+          umask 077
+          printf '%s\n' "$VPS_SSH_KEY" > "$HOME/.ssh/vps_key"
+          printf '%s\n' "$VPS_KNOWN_HOSTS" > "$HOME/.ssh/known_hosts"
+          ssh-keygen -y -f "$HOME/.ssh/vps_key" > /dev/null
+          # Only tracked configuration/scripts; never server .env, keys or generated TURN config.
+          mapfile -t files < <(find deploy/vps -maxdepth 1 -type f \
+            \( -name '*.sh' -o -name 'compose*.yml' -o -name 'nginx.conf' \
+            -o -name 'host-nginx.conf' -o -name 'turn-probe.py' -o -name 'README.md' \) -printf '%f\n' | sort)
+          tar -C deploy/vps -czf "$RUNNER_TEMP/vps-release.tgz" -- "${files[@]}"
+
+      - name: Upload and Roll Out Images Sequentially
+        if: steps.current.outputs.deploy == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          ssh_options=(-i "$HOME/.ssh/vps_key" -o BatchMode=yes -o IdentitiesOnly=yes
+            -o StrictHostKeyChecking=yes -o UserKnownHostsFile="$HOME/.ssh/known_hosts"
+            -o ServerAliveInterval=15 -o ServerAliveCountMax=6)
+          incoming="$VPS_PATH/.incoming-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT"
+          ssh "${ssh_options[@]}" "$VPS_USER@$VPS_HOST" "umask 077; mkdir -p '$incoming'"
+          scp "${ssh_options[@]}" "$RUNNER_TEMP/vps-release.tgz" "$VPS_USER@$VPS_HOST:$incoming/release.tgz"
+          image_prefix="ghcr.io/${GITHUB_REPOSITORY,,}"
+          image_tag="sha-${GITHUB_SHA:0:7}"
+          ssh "${ssh_options[@]}" "$VPS_USER@$VPS_HOST" \
+            "tar -xzf '$incoming/release.tgz' -C '$incoming' && bash '$incoming/deploy-release.sh' '$VPS_PATH' '$image_tag' '$image_prefix' '$GITHUB_RUN_NUMBER'"
+
+      - name: Remove Runner SSH Key
+        if: always()
+        shell: bash
+        run: rm -f -- "$HOME/.ssh/vps_key" "$HOME/.ssh/known_hosts"

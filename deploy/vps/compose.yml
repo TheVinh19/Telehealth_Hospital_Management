@@ -1,0 +1,259 @@
+# Low-memory demo. Run services in stages; observe docker stats and swap use.
+name: telehealth-vps
+
+x-app: &app
+  restart: unless-stopped
+  mem_limit: 320m
+  memswap_limit: 640m
+  logging: &logs
+    driver: json-file
+    options:
+      max-size: 5m
+      max-file: '2'
+
+x-java: &java
+  JAVA_TOOL_OPTIONS: >-
+    -Xms32m -Xmx112m -XX:+UseSerialGC -XX:ReservedCodeCacheSize=32m
+    -XX:MaxDirectMemorySize=16m -Xss512k -XX:ActiveProcessorCount=1
+  SPRING_DATASOURCE_HIKARI_MAXIMUM_POOL_SIZE: '3'
+  SPRING_DATASOURCE_HIKARI_MINIMUM_IDLE: '1'
+  SERVER_TOMCAT_THREADS_MAX: '20'
+  SERVER_TOMCAT_THREADS_MIN_SPARE: '2'
+  SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: 'false'
+  JWT_SECRET: ${JWT_SECRET:?Run bash setup.sh first}
+  INTERNAL_SERVICE_TOKEN: ${INTERNAL_SERVICE_TOKEN:?Run bash setup.sh first}
+
+services:
+  postgres:
+    <<: *app
+    image: postgres:16-alpine
+    mem_limit: 192m
+    memswap_limit: 384m
+    command: [postgres, -c, shared_buffers=32MB, -c, max_connections=40, -c, work_mem=1MB]
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Run bash setup.sh first}
+      POSTGRES_MULTIPLE_DATABASES: "identity_db:identity_user:${IDENTITY_DB_PASSWORD},appointment_db:appointment_user:${APPOINTMENT_DB_PASSWORD},clinical_db:clinical_user:${CLINICAL_DB_PASSWORD},billing_db:billing_user:${BILLING_DB_PASSWORD},realtime_db:realtime_user:${REALTIME_DB_PASSWORD},notification_db:notification_user:${NOTIFICATION_DB_PASSWORD}"
+    volumes:
+      - ./init-multiple-dbs.sh:/docker-entrypoint-initdb.d/init-multiple-dbs.sh:ro
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: [CMD-SHELL, pg_isready -U postgres]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+
+  redis:
+    <<: *app
+    image: redis:7-alpine
+    mem_limit: 48m
+    memswap_limit: 96m
+    command: [redis-server, --maxmemory, 24mb, --maxmemory-policy, noeviction]
+    healthcheck:
+      test: [CMD, redis-cli, ping]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+
+  rabbitmq:
+    <<: *app
+    image: rabbitmq:3-alpine
+    mem_limit: 192m
+    memswap_limit: 384m
+    environment:
+      RABBITMQ_DEFAULT_USER: telehealth
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD:?Run bash setup.sh first}
+      RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS: '+S 1:1 +A 4'
+    volumes:
+      - rabbitdata:/var/lib/rabbitmq
+    healthcheck:
+      test: [CMD, rabbitmq-diagnostics, -q, ping]
+      interval: 15s
+      timeout: 10s
+      retries: 12
+
+  mailpit:
+    <<: *app
+    profiles: [mailpit]
+    image: axllent/mailpit:latest
+    mem_limit: 48m
+    memswap_limit: 96m
+    environment:
+      MP_MAX_MESSAGES: '100'
+    # Test email stays in Mailpit until external SMTP is configured.
+
+  identity-service:
+    <<: *app
+    image: ${IMAGE_PREFIX:-ghcr.io/thevinh19/telehealth_hospital_management}-identity-service:${IMAGE_TAG:-sha-0ce0c79}
+    depends_on:
+      postgres: {condition: service_healthy}
+    environment:
+      <<: *java
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/identity_db
+      SPRING_DATASOURCE_USERNAME: identity_user
+      SPRING_DATASOURCE_PASSWORD: ${IDENTITY_DB_PASSWORD:?Run bash setup.sh first}
+
+  appointment-service:
+    <<: *app
+    image: ${IMAGE_PREFIX:-ghcr.io/thevinh19/telehealth_hospital_management}-appointment-service:${IMAGE_TAG:-sha-0ce0c79}
+    depends_on:
+      postgres: {condition: service_healthy}
+      redis: {condition: service_healthy}
+      rabbitmq: {condition: service_healthy}
+    environment:
+      <<: *java
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/appointment_db
+      SPRING_DATASOURCE_USERNAME: appointment_user
+      SPRING_DATASOURCE_PASSWORD: ${APPOINTMENT_DB_PASSWORD:?Run bash setup.sh first}
+      SPRING_DATA_REDIS_HOST: redis
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_USERNAME: telehealth
+      SPRING_RABBITMQ_PASSWORD: ${RABBITMQ_PASSWORD}
+      REALTIME_SERVICE_URL: http://realtime-service:8085
+      IDENTITY_SERVICE_URL: http://identity-service:8081
+      NOTIFICATION_SERVICE_URL: http://notification-service:8086
+
+  clinical-service:
+    <<: *app
+    image: ${IMAGE_PREFIX:-ghcr.io/thevinh19/telehealth_hospital_management}-clinical-service:${IMAGE_TAG:-sha-0ce0c79}
+    depends_on:
+      postgres: {condition: service_healthy}
+    environment:
+      <<: *java
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/clinical_db
+      SPRING_DATASOURCE_USERNAME: clinical_user
+      SPRING_DATASOURCE_PASSWORD: ${CLINICAL_DB_PASSWORD:?Run bash setup.sh first}
+      CLINICAL_ENCRYPTION_KEY: ${CLINICAL_ENCRYPTION_KEY:?Run bash setup.sh first}
+      CLINICAL_STORAGE_DIR: /app/storage/clinical-reports
+      APPOINTMENT_SERVICE_URL: http://appointment-service:8082
+    volumes:
+      - clinical-storage:/app/storage/clinical-reports
+
+  billing-service:
+    <<: *app
+    image: ${IMAGE_PREFIX:-ghcr.io/thevinh19/telehealth_hospital_management}-billing-service:${IMAGE_TAG:-sha-0ce0c79}
+    depends_on:
+      postgres: {condition: service_healthy}
+      rabbitmq: {condition: service_healthy}
+    environment:
+      <<: *java
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/billing_db
+      SPRING_DATASOURCE_USERNAME: billing_user
+      SPRING_DATASOURCE_PASSWORD: ${BILLING_DB_PASSWORD:?Run bash setup.sh first}
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_USERNAME: telehealth
+      SPRING_RABBITMQ_PASSWORD: ${RABBITMQ_PASSWORD}
+      APPOINTMENT_SERVICE_URL: http://appointment-service:8082
+
+  realtime-service:
+    <<: *app
+    image: ${IMAGE_PREFIX:-ghcr.io/thevinh19/telehealth_hospital_management}-realtime-service:${IMAGE_TAG:-sha-0ce0c79}
+    depends_on:
+      postgres: {condition: service_healthy}
+    environment:
+      <<: *java
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/realtime_db
+      SPRING_DATASOURCE_USERNAME: realtime_user
+      SPRING_DATASOURCE_PASSWORD: ${REALTIME_DB_PASSWORD:?Run bash setup.sh first}
+      SPRING_DATA_REDIS_HOST: redis
+      REALTIME_ENCRYPTION_KEY: ${REALTIME_ENCRYPTION_KEY:?Run bash setup.sh first}
+      APPOINTMENT_SERVICE_URL: http://appointment-service:8082
+      TURN_HOST: ${PUBLIC_IP:?Set PUBLIC_IP in .env}
+      TURN_SECRET: ${TURN_SECRET:?Run bash setup.sh first}
+
+  notification-service:
+    <<: *app
+    image: ${IMAGE_PREFIX:-ghcr.io/thevinh19/telehealth_hospital_management}-notification-service:${IMAGE_TAG:-sha-0ce0c79}
+    depends_on:
+      postgres: {condition: service_healthy}
+      rabbitmq: {condition: service_healthy}
+    environment:
+      <<: *java
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/notification_db
+      SPRING_DATASOURCE_USERNAME: notification_user
+      SPRING_DATASOURCE_PASSWORD: ${NOTIFICATION_DB_PASSWORD:?Run bash setup.sh first}
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_USERNAME: telehealth
+      SPRING_RABBITMQ_PASSWORD: ${RABBITMQ_PASSWORD}
+      SPRING_MAIL_HOST: ${SPRING_MAIL_HOST:-mailpit}
+      SPRING_MAIL_PORT: ${SPRING_MAIL_PORT:-1025}
+      SPRING_MAIL_USERNAME: ${SPRING_MAIL_USERNAME:-}
+      SPRING_MAIL_PASSWORD: ${SPRING_MAIL_PASSWORD:-}
+      SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH: ${SMTP_AUTH:-false}
+      SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: ${SMTP_STARTTLS:-false}
+      SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_REQUIRED: ${SMTP_STARTTLS:-false}
+      SPRING_MAIL_PROPERTIES_MAIL_SMTP_SSL_ENABLE: ${SMTP_SSL:-false}
+      SPRING_MAIL_PROPERTIES_MAIL_SMTP_CONNECTIONTIMEOUT: '10000'
+      SPRING_MAIL_PROPERTIES_MAIL_SMTP_TIMEOUT: '20000'
+      SPRING_MAIL_PROPERTIES_MAIL_SMTP_WRITETIMEOUT: '20000'
+      MAIL_FROM: ${MAIL_FROM:-no-reply@telehealth.local}
+      DEMO_NOTIFICATION_EMAIL: ${DEMO_NOTIFICATION_EMAIL:-}
+
+  api-gateway:
+    <<: *app
+    image: ${IMAGE_PREFIX:-ghcr.io/thevinh19/telehealth_hospital_management}-api-gateway:${IMAGE_TAG:-sha-0ce0c79}
+    depends_on:
+      - identity-service
+      - appointment-service
+      - clinical-service
+      - billing-service
+      - realtime-service
+      - notification-service
+    environment:
+      <<: *java
+      IDENTITY_SERVICE_URL: http://identity-service:8081
+      APPOINTMENT_SERVICE_URL: http://appointment-service:8082
+      CLINICAL_SERVICE_URL: http://clinical-service:8083
+      BILLING_SERVICE_URL: http://billing-service:8084
+      REALTIME_SERVICE_URL: http://realtime-service:8085
+      REALTIME_WS_URL: ws://realtime-service:8085
+      NOTIFICATION_SERVICE_URL: http://notification-service:8086
+
+  web:
+    <<: *app
+    image: ${IMAGE_PREFIX:-ghcr.io/thevinh19/telehealth_hospital_management}-web:${IMAGE_TAG:-sha-0ce0c79}
+    mem_limit: 32m
+    memswap_limit: 64m
+    depends_on: [api-gateway]
+    # Access through SSH tunnel until domain/HTTPS and demo access are configured.
+    ports: ['127.0.0.1:3000:80']
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+
+  coturn:
+    image: coturn/coturn:4.18.0-r0-alpine
+    profiles: [turn]
+    restart: unless-stopped
+    network_mode: host
+    user: '${TURN_UID:-1000}:${TURN_GID:-1000}'
+    cap_drop: [ALL]
+    cap_add: [NET_BIND_SERVICE]
+    security_opt: [no-new-privileges:true]
+    read_only: true
+    mem_limit: 96m
+    memswap_limit: 128m
+    pids_limit: 32
+    entrypoint: [/bin/sh, /etc/coturn/turn-entrypoint.sh]
+    command: []
+    volumes:
+      - type: bind
+        source: ./.env.turnserver.conf
+        target: /etc/coturn/turnserver.conf
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ./turn-entrypoint.sh
+        target: /etc/coturn/turn-entrypoint.sh
+        read_only: true
+        bind:
+          create_host_path: false
+    tmpfs:
+      - /tmp:size=8m,mode=1777
+      - /var/lib/coturn:size=4m,mode=0700,uid=${TURN_UID:-1000},gid=${TURN_GID:-1000}
+    logging: *logs
+
+volumes:
+  pgdata:
+  clinical-storage:
+  rabbitdata:

@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.*;
+import java.util.stream.Stream;
 
 @Slf4j
 @Service
@@ -35,6 +36,9 @@ public class RealtimeService {
 
     @Value("${webrtc.turn.url:turn:localhost:3478}")
     private String turnUrl;
+
+    @Value("${webrtc.turn.tcp-url:}")
+    private String turnTcpUrl = "";
 
     @Value("${webrtc.turn.username:telehealth}")
     private String turnUsername;
@@ -198,11 +202,18 @@ public class RealtimeService {
         iceServers.add(Map.of("urls", List.of("stun:stun.l.google.com:19302", "stun:stun1.l.google.com:19302")));
 
         // Coturn STUN/TURN server
-        Map<String, Object> turnConfig = new HashMap<>();
-        turnConfig.put("urls", List.of(turnUrl));
-        turnConfig.put("username", turnUsername);
-        turnConfig.put("credential", turnCredential);
-        iceServers.add(turnConfig);
+        List<String> turnUrls = Stream.of(turnUrl, turnTcpUrl)
+                .filter(Objects::nonNull)
+                .filter(url -> !url.isBlank())
+                .distinct()
+                .toList();
+        if (!turnUrls.isEmpty()) {
+            Map<String, Object> turnConfig = new HashMap<>();
+            turnConfig.put("urls", turnUrls);
+            turnConfig.put("username", turnUsername);
+            turnConfig.put("credential", turnCredential);
+            iceServers.add(turnConfig);
+        }
 
         return WebRtcConfigResponse.builder().iceServers(iceServers).build();
     }

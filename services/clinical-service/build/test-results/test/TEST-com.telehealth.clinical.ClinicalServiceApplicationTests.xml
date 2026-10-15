@@ -1,0 +1,1226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.telehealth.clinical.ClinicalServiceApplicationTests" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-10-15T07:20:32.765Z" hostname="THEVINH" time="0.264">
+  <properties/>
+  <testcase name="uploadRejectsMissingOrMismatchedIntakeWithoutCreatingEncounter()" classname="com.telehealth.clinical.ClinicalServiceApplicationTests" time="0.122"/>
+  <testcase name="testIntakeFormEncryptionAndDecryption()" classname="com.telehealth.clinical.ClinicalServiceApplicationTests" time="0.044"/>
+  <testcase name="testAuditLogsRecordedWithoutMedicalDetails()" classname="com.telehealth.clinical.ClinicalServiceApplicationTests" time="0.01"/>
+  <testcase name="testUploadPublishAndDownloadReport()" classname="com.telehealth.clinical.ClinicalServiceApplicationTests" time="0.083"/>
+  <system-out><![CDATA[14:20:25.477 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.telehealth.clinical.ClinicalServiceApplicationTests]: ClinicalServiceApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+14:20:25.601 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.telehealth.clinical.ClinicalServiceApplication for test class com.telehealth.clinical.ClinicalServiceApplicationTests
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.5)
+
+2026-10-15T14:20:26.071+07:00  INFO 16284 --- [clinical-service-test] [    Test worker] c.t.c.ClinicalServiceApplicationTests    : Starting ClinicalServiceApplicationTests using Java 17.0.12 with PID 16284 (started by Admin in D:\Workspace\Telehealth_Hospital_Management\services\clinical-service)
+2026-10-15T14:20:26.072+07:00  INFO 16284 --- [clinical-service-test] [    Test worker] c.t.c.ClinicalServiceApplicationTests    : No active profile set, falling back to 1 default profile: "default"
+2026-10-15T14:20:26.073+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] o.s.boot.SpringApplication               : Loading source class com.telehealth.clinical.ClinicalServiceApplication
+2026-10-15T14:20:26.111+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] o.s.w.c.s.GenericWebApplicationContext   : Refreshing org.springframework.web.context.support.GenericWebApplicationContext@5fb7183b
+2026-10-15T14:20:26.910+07:00  INFO 16284 --- [clinical-service-test] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-10-15T14:20:26.932+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] o.s.b.a.AutoConfigurationPackages        : @EnableAutoConfiguration was declared on a class in the package 'com.telehealth.clinical'. Automatic @Repository and @Entity scanning is enabled.
+2026-10-15T14:20:26.993+07:00  INFO 16284 --- [clinical-service-test] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 72 ms. Found 4 JPA repository interfaces.
+2026-10-15T14:20:28.691+07:00  INFO 16284 --- [clinical-service-test] [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-10-15T14:20:28.789+07:00  INFO 16284 --- [clinical-service-test] [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2026-10-15T14:20:28.834+07:00  INFO 16284 --- [clinical-service-test] [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-10-15T14:20:29.010+07:00  INFO 16284 --- [clinical-service-test] [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-10-15T14:20:29.056+07:00  INFO 16284 --- [clinical-service-test] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-10-15T14:20:29.227+07:00  INFO 16284 --- [clinical-service-test] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:clinical_test user=SA
+2026-10-15T14:20:29.228+07:00  INFO 16284 --- [clinical-service-test] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-10-15T14:20:29.268+07:00  WARN 16284 --- [clinical-service-test] [    Test worker] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-10-15T14:20:30.454+07:00  INFO 16284 --- [clinical-service-test] [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-10-15T14:20:30.470+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : drop table if exists audit_logs cascade 
+2026-10-15T14:20:30.473+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : drop table if exists encounters cascade 
+2026-10-15T14:20:30.473+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : drop table if exists intakes cascade 
+2026-10-15T14:20:30.474+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : drop table if exists report_files cascade 
+2026-10-15T14:20:30.479+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : create table audit_logs (created_at timestamp(6) with time zone not null, id bigint generated by default as identity, actor_id uuid, correlation_id uuid, resource_id uuid not null, action varchar(255) not null, resource_type varchar(255) not null, result varchar(255) not null, primary key (id))
+2026-10-15T14:20:30.488+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : create table encounters (created_at timestamp(6) with time zone not null, published_at timestamp(6) with time zone, appointment_id uuid not null unique, doctor_id uuid not null, id uuid not null, intake_id uuid not null, patient_id uuid not null, state varchar(255) not null, primary key (id))
+2026-10-15T14:20:30.491+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : create table intakes (payload_version integer not null, created_at timestamp(6) with time zone not null, submitted_at timestamp(6) with time zone, id uuid not null, patient_id uuid not null, key_id varchar(255) not null, nonce varbinary(255) not null, payload_ciphertext BYTEA not null, state varchar(255) not null, primary key (id))
+2026-10-15T14:20:30.493+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : create table report_files (created_at timestamp(6) with time zone not null, size_bytes bigint not null, encounter_id uuid not null, id uuid not null, uploaded_by uuid not null, sha256 varchar(64) not null, key_id varchar(255) not null, mime_type varchar(255) not null, nonce varbinary(255) not null, original_name varchar(255) not null, state varchar(255) not null, storage_key varchar(255) not null unique, primary key (id))
+2026-10-15T14:20:30.498+07:00  INFO 16284 --- [clinical-service-test] [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-10-15T14:20:31.604+07:00  WARN 16284 --- [clinical-service-test] [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-10-15T14:20:31.737+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] s.w.s.m.m.a.RequestMappingHandlerMapping : 10 mappings in 'requestMappingHandlerMapping'
+2026-10-15T14:20:31.860+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2026-10-15T14:20:31.936+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2026-10-15T14:20:31.975+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2026-10-15T14:20:32.131+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+
+============================
+CONDITIONS EVALUATION REPORT
+============================
+
+
+Positive matches:
+-----------------
+
+   AopAutoConfiguration matched:
+      - @ConditionalOnProperty (spring.aop.auto=true) matched (OnPropertyCondition)
+
+   AopAutoConfiguration.AspectJAutoProxyingConfiguration matched:
+      - @ConditionalOnClass found required class 'org.aspectj.weaver.Advice' (OnClassCondition)
+
+   AopAutoConfiguration.AspectJAutoProxyingConfiguration.CglibAutoProxyConfiguration matched:
+      - @ConditionalOnProperty (spring.aop.proxy-target-class=true) matched (OnPropertyCondition)
+
+   ApplicationAvailabilityAutoConfiguration#applicationAvailability matched:
+      - @ConditionalOnMissingBean (types: org.springframework.boot.availability.ApplicationAvailability; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   DataSourceAutoConfiguration matched:
+      - @ConditionalOnClass found required classes 'javax.sql.DataSource', 'org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType' (OnClassCondition)
+      - @ConditionalOnMissingBean (types: io.r2dbc.spi.ConnectionFactory; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   DataSourceAutoConfiguration.PooledDataSourceConfiguration matched:
+      - AnyNestedCondition 1 matched 1 did not; NestedCondition on DataSourceAutoConfiguration.PooledDataSourceCondition.PooledDataSourceAvailable PooledDataSource found supported DataSource; NestedCondition on DataSourceAutoConfiguration.PooledDataSourceCondition.ExplicitType @ConditionalOnProperty (spring.datasource.type) did not find property 'type' (DataSourceAutoConfiguration.PooledDataSourceCondition)
+      - @ConditionalOnMissingBean (types: javax.sql.DataSource,javax.sql.XADataSource; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   DataSourceAutoConfiguration.PooledDataSourceConfiguration#jdbcConnectionDetails matched:
+      - @ConditionalOnMissingBean (types: org.springframework.boot.autoconfigure.jdbc.JdbcConnectionDetails; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   DataSourceConfiguration.Hikari matched:
+      - @ConditionalOnClass found required class 'com.zaxxer.hikari.HikariDataSource' (OnClassCondition)
+      - @ConditionalOnProperty (spring.datasource.type=com.zaxxer.hikari.HikariDataSource) matched (OnPropertyCondition)
+      - @ConditionalOnMissingBean (types: javax.sql.DataSource; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   DataSourceInitializationConfiguration matched:
+      - @ConditionalOnClass found required class 'org.springframework.jdbc.datasource.init.DatabasePopulator' (OnClassCondition)
+      - @ConditionalOnSingleCandidate (types: javax.sql.DataSource; SearchStrategy: all) found a single bean 'dataSource'; @ConditionalOnMissingBean (types: org.springframework.boot.autoconfigure.sql.init.SqlDataSourceScriptDatabaseInitializer,org.springframework.boot.autoconfigure.sql.init.SqlR2dbcScriptDatabaseInitializer; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   DataSourcePoolMetadataProvidersConfiguration.HikariPoolDataSourceMetadataProviderConfiguration matched:
+      - @ConditionalOnClass found required class 'com.zaxxer.hikari.HikariDataSource' (OnClassCondition)
+
+   DataSourceTransactionManagerAutoConfiguration matched:
+      - @ConditionalOnClass found required classes 'javax.sql.DataSource', 'org.springframework.jdbc.core.JdbcTemplate', 'org.springframework.transaction.TransactionManager' (OnClassCondition)
+
+   DataSourceTransactionManagerAutoConfiguration.JdbcTransactionManagerConfiguration matched:
+      - @ConditionalOnSingleCandidate (types: javax.sql.DataSource; SearchStrategy: all) found a single bean 'dataSource' (OnBeanCondition)
+
+   DispatcherServletAutoConfiguration matched:
+      - @ConditionalOnClass found required class 'org.springframework.web.servlet.DispatcherServlet' (OnClassCondition)
+      - found 'session' scope (OnWebApplicationCondition)
+
+   DispatcherServletAutoConfiguration.DispatcherServletConfiguration matched:
+      - @ConditionalOnClass found required class 'jakarta.servlet.ServletRegistration' (OnClassCondition)
+      - Default DispatcherServlet did not find dispatcher servlet beans (DispatcherServletAutoConfiguration.DefaultDispatcherServletCondition)
+
+   DispatcherServletAutoConfiguration.DispatcherServletRegistrationConfiguration matched:
+      - @ConditionalOnClass found required class 'jakarta.servlet.ServletRegistration' (OnClassCondition)
+      - DispatcherServlet Registration did not find servlet registration bean (DispatcherServletAutoConfiguration.DispatcherServletRegistrationCondition)
+
+   DispatcherServletAutoConfiguration.DispatcherServletRegistrationConfiguration#dispatcherServletRegistration matched:
+      - @ConditionalOnBean (names: dispatcherServlet types: org.springframework.web.servlet.DispatcherServlet; SearchStrategy: all) found bean 'dispatcherServlet' (OnBeanCondition)
+
+   ErrorMvcAutoConfiguration matched:
+      - @ConditionalOnClass found required classes 'jakarta.servlet.Servlet', 'org.springframework.web.servlet.DispatcherServlet' (OnClassCondition)
+      - found 'session' scope (OnWebApplicationCondition)
+
+   ErrorMvcAutoConfiguration#basicErrorController matched:
+      - @ConditionalOnMissingBean (types: org.springframework.boot.web.servlet.error.ErrorController; SearchStrategy: current) did not find any beans (OnBeanCondition)
+
+   ErrorMvcAutoConfiguration#errorAttributes matched:
+      - @ConditionalOnMissingBean (types: org.springframework.boot.web.servlet.error.ErrorAttributes; SearchStrategy: current) did not find any beans (OnBeanCondition)
+
+   ErrorMvcAutoConfiguration.DefaultErrorViewResolverConfiguration#conventionErrorViewResolver matched:
+      - @ConditionalOnBean (types: org.springframework.web.servlet.DispatcherServlet; SearchStrategy: all) found bean 'dispatcherServlet'; @ConditionalOnMissingBean (types: org.springframework.boot.autoconfigure.web.servlet.error.ErrorViewResolver; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   ErrorMvcAutoConfiguration.WhitelabelErrorViewConfiguration matched:
+      - @ConditionalOnProperty (server.error.whitelabel.enabled) matched (OnPropertyCondition)
+      - ErrorTemplate Missing did not find error template view (ErrorMvcAutoConfiguration.ErrorTemplateMissingCondition)
+
+   ErrorMvcAutoConfiguration.WhitelabelErrorViewConfiguration#beanNameViewResolver matched:
+      - @ConditionalOnMissingBean (types: org.springframework.web.servlet.view.BeanNameViewResolver; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   ErrorMvcAutoConfiguration.WhitelabelErrorViewConfiguration#defaultErrorView matched:
+      - @ConditionalOnMissingBean (names: error; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   GenericCacheConfiguration matched:
+      - Cache org.springframework.boot.autoconfigure.cache.GenericCacheConfiguration automatic cache type (CacheCondition)
+
+   GsonAutoConfiguration matched:
+      - @ConditionalOnClass found required class 'com.google.gson.Gson' (OnClassCondition)
+
+   GsonAutoConfiguration#gson matched:
+      - @ConditionalOnMissingBean (types: com.google.gson.Gson; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   GsonAutoConfiguration#gsonBuilder matched:
+      - @ConditionalOnMissingBean (types: com.google.gson.GsonBuilder; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   GsonHttpMessageConvertersConfiguration matched:
+      - @ConditionalOnClass found required class 'com.google.gson.Gson' (OnClassCondition)
+
+   HibernateJpaAutoConfiguration matched:
+      - @ConditionalOnClass found required classes 'org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean', 'jakarta.persistence.EntityManager', 'org.hibernate.engine.spi.SessionImplementor' (OnClassCondition)
+
+   HibernateJpaConfiguration matched:
+      - @ConditionalOnSingleCandidate (types: javax.sql.DataSource; SearchStrategy: all) found a single bean 'dataSource' (OnBeanCondition)
+
+   HttpEncodingAutoConfiguration matched:
+      - @ConditionalOnClass found required class 'org.springframework.web.filter.CharacterEncodingFilter' (OnClassCondition)
+      - found 'session' scope (OnWebApplicationCondition)
+      - @ConditionalOnProperty (server.servlet.encoding.enabled) matched (OnPropertyCondition)
+
+   HttpEncodingAutoConfiguration#characterEncodingFilter matched:
+      - @ConditionalOnMissingBean (types: org.springframework.web.filter.CharacterEncodingFilter; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   HttpMessageConvertersAutoConfiguration matched:
+      - @ConditionalOnClass found required class 'org.springframework.http.converter.HttpMessageConverter' (OnClassCondition)
+      - NoneNestedConditions 0 matched 1 did not; NestedCondition on HttpMessageConvertersAutoConfiguration.NotReactiveWebApplicationCondition.ReactiveWebApplication did not find reactive web application classes (HttpMessageConvertersAutoConfiguration.NotReactiveWebApplicationCondition)
+
+   HttpMessageConvertersAutoConfiguration#messageConverters matched:
+      - @ConditionalOnMissingBean (types: org.springframework.boot.autoconfigure.http.HttpMessageConverters; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   HttpMessageConvertersAutoConfiguration.StringHttpMessageConverterConfiguration matched:
+      - @ConditionalOnClass found required class 'org.springframework.http.converter.StringHttpMessageConverter' (OnClassCondition)
+
+   HttpMessageConvertersAutoConfiguration.StringHttpMessageConverterConfiguration#stringHttpMessageConverter matched:
+      - @ConditionalOnMissingBean (types: org.springframework.http.converter.StringHttpMessageConverter; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   JacksonAutoConfiguration matched:
+      - @ConditionalOnClass found required class 'com.fasterxml.jackson.databind.ObjectMapper' (OnClassCondition)
+
+   JacksonAutoConfiguration.Jackson2ObjectMapperBuilderCustomizerConfiguration matched:
+      - @ConditionalOnClass found required class 'org.springframework.http.converter.json.Jackson2ObjectMapperBuilder' (OnClassCondition)
+
+   JacksonAutoConfiguration.JacksonObjectMapperBuilderConfiguration matched:
+      - @ConditionalOnClass found required class 'org.springframework.http.converter.json.Jackson2ObjectMapperBuilder' (OnClassCondition)
+
+   JacksonAutoConfiguration.JacksonObjectMapperBuilderConfiguration#jacksonObjectMapperBuilder matched:
+      - @ConditionalOnMissingBean (types: org.springframework.http.converter.json.Jackson2ObjectMapperBuilder; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   JacksonAutoConfiguration.JacksonObjectMapperConfiguration matched:
+      - @ConditionalOnClass found required class 'org.springframework.http.converter.json.Jackson2ObjectMapperBuilder' (OnClassCondition)
+
+   JacksonAutoConfiguration.JacksonObjectMapperConfiguration#jacksonObjectMapper matched:
+      - @ConditionalOnMissingBean (types: com.fasterxml.jackson.databind.ObjectMapper; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   JacksonAutoConfiguration.ParameterNamesModuleConfiguration matched:
+      - @ConditionalOnClass found required class 'com.fasterxml.jackson.module.paramnames.ParameterNamesModule' (OnClassCondition)
+
+   JacksonAutoConfiguration.ParameterNamesModuleConfiguration#parameterNamesModule matched:
+      - @ConditionalOnMissingBean (types: com.fasterxml.jackson.module.paramnames.ParameterNamesModule; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   JacksonHttpMessageConvertersConfiguration.MappingJackson2HttpMessageConverterConfiguration matched:
+      - @ConditionalOnClass found required class 'com.fasterxml.jackson.databind.ObjectMapper' (OnClassCondition)
+      - @ConditionalOnProperty (spring.mvc.converters.preferred-json-mapper=jackson) matched (OnPropertyCondition)
+      - @ConditionalOnBean (types: com.fasterxml.jackson.databind.ObjectMapper; SearchStrategy: all) found bean 'jacksonObjectMapper' (OnBeanCondition)
+
+   JacksonHttpMessageConvertersConfiguration.MappingJackson2HttpMessageConverterConfiguration#mappingJackson2HttpMessageConverter matched:
+      - @ConditionalOnMissingBean (types: org.springframework.http.converter.json.MappingJackson2HttpMessageConverter ignored: org.springframework.hateoas.server.mvc.TypeConstrainedMappingJackson2HttpMessageConverter,org.springframework.data.rest.webmvc.alps.AlpsJsonHttpMessageConverter; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   JdbcClientAutoConfiguration matched:
+      - @ConditionalOnSingleCandidate (types: org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate; SearchStrategy: all) found a single bean 'namedParameterJdbcTemplate'; @ConditionalOnMissingBean (types: org.springframework.jdbc.core.simple.JdbcClient; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   JdbcTemplateAutoConfiguration matched:
+      - @ConditionalOnClass found required classes 'javax.sql.DataSource', 'org.springframework.jdbc.core.JdbcTemplate' (OnClassCondition)
+      - @ConditionalOnSingleCandidate (types: javax.sql.DataSource; SearchStrategy: all) found a single bean 'dataSource' (OnBeanCondition)
+
+   JdbcTemplateConfiguration matched:
+      - @ConditionalOnMissingBean (types: org.springframework.jdbc.core.JdbcOperations; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   JpaBaseConfiguration#entityManagerFactory matched:
+      - @ConditionalOnMissingBean (types: org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean,jakarta.persistence.EntityManagerFactory; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   JpaBaseConfiguration#entityManagerFactoryBuilder matched:
+      - @ConditionalOnMissingBean (types: org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   JpaBaseConfiguration#jpaVendorAdapter matched:
+      - @ConditionalOnMissingBean (types: org.springframework.orm.jpa.JpaVendorAdapter; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   JpaBaseConfiguration#transactionManager matched:
+      - @ConditionalOnMissingBean (types: org.springframework.transaction.TransactionManager; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   JpaBaseConfiguration.JpaWebConfiguration matched:
+      - @ConditionalOnClass found required class 'org.springframework.web.servlet.config.annotation.WebMvcConfigurer' (OnClassCondition)
+      - found 'session' scope (OnWebApplicationCondition)
+      - @ConditionalOnProperty (spring.jpa.open-in-view=true) matched (OnPropertyCondition)
+      - @ConditionalOnMissingBean (types: org.springframework.orm.jpa.support.OpenEntityManagerInViewInterceptor,org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   JpaBaseConfiguration.PersistenceManagedTypesConfiguration matched:
+      - @ConditionalOnMissingBean (types: org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean,jakarta.persistence.EntityManagerFactory; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   JpaBaseConfiguration.PersistenceManagedTypesConfiguration#persistenceManagedTypes matched:
+      - @ConditionalOnMissingBean (types: org.springframework.orm.jpa.persistenceunit.PersistenceManagedTypes; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   JpaRepositoriesAutoConfiguration matched:
+      - @ConditionalOnClass found required class 'org.springframework.data.jpa.repository.JpaRepository' (OnClassCondition)
+      - @ConditionalOnProperty (spring.data.jpa.repositories.enabled=true) matched (OnPropertyCondition)
+      - @ConditionalOnBean (types: javax.sql.DataSource; SearchStrategy: all) found bean 'dataSource'; @ConditionalOnMissingBean (types: org.springframework.data.jpa.repository.support.JpaRepositoryFactoryBean,org.springframework.data.jpa.repository.config.JpaRepositoryConfigExtension; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   JtaAutoConfiguration matched:
+      - @ConditionalOnClass found required class 'jakarta.transaction.Transaction' (OnClassCondition)
+      - @ConditionalOnProperty (spring.jta.enabled) matched (OnPropertyCondition)
+
+   LifecycleAutoConfiguration#defaultLifecycleProcessor matched:
+      - @ConditionalOnMissingBean (names: lifecycleProcessor; SearchStrategy: current) did not find any beans (OnBeanCondition)
+
+   MultipartAutoConfiguration matched:
+      - @ConditionalOnClass found required classes 'jakarta.servlet.Servlet', 'org.springframework.web.multipart.support.StandardServletMultipartResolver', 'jakarta.servlet.MultipartConfigElement' (OnClassCondition)
+      - found 'session' scope (OnWebApplicationCondition)
+      - @ConditionalOnProperty (spring.servlet.multipart.enabled) matched (OnPropertyCondition)
+
+   MultipartAutoConfiguration#multipartConfigElement matched:
+      - @ConditionalOnMissingBean (types: jakarta.servlet.MultipartConfigElement; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   MultipartAutoConfiguration#multipartResolver matched:
+      - @ConditionalOnMissingBean (types: org.springframework.web.multipart.MultipartResolver; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   NamedParameterJdbcTemplateConfiguration matched:
+      - @ConditionalOnSingleCandidate (types: org.springframework.jdbc.core.JdbcTemplate; SearchStrategy: all) found a single bean 'jdbcTemplate'; @ConditionalOnMissingBean (types: org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   NoOpCacheConfiguration matched:
+      - Cache org.springframework.boot.autoconfigure.cache.NoOpCacheConfiguration automatic cache type (CacheCondition)
+
+   PersistenceExceptionTranslationAutoConfiguration matched:
+      - @ConditionalOnClass found required class 'org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor' (OnClassCondition)
+
+   PersistenceExceptionTranslationAutoConfiguration#persistenceExceptionTranslationPostProcessor matched:
+      - @ConditionalOnProperty (spring.dao.exceptiontranslation.enabled) matched (OnPropertyCondition)
+      - @ConditionalOnMissingBean (types: org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   PropertyPlaceholderAutoConfiguration#propertySourcesPlaceholderConfigurer matched:
+      - @ConditionalOnMissingBean (types: org.springframework.context.support.PropertySourcesPlaceholderConfigurer; SearchStrategy: current) did not find any beans (OnBeanCondition)
+
+   RestClientAutoConfiguration matched:
+      - @ConditionalOnClass found required class 'org.springframework.web.client.RestClient' (OnClassCondition)
+      - NoneNestedConditions 0 matched 1 did not; NestedCondition on NotReactiveWebApplicationCondition.ReactiveWebApplication did not find reactive web application classes (NotReactiveWebApplicationCondition)
+
+   RestClientAutoConfiguration#httpMessageConvertersRestClientCustomizer matched:
+      - @ConditionalOnMissingBean (types: org.springframework.boot.autoconfigure.web.client.HttpMessageConvertersRestClientCustomizer; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   RestClientAutoConfiguration#restClientBuilder matched:
+      - @ConditionalOnMissingBean (types: org.springframework.web.client.RestClient$Builder; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   RestClientAutoConfiguration#restClientBuilderConfigurer matched:
+      - @ConditionalOnMissingBean (types: org.springframework.boot.autoconfigure.web.client.RestClientBuilderConfigurer; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   RestClientAutoConfiguration#restClientSsl matched:
+      - @ConditionalOnBean (types: org.springframework.boot.ssl.SslBundles; SearchStrategy: all) found bean 'sslBundleRegistry'; @ConditionalOnMissingBean (types: org.springframework.boot.autoconfigure.web.client.RestClientSsl; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   RestTemplateAutoConfiguration matched:
+      - @ConditionalOnClass found required class 'org.springframework.web.client.RestTemplate' (OnClassCondition)
+      - NoneNestedConditions 0 matched 1 did not; NestedCondition on NotReactiveWebApplicationCondition.ReactiveWebApplication did not find reactive web application classes (NotReactiveWebApplicationCondition)
+
+   RestTemplateAutoConfiguration#restTemplateBuilder matched:
+      - @ConditionalOnMissingBean (types: org.springframework.boot.web.client.RestTemplateBuilder; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   ServletWebServerFactoryAutoConfiguration matched:
+      - @ConditionalOnClass found required class 'jakarta.servlet.ServletRequest' (OnClassCondition)
+      - found 'session' scope (OnWebApplicationCondition)
+
+   ServletWebServerFactoryAutoConfiguration#tomcatServletWebServerFactoryCustomizer matched:
+      - @ConditionalOnClass found required class 'org.apache.catalina.startup.Tomcat' (OnClassCondition)
+
+   ServletWebServerFactoryConfiguration.EmbeddedTomcat matched:
+      - @ConditionalOnClass found required classes 'jakarta.servlet.Servlet', 'org.apache.catalina.startup.Tomcat', 'org.apache.coyote.UpgradeProtocol' (OnClassCondition)
+      - @ConditionalOnMissingBean (types: org.springframework.boot.web.servlet.server.ServletWebServerFactory; SearchStrategy: current) did not find any beans (OnBeanCondition)
+
+   SimpleCacheConfiguration matched:
+      - Cache org.springframework.boot.autoconfigure.cache.SimpleCacheConfiguration automatic cache type (CacheCondition)
+
+   SpringDataWebAutoConfiguration matched:
+      - @ConditionalOnClass found required classes 'org.springframework.data.web.PageableHandlerMethodArgumentResolver', 'org.springframework.web.servlet.config.annotation.WebMvcConfigurer' (OnClassCondition)
+      - found 'session' scope (OnWebApplicationCondition)
+      - @ConditionalOnMissingBean (types: org.springframework.data.web.PageableHandlerMethodArgumentResolver; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   SpringDataWebAutoConfiguration#pageableCustomizer matched:
+      - @ConditionalOnMissingBean (types: org.springframework.data.web.config.PageableHandlerMethodArgumentResolverCustomizer; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   SpringDataWebAutoConfiguration#sortCustomizer matched:
+      - @ConditionalOnMissingBean (types: org.springframework.data.web.config.SortHandlerMethodArgumentResolverCustomizer; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   SqlInitializationAutoConfiguration matched:
+      - @ConditionalOnProperty (spring.sql.init.enabled) matched (OnPropertyCondition)
+      - NoneNestedConditions 0 matched 1 did not; NestedCondition on SqlInitializationAutoConfiguration.SqlInitializationModeCondition.ModeIsNever @ConditionalOnProperty (spring.sql.init.mode=never) did not find property 'mode' (SqlInitializationAutoConfiguration.SqlInitializationModeCondition)
+
+   SslAutoConfiguration#sslBundleRegistry matched:
+      - @ConditionalOnMissingBean (types: org.springframework.boot.ssl.SslBundleRegistry,org.springframework.boot.ssl.SslBundles; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   TaskExecutionAutoConfiguration matched:
+      - @ConditionalOnClass found required class 'org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor' (OnClassCondition)
+
+   TaskExecutorConfigurations.SimpleAsyncTaskExecutorBuilderConfiguration#simpleAsyncTaskExecutorBuilder matched:
+      - @ConditionalOnMissingBean (types: org.springframework.boot.task.SimpleAsyncTaskExecutorBuilder; SearchStrategy: all) did not find any beans (OnBeanCondition)
+      - @ConditionalOnThreading found PLATFORM (OnThreadingCondition)
+
+   TaskExecutorConfigurations.TaskExecutorBuilderConfiguration#taskExecutorBuilder matched:
+      - @ConditionalOnMissingBean (types: org.springframework.boot.task.TaskExecutorBuilder; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   TaskExecutorConfigurations.TaskExecutorConfiguration matched:
+      - @ConditionalOnMissingBean (types: java.util.concurrent.Executor; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   TaskExecutorConfigurations.TaskExecutorConfiguration#applicationTaskExecutor matched:
+      - @ConditionalOnThreading found PLATFORM (OnThreadingCondition)
+
+   TaskExecutorConfigurations.ThreadPoolTaskExecutorBuilderConfiguration#threadPoolTaskExecutorBuilder matched:
+      - @ConditionalOnMissingBean (types: org.springframework.boot.task.TaskExecutorBuilder,org.springframework.boot.task.ThreadPoolTaskExecutorBuilder; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   TaskSchedulingAutoConfiguration matched:
+      - @ConditionalOnClass found required class 'org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler' (OnClassCondition)
+
+   TaskSchedulingConfigurations.SimpleAsyncTaskSchedulerBuilderConfiguration#simpleAsyncTaskSchedulerBuilder matched:
+      - @ConditionalOnMissingBean (types: org.springframework.boot.task.SimpleAsyncTaskSchedulerBuilder; SearchStrategy: all) did not find any beans (OnBeanCondition)
+      - @ConditionalOnThreading found PLATFORM (OnThreadingCondition)
+
+   TaskSchedulingConfigurations.TaskSchedulerBuilderConfiguration#taskSchedulerBuilder matched:
+      - @ConditionalOnMissingBean (types: org.springframework.boot.task.TaskSchedulerBuilder; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   TaskSchedulingConfigurations.ThreadPoolTaskSchedulerBuilderConfiguration#threadPoolTaskSchedulerBuilder matched:
+      - @ConditionalOnMissingBean (types: org.springframework.boot.task.TaskSchedulerBuilder,org.springframework.boot.task.ThreadPoolTaskSchedulerBuilder; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   TransactionAutoConfiguration matched:
+      - @ConditionalOnClass found required class 'org.springframework.transaction.PlatformTransactionManager' (OnClassCondition)
+
+   TransactionAutoConfiguration.EnableTransactionManagementConfiguration matched:
+      - @ConditionalOnBean (types: org.springframework.transaction.TransactionManager; SearchStrategy: all) found bean 'transactionManager'; @ConditionalOnMissingBean (types: org.springframework.transaction.annotation.AbstractTransactionManagementConfiguration; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   TransactionAutoConfiguration.EnableTransactionManagementConfiguration.CglibAutoProxyConfiguration matched:
+      - @ConditionalOnProperty (spring.aop.proxy-target-class=true) matched (OnPropertyCondition)
+
+   TransactionAutoConfiguration.TransactionTemplateConfiguration matched:
+      - @ConditionalOnSingleCandidate (types: org.springframework.transaction.PlatformTransactionManager; SearchStrategy: all) found a single bean 'transactionManager' (OnBeanCondition)
+
+   TransactionAutoConfiguration.TransactionTemplateConfiguration#transactionTemplate matched:
+      - @ConditionalOnMissingBean (types: org.springframework.transaction.support.TransactionOperations; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   TransactionManagerCustomizationAutoConfiguration matched:
+      - @ConditionalOnClass found required class 'org.springframework.transaction.PlatformTransactionManager' (OnClassCondition)
+
+   TransactionManagerCustomizationAutoConfiguration#platformTransactionManagerCustomizers matched:
+      - @ConditionalOnMissingBean (types: org.springframework.boot.autoconfigure.transaction.TransactionManagerCustomizers; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   ValidationAutoConfiguration matched:
+      - @ConditionalOnClass found required class 'jakarta.validation.executable.ExecutableValidator' (OnClassCondition)
+      - @ConditionalOnResource found location classpath:META-INF/services/jakarta.validation.spi.ValidationProvider (OnResourceCondition)
+
+   ValidationAutoConfiguration#defaultValidator matched:
+      - @ConditionalOnMissingBean (types: jakarta.validation.Validator; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   ValidationAutoConfiguration#methodValidationPostProcessor matched:
+      - @ConditionalOnMissingBean (types: org.springframework.validation.beanvalidation.MethodValidationPostProcessor; SearchStrategy: current) did not find any beans (OnBeanCondition)
+
+   WebMvcAutoConfiguration matched:
+      - @ConditionalOnClass found required classes 'jakarta.servlet.Servlet', 'org.springframework.web.servlet.DispatcherServlet', 'org.springframework.web.servlet.config.annotation.WebMvcConfigurer' (OnClassCondition)
+      - found 'session' scope (OnWebApplicationCondition)
+      - @ConditionalOnMissingBean (types: org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   WebMvcAutoConfiguration#formContentFilter matched:
+      - @ConditionalOnProperty (spring.mvc.formcontent.filter.enabled) matched (OnPropertyCondition)
+      - @ConditionalOnMissingBean (types: org.springframework.web.filter.FormContentFilter; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   WebMvcAutoConfiguration.EnableWebMvcConfiguration#flashMapManager matched:
+      - @ConditionalOnMissingBean (names: flashMapManager; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   WebMvcAutoConfiguration.EnableWebMvcConfiguration#localeResolver matched:
+      - @ConditionalOnMissingBean (names: localeResolver; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   WebMvcAutoConfiguration.EnableWebMvcConfiguration#themeResolver matched:
+      - @ConditionalOnMissingBean (names: themeResolver; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   WebMvcAutoConfiguration.WebMvcAutoConfigurationAdapter#defaultViewResolver matched:
+      - @ConditionalOnMissingBean (types: org.springframework.web.servlet.view.InternalResourceViewResolver; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   WebMvcAutoConfiguration.WebMvcAutoConfigurationAdapter#requestContextFilter matched:
+      - @ConditionalOnMissingBean (types: org.springframework.web.context.request.RequestContextListener,org.springframework.web.filter.RequestContextFilter; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   WebMvcAutoConfiguration.WebMvcAutoConfigurationAdapter#viewResolver matched:
+      - @ConditionalOnBean (types: org.springframework.web.servlet.ViewResolver; SearchStrategy: all) found beans 'defaultViewResolver', 'beanNameViewResolver', 'mvcViewResolver'; @ConditionalOnMissingBean (names: viewResolver types: org.springframework.web.servlet.view.ContentNegotiatingViewResolver; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   WebSocketServletAutoConfiguration matched:
+      - @ConditionalOnClass found required classes 'jakarta.servlet.Servlet', 'jakarta.websocket.server.ServerContainer' (OnClassCondition)
+      - found 'session' scope (OnWebApplicationCondition)
+
+   WebSocketServletAutoConfiguration.TomcatWebSocketConfiguration matched:
+      - @ConditionalOnClass found required classes 'org.apache.catalina.startup.Tomcat', 'org.apache.tomcat.websocket.server.WsSci' (OnClassCondition)
+
+   WebSocketServletAutoConfiguration.TomcatWebSocketConfiguration#websocketServletWebServerCustomizer matched:
+      - @ConditionalOnMissingBean (names: websocketServletWebServerCustomizer; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+
+Negative matches:
+-----------------
+
+   ActiveMQAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'jakarta.jms.ConnectionFactory' (OnClassCondition)
+
+   AopAutoConfiguration.AspectJAutoProxyingConfiguration.JdkDynamicAutoProxyConfiguration:
+      Did not match:
+         - @ConditionalOnProperty (spring.aop.proxy-target-class=false) did not find property 'proxy-target-class' (OnPropertyCondition)
+
+   AopAutoConfiguration.ClassProxyingConfiguration:
+      Did not match:
+         - @ConditionalOnMissingClass found unwanted class 'org.aspectj.weaver.Advice' (OnClassCondition)
+
+   ArtemisAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'jakarta.jms.ConnectionFactory' (OnClassCondition)
+
+   BatchAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.batch.core.launch.JobLauncher' (OnClassCondition)
+
+   Cache2kCacheConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.cache2k.Cache2kBuilder' (OnClassCondition)
+
+   CacheAutoConfiguration:
+      Did not match:
+         - @ConditionalOnBean (types: org.springframework.cache.interceptor.CacheAspectSupport; SearchStrategy: all) did not find any beans of type org.springframework.cache.interceptor.CacheAspectSupport (OnBeanCondition)
+      Matched:
+         - @ConditionalOnClass found required class 'org.springframework.cache.CacheManager' (OnClassCondition)
+
+   CacheAutoConfiguration.CacheManagerEntityManagerFactoryDependsOnPostProcessor:
+      Did not match:
+         - Ancestor org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration did not match (ConditionEvaluationReport.AncestorsMatchedCondition)
+      Matched:
+         - @ConditionalOnClass found required class 'org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean' (OnClassCondition)
+
+   CaffeineCacheConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'com.github.benmanes.caffeine.cache.Caffeine' (OnClassCondition)
+
+   CassandraAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'com.datastax.oss.driver.api.core.CqlSession' (OnClassCondition)
+
+   CassandraDataAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'com.datastax.oss.driver.api.core.CqlSession' (OnClassCondition)
+
+   CassandraReactiveDataAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'com.datastax.oss.driver.api.core.CqlSession' (OnClassCondition)
+
+   CassandraReactiveRepositoriesAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.data.cassandra.ReactiveSession' (OnClassCondition)
+
+   CassandraRepositoriesAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'com.datastax.oss.driver.api.core.CqlSession' (OnClassCondition)
+
+   ClientHttpConnectorAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.web.reactive.function.client.WebClient' (OnClassCondition)
+
+   CodecsAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.web.reactive.function.client.WebClient' (OnClassCondition)
+
+   CouchbaseAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'com.couchbase.client.java.Cluster' (OnClassCondition)
+
+   CouchbaseCacheConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'com.couchbase.client.java.Cluster' (OnClassCondition)
+
+   CouchbaseDataAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'com.couchbase.client.java.Bucket' (OnClassCondition)
+
+   CouchbaseReactiveDataAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'com.couchbase.client.java.Cluster' (OnClassCondition)
+
+   CouchbaseReactiveRepositoriesAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'com.couchbase.client.java.Cluster' (OnClassCondition)
+
+   CouchbaseRepositoriesAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'com.couchbase.client.java.Bucket' (OnClassCondition)
+
+   DataSourceAutoConfiguration.EmbeddedDatabaseConfiguration:
+      Did not match:
+         - EmbeddedDataSource spring.datasource.url is set (DataSourceAutoConfiguration.EmbeddedDatabaseCondition)
+
+   DataSourceCheckpointRestoreConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.crac.Resource' (OnClassCondition)
+
+   DataSourceConfiguration.Dbcp2:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.apache.commons.dbcp2.BasicDataSource' (OnClassCondition)
+
+   DataSourceConfiguration.Generic:
+      Did not match:
+         - @ConditionalOnProperty (spring.datasource.type) did not find property 'spring.datasource.type' (OnPropertyCondition)
+
+   DataSourceConfiguration.OracleUcp:
+      Did not match:
+         - @ConditionalOnClass did not find required classes 'oracle.ucp.jdbc.PoolDataSourceImpl', 'oracle.jdbc.OracleConnection' (OnClassCondition)
+
+   DataSourceConfiguration.Tomcat:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.apache.tomcat.jdbc.pool.DataSource' (OnClassCondition)
+
+   DataSourceJmxConfiguration:
+      Did not match:
+         - @ConditionalOnProperty (spring.jmx.enabled=true) found different value in property 'enabled' (OnPropertyCondition)
+
+   DataSourcePoolMetadataProvidersConfiguration.CommonsDbcp2PoolDataSourceMetadataProviderConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.apache.commons.dbcp2.BasicDataSource' (OnClassCondition)
+
+   DataSourcePoolMetadataProvidersConfiguration.OracleUcpPoolDataSourceMetadataProviderConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required classes 'oracle.ucp.jdbc.PoolDataSource', 'oracle.jdbc.OracleConnection' (OnClassCondition)
+
+   DataSourcePoolMetadataProvidersConfiguration.TomcatDataSourcePoolMetadataProviderConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.apache.tomcat.jdbc.pool.DataSource' (OnClassCondition)
+
+   DataSourceTransactionManagerAutoConfiguration.JdbcTransactionManagerConfiguration#transactionManager:
+      Did not match:
+         - @ConditionalOnMissingBean (types: org.springframework.transaction.TransactionManager; SearchStrategy: all) found beans of type 'org.springframework.transaction.TransactionManager' transactionManager (OnBeanCondition)
+
+   DispatcherServletAutoConfiguration.DispatcherServletConfiguration#multipartResolver:
+      Did not match:
+         - @ConditionalOnBean (types: org.springframework.web.multipart.MultipartResolver; SearchStrategy: all) did not find any beans of type org.springframework.web.multipart.MultipartResolver (OnBeanCondition)
+
+   ElasticsearchClientAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'co.elastic.clients.elasticsearch.ElasticsearchClient' (OnClassCondition)
+
+   ElasticsearchDataAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.data.elasticsearch.client.elc.ElasticsearchTemplate' (OnClassCondition)
+
+   ElasticsearchRepositoriesAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.data.elasticsearch.repository.ElasticsearchRepository' (OnClassCondition)
+
+   ElasticsearchRestClientAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.elasticsearch.client.RestClientBuilder' (OnClassCondition)
+
+   EmbeddedLdapAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'com.unboundid.ldap.listener.InMemoryDirectoryServer' (OnClassCondition)
+
+   EmbeddedWebServerFactoryCustomizerAutoConfiguration:
+      Did not match:
+         - Application is deployed as a WAR file. (OnWarDeploymentCondition)
+      Matched:
+         - @ConditionalOnWebApplication (required) found 'session' scope (OnWebApplicationCondition)
+
+   ErrorWebFluxAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.web.reactive.config.WebFluxConfigurer' (OnClassCondition)
+
+   FlywayAutoConfiguration:
+      Did not match:
+         - @ConditionalOnProperty (spring.flyway.enabled) found different value in property 'enabled' (OnPropertyCondition)
+      Matched:
+         - @ConditionalOnClass found required class 'org.flywaydb.core.Flyway' (OnClassCondition)
+
+   FreeMarkerAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'freemarker.template.Configuration' (OnClassCondition)
+
+   GraphQlAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'graphql.GraphQL' (OnClassCondition)
+
+   GraphQlQueryByExampleAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'graphql.GraphQL' (OnClassCondition)
+
+   GraphQlQuerydslAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'com.querydsl.core.Query' (OnClassCondition)
+
+   GraphQlRSocketAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'graphql.GraphQL' (OnClassCondition)
+
+   GraphQlReactiveQueryByExampleAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'graphql.GraphQL' (OnClassCondition)
+
+   GraphQlReactiveQuerydslAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'com.querydsl.core.Query' (OnClassCondition)
+
+   GraphQlWebFluxAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'graphql.GraphQL' (OnClassCondition)
+
+   GraphQlWebFluxSecurityAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'graphql.GraphQL' (OnClassCondition)
+
+   GraphQlWebMvcAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'graphql.GraphQL' (OnClassCondition)
+
+   GraphQlWebMvcSecurityAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'graphql.GraphQL' (OnClassCondition)
+
+   GroovyTemplateAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'groovy.text.markup.MarkupTemplateEngine' (OnClassCondition)
+
+   GsonHttpMessageConvertersConfiguration.GsonHttpMessageConverterConfiguration:
+      Did not match:
+         - AnyNestedCondition 0 matched 2 did not; NestedCondition on GsonHttpMessageConvertersConfiguration.PreferGsonOrJacksonAndJsonbUnavailableCondition.JacksonJsonbUnavailable NoneNestedConditions 1 matched 1 did not; NestedCondition on GsonHttpMessageConvertersConfiguration.JacksonAndJsonbUnavailableCondition.JsonbPreferred @ConditionalOnProperty (spring.mvc.converters.preferred-json-mapper=jsonb) did not find property 'spring.mvc.converters.preferred-json-mapper'; NestedCondition on GsonHttpMessageConvertersConfiguration.JacksonAndJsonbUnavailableCondition.JacksonAvailable @ConditionalOnBean (types: org.springframework.http.converter.json.MappingJackson2HttpMessageConverter; SearchStrategy: all) found bean 'mappingJackson2HttpMessageConverter'; NestedCondition on GsonHttpMessageConvertersConfiguration.PreferGsonOrJacksonAndJsonbUnavailableCondition.GsonPreferred @ConditionalOnProperty (spring.mvc.converters.preferred-json-mapper=gson) did not find property 'spring.mvc.converters.preferred-json-mapper' (GsonHttpMessageConvertersConfiguration.PreferGsonOrJacksonAndJsonbUnavailableCondition)
+
+   H2ConsoleAutoConfiguration:
+      Did not match:
+         - @ConditionalOnProperty (spring.h2.console.enabled=true) did not find property 'enabled' (OnPropertyCondition)
+      Matched:
+         - @ConditionalOnClass found required class 'org.h2.server.web.JakartaWebServlet' (OnClassCondition)
+         - found 'session' scope (OnWebApplicationCondition)
+
+   HazelcastAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'com.hazelcast.core.HazelcastInstance' (OnClassCondition)
+
+   HazelcastCacheConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'com.hazelcast.core.HazelcastInstance' (OnClassCondition)
+
+   HazelcastJpaDependencyAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'com.hazelcast.core.HazelcastInstance' (OnClassCondition)
+
+   HttpHandlerAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.web.reactive.DispatcherHandler' (OnClassCondition)
+
+   HypermediaAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.hateoas.EntityModel' (OnClassCondition)
+
+   InfinispanCacheConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.infinispan.spring.embedded.provider.SpringEmbeddedCacheManager' (OnClassCondition)
+
+   InfluxDbAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.influxdb.InfluxDB' (OnClassCondition)
+
+   IntegrationAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.integration.config.EnableIntegration' (OnClassCondition)
+
+   JCacheCacheConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'javax.cache.Caching' (OnClassCondition)
+
+   JacksonHttpMessageConvertersConfiguration.MappingJackson2XmlHttpMessageConverterConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'com.fasterxml.jackson.dataformat.xml.XmlMapper' (OnClassCondition)
+
+   JdbcRepositoriesAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.data.jdbc.repository.config.AbstractJdbcConfiguration' (OnClassCondition)
+
+   JerseyAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.glassfish.jersey.server.spring.SpringComponentProvider' (OnClassCondition)
+
+   JmsAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'jakarta.jms.Message' (OnClassCondition)
+
+   JmxAutoConfiguration:
+      Did not match:
+         - @ConditionalOnProperty (spring.jmx.enabled=true) found different value in property 'enabled' (OnPropertyCondition)
+      Matched:
+         - @ConditionalOnClass found required class 'org.springframework.jmx.export.MBeanExporter' (OnClassCondition)
+
+   JndiConnectionFactoryAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.jms.core.JmsTemplate' (OnClassCondition)
+
+   JndiDataSourceAutoConfiguration:
+      Did not match:
+         - @ConditionalOnProperty (spring.datasource.jndi-name) did not find property 'jndi-name' (OnPropertyCondition)
+      Matched:
+         - @ConditionalOnClass found required classes 'javax.sql.DataSource', 'org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType' (OnClassCondition)
+
+   JndiJtaConfiguration:
+      Did not match:
+         - @ConditionalOnJndi JNDI environment is not available (OnJndiCondition)
+      Matched:
+         - @ConditionalOnClass found required class 'org.springframework.transaction.jta.JtaTransactionManager' (OnClassCondition)
+
+   JooqAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.jooq.DSLContext' (OnClassCondition)
+
+   JpaRepositoriesAutoConfiguration#entityManagerFactoryBootstrapExecutorCustomizer:
+      Did not match:
+         - AnyNestedCondition 0 matched 2 did not; NestedCondition on JpaRepositoriesAutoConfiguration.BootstrapExecutorCondition.LazyBootstrapMode @ConditionalOnProperty (spring.data.jpa.repositories.bootstrap-mode=lazy) did not find property 'bootstrap-mode'; NestedCondition on JpaRepositoriesAutoConfiguration.BootstrapExecutorCondition.DeferredBootstrapMode @ConditionalOnProperty (spring.data.jpa.repositories.bootstrap-mode=deferred) did not find property 'bootstrap-mode' (JpaRepositoriesAutoConfiguration.BootstrapExecutorCondition)
+
+   JsonbAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'jakarta.json.bind.Jsonb' (OnClassCondition)
+
+   JsonbHttpMessageConvertersConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'jakarta.json.bind.Jsonb' (OnClassCondition)
+
+   KafkaAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.kafka.core.KafkaTemplate' (OnClassCondition)
+
+   LdapAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.ldap.core.ContextSource' (OnClassCondition)
+
+   LdapRepositoriesAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.data.ldap.repository.LdapRepository' (OnClassCondition)
+
+   LiquibaseAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'liquibase.change.DatabaseChange' (OnClassCondition)
+
+   MailSenderAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'jakarta.mail.internet.MimeMessage' (OnClassCondition)
+
+   MailSenderValidatorAutoConfiguration:
+      Did not match:
+         - @ConditionalOnSingleCandidate did not find required type 'org.springframework.mail.javamail.JavaMailSenderImpl' (OnBeanCondition)
+
+   MessageSourceAutoConfiguration:
+      Did not match:
+         - ResourceBundle did not find bundle with basename messages (MessageSourceAutoConfiguration.ResourceBundleCondition)
+
+   MongoAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'com.mongodb.client.MongoClient' (OnClassCondition)
+
+   MongoDataAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'com.mongodb.client.MongoClient' (OnClassCondition)
+
+   MongoReactiveAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'com.mongodb.reactivestreams.client.MongoClient' (OnClassCondition)
+
+   MongoReactiveDataAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'com.mongodb.reactivestreams.client.MongoClient' (OnClassCondition)
+
+   MongoReactiveRepositoriesAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'com.mongodb.reactivestreams.client.MongoClient' (OnClassCondition)
+
+   MongoRepositoriesAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'com.mongodb.client.MongoClient' (OnClassCondition)
+
+   MustacheAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'com.samskivert.mustache.Mustache' (OnClassCondition)
+
+   Neo4jAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.neo4j.driver.Driver' (OnClassCondition)
+
+   Neo4jDataAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.neo4j.driver.Driver' (OnClassCondition)
+
+   Neo4jReactiveDataAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.neo4j.driver.Driver' (OnClassCondition)
+
+   Neo4jReactiveRepositoriesAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.neo4j.driver.Driver' (OnClassCondition)
+
+   Neo4jRepositoriesAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.neo4j.driver.Driver' (OnClassCondition)
+
+   NettyAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'io.netty.util.NettyRuntime' (OnClassCondition)
+
+   OAuth2AuthorizationServerAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.security.oauth2.server.authorization.OAuth2Authorization' (OnClassCondition)
+
+   OAuth2AuthorizationServerJwtAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.security.oauth2.server.authorization.OAuth2Authorization' (OnClassCondition)
+
+   OAuth2ClientAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.security.config.annotation.web.configuration.EnableWebSecurity' (OnClassCondition)
+
+   OAuth2ResourceServerAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.security.oauth2.server.resource.authentication.BearerTokenAuthenticationToken' (OnClassCondition)
+
+   ProjectInfoAutoConfiguration#buildProperties:
+      Did not match:
+         - @ConditionalOnResource did not find resource '${spring.info.build.location:classpath:META-INF/build-info.properties}' (OnResourceCondition)
+
+   ProjectInfoAutoConfiguration#gitProperties:
+      Did not match:
+         - GitResource did not find git info at classpath:git.properties (ProjectInfoAutoConfiguration.GitResourceAvailableCondition)
+
+   PulsarAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.apache.pulsar.client.api.PulsarClient' (OnClassCondition)
+
+   PulsarReactiveAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.apache.pulsar.client.api.PulsarClient' (OnClassCondition)
+
+   QuartzAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.quartz.Scheduler' (OnClassCondition)
+
+   R2dbcAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'io.r2dbc.spi.ConnectionFactory' (OnClassCondition)
+
+   R2dbcDataAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.data.r2dbc.core.R2dbcEntityTemplate' (OnClassCondition)
+
+   R2dbcInitializationConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required classes 'io.r2dbc.spi.ConnectionFactory', 'org.springframework.r2dbc.connection.init.DatabasePopulator' (OnClassCondition)
+
+   R2dbcRepositoriesAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'io.r2dbc.spi.ConnectionFactory' (OnClassCondition)
+
+   R2dbcTransactionManagerAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.r2dbc.connection.R2dbcTransactionManager' (OnClassCondition)
+
+   RSocketGraphQlClientAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'graphql.GraphQL' (OnClassCondition)
+
+   RSocketMessagingAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'io.rsocket.RSocket' (OnClassCondition)
+
+   RSocketRequesterAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'io.rsocket.RSocket' (OnClassCondition)
+
+   RSocketSecurityAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.security.rsocket.core.SecuritySocketAcceptorInterceptor' (OnClassCondition)
+
+   RSocketServerAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'io.rsocket.core.RSocketServer' (OnClassCondition)
+
+   RSocketStrategiesAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'io.netty.buffer.PooledByteBufAllocator' (OnClassCondition)
+
+   RabbitAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'com.rabbitmq.client.Channel' (OnClassCondition)
+
+   ReactiveElasticsearchClientAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'co.elastic.clients.transport.ElasticsearchTransport' (OnClassCondition)
+
+   ReactiveElasticsearchRepositoriesAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'reactor.core.publisher.Mono' (OnClassCondition)
+
+   ReactiveMultipartAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.web.reactive.config.WebFluxConfigurer' (OnClassCondition)
+
+   ReactiveOAuth2ClientAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'reactor.core.publisher.Flux' (OnClassCondition)
+
+   ReactiveOAuth2ResourceServerAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity' (OnClassCondition)
+
+   ReactiveSecurityAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'reactor.core.publisher.Flux' (OnClassCondition)
+
+   ReactiveUserDetailsServiceAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.security.authentication.ReactiveAuthenticationManager' (OnClassCondition)
+
+   ReactiveWebServerFactoryAutoConfiguration:
+      Did not match:
+         - @ConditionalOnWebApplication did not find reactive web application classes (OnWebApplicationCondition)
+
+   ReactorAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'reactor.core.publisher.Hooks' (OnClassCondition)
+
+   RedisAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.data.redis.core.RedisOperations' (OnClassCondition)
+
+   RedisCacheConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.data.redis.connection.RedisConnectionFactory' (OnClassCondition)
+
+   RedisReactiveAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'reactor.core.publisher.Flux' (OnClassCondition)
+
+   RedisRepositoriesAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.data.redis.repository.configuration.EnableRedisRepositories' (OnClassCondition)
+
+   RepositoryRestMvcAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.data.rest.webmvc.config.RepositoryRestMvcConfiguration' (OnClassCondition)
+
+   Saml2RelyingPartyAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.security.saml2.provider.service.registration.RelyingPartyRegistrationRepository' (OnClassCondition)
+
+   SecurityAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.security.authentication.DefaultAuthenticationEventPublisher' (OnClassCondition)
+
+   SecurityFilterAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.security.config.http.SessionCreationPolicy' (OnClassCondition)
+
+   SendGridAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'com.sendgrid.SendGrid' (OnClassCondition)
+
+   ServletWebServerFactoryAutoConfiguration.ForwardedHeaderFilterConfiguration:
+      Did not match:
+         - @ConditionalOnProperty (server.forward-headers-strategy=framework) did not find property 'server.forward-headers-strategy' (OnPropertyCondition)
+
+   ServletWebServerFactoryConfiguration.EmbeddedJetty:
+      Did not match:
+         - @ConditionalOnClass did not find required classes 'org.eclipse.jetty.server.Server', 'org.eclipse.jetty.util.Loader', 'org.eclipse.jetty.ee10.webapp.WebAppContext' (OnClassCondition)
+
+   ServletWebServerFactoryConfiguration.EmbeddedUndertow:
+      Did not match:
+         - @ConditionalOnClass did not find required classes 'io.undertow.Undertow', 'org.xnio.SslClientAuthMode' (OnClassCondition)
+
+   SessionAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.session.Session' (OnClassCondition)
+
+   SpringApplicationAdminJmxAutoConfiguration:
+      Did not match:
+         - @ConditionalOnProperty (spring.application.admin.enabled=true) did not find property 'enabled' (OnPropertyCondition)
+
+   TaskExecutorConfigurations.SimpleAsyncTaskExecutorBuilderConfiguration#simpleAsyncTaskExecutorBuilderVirtualThreads:
+      Did not match:
+         - @ConditionalOnMissingBean (types: org.springframework.boot.task.SimpleAsyncTaskExecutorBuilder; SearchStrategy: all) found beans of type 'org.springframework.boot.task.SimpleAsyncTaskExecutorBuilder' simpleAsyncTaskExecutorBuilder (OnBeanCondition)
+
+   TaskExecutorConfigurations.TaskExecutorConfiguration#applicationTaskExecutorVirtualThreads:
+      Did not match:
+         - @ConditionalOnThreading did not find VIRTUAL (OnThreadingCondition)
+
+   TaskSchedulingAutoConfiguration#scheduledBeanLazyInitializationExcludeFilter:
+      Did not match:
+         - @ConditionalOnBean (names: org.springframework.context.annotation.internalScheduledAnnotationProcessor; SearchStrategy: all) did not find any beans named org.springframework.context.annotation.internalScheduledAnnotationProcessor (OnBeanCondition)
+
+   TaskSchedulingConfigurations.SimpleAsyncTaskSchedulerBuilderConfiguration#simpleAsyncTaskSchedulerBuilderVirtualThreads:
+      Did not match:
+         - @ConditionalOnMissingBean (types: org.springframework.boot.task.SimpleAsyncTaskSchedulerBuilder; SearchStrategy: all) found beans of type 'org.springframework.boot.task.SimpleAsyncTaskSchedulerBuilder' simpleAsyncTaskSchedulerBuilder (OnBeanCondition)
+
+   TaskSchedulingConfigurations.TaskSchedulerConfiguration:
+      Did not match:
+         - @ConditionalOnBean (names: org.springframework.context.annotation.internalScheduledAnnotationProcessor; SearchStrategy: all) did not find any beans named org.springframework.context.annotation.internalScheduledAnnotationProcessor (OnBeanCondition)
+
+   ThymeleafAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.thymeleaf.spring6.SpringTemplateEngine' (OnClassCondition)
+
+   TransactionAutoConfiguration#transactionalOperator:
+      Did not match:
+         - @ConditionalOnSingleCandidate (types: org.springframework.transaction.ReactiveTransactionManager; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   TransactionAutoConfiguration.AspectJTransactionManagementConfiguration:
+      Did not match:
+         - @ConditionalOnBean (types: org.springframework.transaction.aspectj.AbstractTransactionAspect; SearchStrategy: all) did not find any beans of type org.springframework.transaction.aspectj.AbstractTransactionAspect (OnBeanCondition)
+
+   TransactionAutoConfiguration.EnableTransactionManagementConfiguration.JdkDynamicAutoProxyConfiguration:
+      Did not match:
+         - @ConditionalOnProperty (spring.aop.proxy-target-class=false) did not find property 'proxy-target-class' (OnPropertyCondition)
+
+   UserDetailsServiceAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.security.authentication.AuthenticationManager' (OnClassCondition)
+
+   WebClientAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.web.reactive.function.client.WebClient' (OnClassCondition)
+
+   WebFluxAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.web.reactive.config.WebFluxConfigurer' (OnClassCondition)
+
+   WebMvcAutoConfiguration#hiddenHttpMethodFilter:
+      Did not match:
+         - @ConditionalOnProperty (spring.mvc.hiddenmethod.filter.enabled) did not find property 'enabled' (OnPropertyCondition)
+
+   WebMvcAutoConfiguration.ProblemDetailsErrorHandlingConfiguration:
+      Did not match:
+         - @ConditionalOnProperty (spring.mvc.problemdetails.enabled=true) did not find property 'enabled' (OnPropertyCondition)
+
+   WebMvcAutoConfiguration.ResourceChainCustomizerConfiguration:
+      Did not match:
+         - @ConditionalOnEnabledResourceChain did not find class org.webjars.WebJarAssetLocator (OnEnabledResourceChainCondition)
+
+   WebMvcAutoConfiguration.WebMvcAutoConfigurationAdapter#beanNameViewResolver:
+      Did not match:
+         - @ConditionalOnMissingBean (types: org.springframework.web.servlet.view.BeanNameViewResolver; SearchStrategy: all) found beans of type 'org.springframework.web.servlet.view.BeanNameViewResolver' beanNameViewResolver (OnBeanCondition)
+
+   WebServiceTemplateAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.oxm.Marshaller' (OnClassCondition)
+
+   WebServicesAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.ws.transport.http.MessageDispatcherServlet' (OnClassCondition)
+
+   WebSessionIdResolverAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'reactor.core.publisher.Mono' (OnClassCondition)
+
+   WebSocketMessagingAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer' (OnClassCondition)
+
+   WebSocketReactiveAutoConfiguration:
+      Did not match:
+         - @ConditionalOnWebApplication did not find reactive web application classes (OnWebApplicationCondition)
+
+   WebSocketServletAutoConfiguration.JettyWebSocketConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.eclipse.jetty.ee10.websocket.jakarta.server.config.JakartaWebSocketServletContainerInitializer' (OnClassCondition)
+
+   WebSocketServletAutoConfiguration.UndertowWebSocketConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'io.undertow.websockets.jsr.Bootstrap' (OnClassCondition)
+
+   XADataSourceAutoConfiguration:
+      Did not match:
+         - @ConditionalOnBean (types: org.springframework.boot.jdbc.XADataSourceWrapper; SearchStrategy: all) did not find any beans of type org.springframework.boot.jdbc.XADataSourceWrapper (OnBeanCondition)
+      Matched:
+         - @ConditionalOnClass found required classes 'javax.sql.DataSource', 'jakarta.transaction.TransactionManager', 'org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType' (OnClassCondition)
+
+
+Exclusions:
+-----------
+
+    None
+
+
+Unconditional classes:
+----------------------
+
+    org.springframework.boot.autoconfigure.context.ConfigurationPropertiesAutoConfiguration
+
+    org.springframework.boot.autoconfigure.ssl.SslAutoConfiguration
+
+    org.springframework.boot.autoconfigure.context.LifecycleAutoConfiguration
+
+    org.springframework.boot.autoconfigure.context.PropertyPlaceholderAutoConfiguration
+
+    org.springframework.boot.autoconfigure.availability.ApplicationAvailabilityAutoConfiguration
+
+    org.springframework.boot.autoconfigure.info.ProjectInfoAutoConfiguration
+
+
+
+2026-10-15T14:20:32.165+07:00  INFO 16284 --- [clinical-service-test] [    Test worker] c.t.c.ClinicalServiceApplicationTests    : Started ClinicalServiceApplicationTests in 6.368 seconds (process running for 7.592)
+2026-10-15T14:20:32.168+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] o.s.b.a.ApplicationAvailabilityBean      : Application availability state LivenessState changed to CORRECT
+2026-10-15T14:20:32.536+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : select count(*) from intakes ie1_0 where ie1_0.id=?
+2026-10-15T14:20:32.629+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : select ie1_0.id,ie1_0.created_at,ie1_0.key_id,ie1_0.nonce,ie1_0.patient_id,ie1_0.payload_ciphertext,ie1_0.payload_version,ie1_0.state,ie1_0.submitted_at from intakes ie1_0 where ie1_0.id=?
+2026-10-15T14:20:32.656+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : insert into intakes (created_at,key_id,nonce,patient_id,payload_ciphertext,payload_version,state,submitted_at,id) values (?,?,?,?,?,?,?,?,?)
+2026-10-15T14:20:32.661+07:00  INFO 16284 --- [clinical-service-test] [    Test worker] c.t.c.service.ClinicalDataInitializer    : Seeded demo intake 1: aaaaaaaa-1111-1111-1111-111111111111
+2026-10-15T14:20:32.662+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : select count(*) from intakes ie1_0 where ie1_0.id=?
+2026-10-15T14:20:32.665+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : select ie1_0.id,ie1_0.created_at,ie1_0.key_id,ie1_0.nonce,ie1_0.patient_id,ie1_0.payload_ciphertext,ie1_0.payload_version,ie1_0.state,ie1_0.submitted_at from intakes ie1_0 where ie1_0.id=?
+2026-10-15T14:20:32.666+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : insert into intakes (created_at,key_id,nonce,patient_id,payload_ciphertext,payload_version,state,submitted_at,id) values (?,?,?,?,?,?,?,?,?)
+2026-10-15T14:20:32.667+07:00  INFO 16284 --- [clinical-service-test] [    Test worker] c.t.c.service.ClinicalDataInitializer    : Seeded demo intake 2: aaaaaaaa-2222-2222-2222-222222222222
+2026-10-15T14:20:32.721+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : select ee1_0.id,ee1_0.appointment_id,ee1_0.created_at,ee1_0.doctor_id,ee1_0.intake_id,ee1_0.patient_id,ee1_0.published_at,ee1_0.state from encounters ee1_0 where ee1_0.appointment_id=?
+2026-10-15T14:20:32.725+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : select ee1_0.id,ee1_0.appointment_id,ee1_0.created_at,ee1_0.doctor_id,ee1_0.intake_id,ee1_0.patient_id,ee1_0.published_at,ee1_0.state from encounters ee1_0 where ee1_0.id=?
+2026-10-15T14:20:32.726+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : insert into encounters (appointment_id,created_at,doctor_id,intake_id,patient_id,published_at,state,id) values (?,?,?,?,?,?,?,?)
+2026-10-15T14:20:32.732+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : select rfe1_0.id,rfe1_0.created_at,rfe1_0.encounter_id,rfe1_0.key_id,rfe1_0.mime_type,rfe1_0.nonce,rfe1_0.original_name,rfe1_0.sha256,rfe1_0.size_bytes,rfe1_0.state,rfe1_0.storage_key,rfe1_0.uploaded_by from report_files rfe1_0 where rfe1_0.id=?
+2026-10-15T14:20:32.733+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : insert into report_files (created_at,encounter_id,key_id,mime_type,nonce,original_name,sha256,size_bytes,state,storage_key,uploaded_by,id) values (?,?,?,?,?,?,?,?,?,?,?,?)
+2026-10-15T14:20:32.734+07:00  INFO 16284 --- [clinical-service-test] [    Test worker] c.t.c.service.ClinicalDataInitializer    : Seeded demo report file for appointment aaaaaaaa-2222-2222-2222-222222222222
+2026-10-15T14:20:32.736+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] o.s.b.a.ApplicationAvailabilityBean      : Application availability state ReadinessState changed to ACCEPTING_TRAFFIC
+2026-10-15T14:20:32.830+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : select ie1_0.id,ie1_0.created_at,ie1_0.key_id,ie1_0.nonce,ie1_0.patient_id,ie1_0.payload_ciphertext,ie1_0.payload_version,ie1_0.state,ie1_0.submitted_at from intakes ie1_0 where ie1_0.id=?
+2026-10-15T14:20:32.834+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : select ee1_0.id,ee1_0.appointment_id,ee1_0.created_at,ee1_0.doctor_id,ee1_0.intake_id,ee1_0.patient_id,ee1_0.published_at,ee1_0.state from encounters ee1_0 where ee1_0.appointment_id=?
+2026-10-15T14:20:32.838+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : select ie1_0.id,ie1_0.created_at,ie1_0.key_id,ie1_0.nonce,ie1_0.patient_id,ie1_0.payload_ciphertext,ie1_0.payload_version,ie1_0.state,ie1_0.submitted_at from intakes ie1_0 where ie1_0.id=?
+2026-10-15T14:20:32.844+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : insert into audit_logs (action,actor_id,correlation_id,created_at,resource_id,resource_type,result,id) values (?,?,?,?,?,?,?,default)
+2026-10-15T14:20:32.861+07:00  INFO 16284 --- [clinical-service-test] [    Test worker] c.t.clinical.service.AuditService        : Audit: actor=0b4aea38-94d0-49b7-865d-baffc502b69f action=CREATE_INTAKE resource=INTAKE:5bcaffa3-5e92-40ba-9ce2-dfa0987c586d result=ALLOWED
+2026-10-15T14:20:32.864+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : insert into intakes (created_at,key_id,nonce,patient_id,payload_ciphertext,payload_version,state,submitted_at,id) values (?,?,?,?,?,?,?,?,?)
+2026-10-15T14:20:32.867+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : select ie1_0.id,ie1_0.created_at,ie1_0.key_id,ie1_0.nonce,ie1_0.patient_id,ie1_0.payload_ciphertext,ie1_0.payload_version,ie1_0.state,ie1_0.submitted_at from intakes ie1_0 where ie1_0.id=?
+2026-10-15T14:20:32.874+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : select ee1_0.id,ee1_0.appointment_id,ee1_0.created_at,ee1_0.doctor_id,ee1_0.intake_id,ee1_0.patient_id,ee1_0.published_at,ee1_0.state from encounters ee1_0 where ee1_0.appointment_id=?
+2026-10-15T14:20:32.894+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : select ie1_0.id,ie1_0.created_at,ie1_0.key_id,ie1_0.nonce,ie1_0.patient_id,ie1_0.payload_ciphertext,ie1_0.payload_version,ie1_0.state,ie1_0.submitted_at from intakes ie1_0 where ie1_0.id=?
+2026-10-15T14:20:32.895+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : insert into audit_logs (action,actor_id,correlation_id,created_at,resource_id,resource_type,result,id) values (?,?,?,?,?,?,?,default)
+2026-10-15T14:20:32.896+07:00  INFO 16284 --- [clinical-service-test] [    Test worker] c.t.clinical.service.AuditService        : Audit: actor=4cfdd223-a3bc-489d-b013-cb628f0a92a9 action=CREATE_INTAKE resource=INTAKE:f948ba0b-f4c2-46bd-90ec-cf47561a4736 result=ALLOWED
+2026-10-15T14:20:32.897+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : insert into intakes (created_at,key_id,nonce,patient_id,payload_ciphertext,payload_version,state,submitted_at,id) values (?,?,?,?,?,?,?,?,?)
+2026-10-15T14:20:32.901+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : select ie1_0.id,ie1_0.created_at,ie1_0.key_id,ie1_0.nonce,ie1_0.patient_id,ie1_0.payload_ciphertext,ie1_0.payload_version,ie1_0.state,ie1_0.submitted_at from intakes ie1_0 where ie1_0.id=?
+2026-10-15T14:20:32.903+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : select ie1_0.id,ie1_0.created_at,ie1_0.key_id,ie1_0.nonce,ie1_0.patient_id,ie1_0.payload_ciphertext,ie1_0.payload_version,ie1_0.state,ie1_0.submitted_at from intakes ie1_0 where ie1_0.id=?
+2026-10-15T14:20:32.926+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : insert into audit_logs (action,actor_id,correlation_id,created_at,resource_id,resource_type,result,id) values (?,?,?,?,?,?,?,default)
+2026-10-15T14:20:32.927+07:00  INFO 16284 --- [clinical-service-test] [    Test worker] c.t.clinical.service.AuditService        : Audit: actor=4cfdd223-a3bc-489d-b013-cb628f0a92a9 action=VIEW_INTAKE resource=INTAKE:f948ba0b-f4c2-46bd-90ec-cf47561a4736 result=ALLOWED
+2026-10-15T14:20:32.930+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : select ie1_0.id,ie1_0.created_at,ie1_0.key_id,ie1_0.nonce,ie1_0.patient_id,ie1_0.payload_ciphertext,ie1_0.payload_version,ie1_0.state,ie1_0.submitted_at from intakes ie1_0 where ie1_0.id=?
+2026-10-15T14:20:32.931+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : insert into audit_logs (action,actor_id,correlation_id,created_at,resource_id,resource_type,result,id) values (?,?,?,?,?,?,?,default)
+2026-10-15T14:20:32.932+07:00  INFO 16284 --- [clinical-service-test] [    Test worker] c.t.clinical.service.AuditService        : Audit: actor=531a8fc8-22c5-4ed8-9b18-691792562979 action=VIEW_INTAKE resource=INTAKE:f948ba0b-f4c2-46bd-90ec-cf47561a4736 result=DENIED
+2026-10-15T14:20:32.940+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : select ale1_0.id,ale1_0.action,ale1_0.actor_id,ale1_0.correlation_id,ale1_0.created_at,ale1_0.resource_id,ale1_0.resource_type,ale1_0.result from audit_logs ale1_0 order by ale1_0.created_at desc fetch first ? rows only
+2026-10-15T14:20:32.950+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : select ie1_0.id,ie1_0.created_at,ie1_0.key_id,ie1_0.nonce,ie1_0.patient_id,ie1_0.payload_ciphertext,ie1_0.payload_version,ie1_0.state,ie1_0.submitted_at from intakes ie1_0 where ie1_0.id=?
+2026-10-15T14:20:32.951+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : insert into audit_logs (action,actor_id,correlation_id,created_at,resource_id,resource_type,result,id) values (?,?,?,?,?,?,?,default)
+2026-10-15T14:20:32.952+07:00  INFO 16284 --- [clinical-service-test] [    Test worker] c.t.clinical.service.AuditService        : Audit: actor=977d9cb0-0550-45bc-bc79-be279335df6a action=CREATE_INTAKE resource=INTAKE:4e596d9f-8dcd-4057-9b45-69314ddc044d result=ALLOWED
+2026-10-15T14:20:32.953+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : insert into intakes (created_at,key_id,nonce,patient_id,payload_ciphertext,payload_version,state,submitted_at,id) values (?,?,?,?,?,?,?,?,?)
+2026-10-15T14:20:32.955+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : select ie1_0.id,ie1_0.created_at,ie1_0.key_id,ie1_0.nonce,ie1_0.patient_id,ie1_0.payload_ciphertext,ie1_0.payload_version,ie1_0.state,ie1_0.submitted_at from intakes ie1_0 where ie1_0.id=?
+2026-10-15T14:20:32.957+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : select ee1_0.id,ee1_0.appointment_id,ee1_0.created_at,ee1_0.doctor_id,ee1_0.intake_id,ee1_0.patient_id,ee1_0.published_at,ee1_0.state from encounters ee1_0 where ee1_0.appointment_id=?
+2026-10-15T14:20:32.959+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : select ee1_0.id,ee1_0.appointment_id,ee1_0.created_at,ee1_0.doctor_id,ee1_0.intake_id,ee1_0.patient_id,ee1_0.published_at,ee1_0.state from encounters ee1_0 where ee1_0.id=?
+2026-10-15T14:20:32.960+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : insert into encounters (appointment_id,created_at,doctor_id,intake_id,patient_id,published_at,state,id) values (?,?,?,?,?,?,?,?)
+2026-10-15T14:20:32.962+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : select rfe1_0.id,rfe1_0.created_at,rfe1_0.encounter_id,rfe1_0.key_id,rfe1_0.mime_type,rfe1_0.nonce,rfe1_0.original_name,rfe1_0.sha256,rfe1_0.size_bytes,rfe1_0.state,rfe1_0.storage_key,rfe1_0.uploaded_by from report_files rfe1_0 where rfe1_0.encounter_id=?
+2026-10-15T14:20:32.967+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : select rfe1_0.id,rfe1_0.created_at,rfe1_0.encounter_id,rfe1_0.key_id,rfe1_0.mime_type,rfe1_0.nonce,rfe1_0.original_name,rfe1_0.sha256,rfe1_0.size_bytes,rfe1_0.state,rfe1_0.storage_key,rfe1_0.uploaded_by from report_files rfe1_0 where rfe1_0.id=?
+2026-10-15T14:20:32.969+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : insert into audit_logs (action,actor_id,correlation_id,created_at,resource_id,resource_type,result,id) values (?,?,?,?,?,?,?,default)
+2026-10-15T14:20:32.969+07:00  INFO 16284 --- [clinical-service-test] [    Test worker] c.t.clinical.service.AuditService        : Audit: actor=3c7ac0d6-a9b7-4302-98c5-537a0e999839 action=UPLOAD_REPORT_FILE resource=REPORT_FILE:b04c48a6-1aaf-4959-a4ca-1ed4ef6aa7ec result=ALLOWED
+2026-10-15T14:20:32.973+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : insert into report_files (created_at,encounter_id,key_id,mime_type,nonce,original_name,sha256,size_bytes,state,storage_key,uploaded_by,id) values (?,?,?,?,?,?,?,?,?,?,?,?)
+2026-10-15T14:20:32.976+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : select ee1_0.id,ee1_0.appointment_id,ee1_0.created_at,ee1_0.doctor_id,ee1_0.intake_id,ee1_0.patient_id,ee1_0.published_at,ee1_0.state from encounters ee1_0 where ee1_0.appointment_id=?
+2026-10-15T14:20:32.978+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : select rfe1_0.id,rfe1_0.created_at,rfe1_0.encounter_id,rfe1_0.key_id,rfe1_0.mime_type,rfe1_0.nonce,rfe1_0.original_name,rfe1_0.sha256,rfe1_0.size_bytes,rfe1_0.state,rfe1_0.storage_key,rfe1_0.uploaded_by from report_files rfe1_0 where rfe1_0.encounter_id=?
+2026-10-15T14:20:32.980+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : insert into audit_logs (action,actor_id,correlation_id,created_at,resource_id,resource_type,result,id) values (?,?,?,?,?,?,?,default)
+2026-10-15T14:20:32.981+07:00  INFO 16284 --- [clinical-service-test] [    Test worker] c.t.clinical.service.AuditService        : Audit: actor=3c7ac0d6-a9b7-4302-98c5-537a0e999839 action=VIEW_ENCOUNTER resource=ENCOUNTER:beafc80c-8537-4d4a-9552-21e298d60e73 result=ALLOWED
+2026-10-15T14:20:32.983+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : select ee1_0.id,ee1_0.appointment_id,ee1_0.created_at,ee1_0.doctor_id,ee1_0.intake_id,ee1_0.patient_id,ee1_0.published_at,ee1_0.state from encounters ee1_0 where ee1_0.id=?
+2026-10-15T14:20:32.986+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : insert into audit_logs (action,actor_id,correlation_id,created_at,resource_id,resource_type,result,id) values (?,?,?,?,?,?,?,default)
+2026-10-15T14:20:32.986+07:00  INFO 16284 --- [clinical-service-test] [    Test worker] c.t.clinical.service.AuditService        : Audit: actor=977d9cb0-0550-45bc-bc79-be279335df6a action=DOWNLOAD_REPORT_FILE resource=REPORT_FILE:b04c48a6-1aaf-4959-a4ca-1ed4ef6aa7ec result=DENIED
+2026-10-15T14:20:32.989+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : select ee1_0.id,ee1_0.appointment_id,ee1_0.created_at,ee1_0.doctor_id,ee1_0.intake_id,ee1_0.patient_id,ee1_0.published_at,ee1_0.state from encounters ee1_0 where ee1_0.appointment_id=?
+2026-10-15T14:20:32.991+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : select rfe1_0.id,rfe1_0.created_at,rfe1_0.encounter_id,rfe1_0.key_id,rfe1_0.mime_type,rfe1_0.nonce,rfe1_0.original_name,rfe1_0.sha256,rfe1_0.size_bytes,rfe1_0.state,rfe1_0.storage_key,rfe1_0.uploaded_by from report_files rfe1_0 where rfe1_0.encounter_id=?
+2026-10-15T14:20:32.994+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : insert into audit_logs (action,actor_id,correlation_id,created_at,resource_id,resource_type,result,id) values (?,?,?,?,?,?,?,default)
+2026-10-15T14:20:32.994+07:00  INFO 16284 --- [clinical-service-test] [    Test worker] c.t.clinical.service.AuditService        : Audit: actor=3c7ac0d6-a9b7-4302-98c5-537a0e999839 action=PUBLISH_ENCOUNTER resource=ENCOUNTER:beafc80c-8537-4d4a-9552-21e298d60e73 result=ALLOWED
+2026-10-15T14:20:32.995+07:00  INFO 16284 --- [clinical-service-test] [    Test worker] c.t.clinical.service.ClinicalService     : Encounter beafc80c-8537-4d4a-9552-21e298d60e73 published by doctor 3c7ac0d6-a9b7-4302-98c5-537a0e999839
+2026-10-15T14:20:33.000+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : update encounters set appointment_id=?,doctor_id=?,intake_id=?,patient_id=?,published_at=?,state=? where id=?
+2026-10-15T14:20:33.004+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : select ee1_0.id,ee1_0.appointment_id,ee1_0.created_at,ee1_0.doctor_id,ee1_0.intake_id,ee1_0.patient_id,ee1_0.published_at,ee1_0.state from encounters ee1_0 where ee1_0.appointment_id=?
+2026-10-15T14:20:33.006+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : select rfe1_0.id,rfe1_0.created_at,rfe1_0.encounter_id,rfe1_0.key_id,rfe1_0.mime_type,rfe1_0.nonce,rfe1_0.original_name,rfe1_0.sha256,rfe1_0.size_bytes,rfe1_0.state,rfe1_0.storage_key,rfe1_0.uploaded_by from report_files rfe1_0 where rfe1_0.encounter_id=?
+2026-10-15T14:20:33.007+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : insert into audit_logs (action,actor_id,correlation_id,created_at,resource_id,resource_type,result,id) values (?,?,?,?,?,?,?,default)
+2026-10-15T14:20:33.007+07:00  INFO 16284 --- [clinical-service-test] [    Test worker] c.t.clinical.service.AuditService        : Audit: actor=3c7ac0d6-a9b7-4302-98c5-537a0e999839 action=VIEW_ENCOUNTER resource=ENCOUNTER:beafc80c-8537-4d4a-9552-21e298d60e73 result=ALLOWED
+2026-10-15T14:20:33.009+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : select ee1_0.id,ee1_0.appointment_id,ee1_0.created_at,ee1_0.doctor_id,ee1_0.intake_id,ee1_0.patient_id,ee1_0.published_at,ee1_0.state from encounters ee1_0 where ee1_0.id=?
+2026-10-15T14:20:33.010+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : select rfe1_0.id,rfe1_0.created_at,rfe1_0.encounter_id,rfe1_0.key_id,rfe1_0.mime_type,rfe1_0.nonce,rfe1_0.original_name,rfe1_0.sha256,rfe1_0.size_bytes,rfe1_0.state,rfe1_0.storage_key,rfe1_0.uploaded_by from report_files rfe1_0 where rfe1_0.id=?
+2026-10-15T14:20:33.020+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : insert into audit_logs (action,actor_id,correlation_id,created_at,resource_id,resource_type,result,id) values (?,?,?,?,?,?,?,default)
+2026-10-15T14:20:33.021+07:00  INFO 16284 --- [clinical-service-test] [    Test worker] c.t.clinical.service.AuditService        : Audit: actor=977d9cb0-0550-45bc-bc79-be279335df6a action=DOWNLOAD_REPORT_FILE resource=REPORT_FILE:b04c48a6-1aaf-4959-a4ca-1ed4ef6aa7ec result=ALLOWED
+2026-10-15T14:20:33.023+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : select ee1_0.id,ee1_0.appointment_id,ee1_0.created_at,ee1_0.doctor_id,ee1_0.intake_id,ee1_0.patient_id,ee1_0.published_at,ee1_0.state from encounters ee1_0 where ee1_0.id=?
+2026-10-15T14:20:33.024+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : select rfe1_0.id,rfe1_0.created_at,rfe1_0.encounter_id,rfe1_0.key_id,rfe1_0.mime_type,rfe1_0.nonce,rfe1_0.original_name,rfe1_0.sha256,rfe1_0.size_bytes,rfe1_0.state,rfe1_0.storage_key,rfe1_0.uploaded_by from report_files rfe1_0 where rfe1_0.id=?
+2026-10-15T14:20:33.026+07:00 DEBUG 16284 --- [clinical-service-test] [    Test worker] org.hibernate.SQL                        : insert into audit_logs (action,actor_id,correlation_id,created_at,resource_id,resource_type,result,id) values (?,?,?,?,?,?,?,default)
+2026-10-15T14:20:33.027+07:00  INFO 16284 --- [clinical-service-test] [    Test worker] c.t.clinical.service.AuditService        : Audit: actor=3c7ac0d6-a9b7-4302-98c5-537a0e999839 action=DOWNLOAD_REPORT_FILE resource=REPORT_FILE:b04c48a6-1aaf-4959-a4ca-1ed4ef6aa7ec result=ALLOWED
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,35 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: clinical-service
+  datasource:
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${CLINICAL_DB_NAME:clinical_db}
+    username: ${CLINICAL_DB_USER:clinical_user}
+    password: ${CLINICAL_DB_PASSWORD:clinical_pass}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    open-in-view: false
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+  servlet:
+    multipart:
+      max-file-size: 25MB
+      max-request-size: 30MB
+
+clinical:
+  encryption-key: ${CLINICAL_ENCRYPTION_KEY:telehealth_clinical_aes_gcm_secret_key_32_bytes!}
+  storage:
+    directory: ${CLINICAL_STORAGE_DIR:storage/clinical-reports}
+
+services:
+  appointment:
+    url: ${APPOINTMENT_SERVICE_URL:http://localhost:8082}

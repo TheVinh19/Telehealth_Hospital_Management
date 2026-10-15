@@ -1,0 +1,117 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_UNIQUE
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOriginPatterns: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - PATCH
+              - OPTIONS
+            allowedHeaders: "*"
+            allowCredentials: true
+            maxAge: 3600
+      routes:
+        - id: identity-auth
+          uri: ${IDENTITY_SERVICE_URL:http://localhost:8081}
+          predicates:
+            - Path=/api/v1/auth/**
+
+        - id: identity-admin-users
+          uri: ${IDENTITY_SERVICE_URL:http://localhost:8081}
+          predicates:
+            - Path=/api/v1/admin/users/**
+
+        - id: appointment-admin-doctors
+          uri: ${APPOINTMENT_SERVICE_URL:http://localhost:8082}
+          predicates:
+            - Path=/api/v1/admin/doctors/**
+
+        - id: appointment-admin-slots
+          uri: ${APPOINTMENT_SERVICE_URL:http://localhost:8082}
+          predicates:
+            - Path=/api/v1/admin/slots/**
+
+        - id: appointment-admin-specialties
+          uri: ${APPOINTMENT_SERVICE_URL:http://localhost:8082}
+          predicates:
+            - Path=/api/v1/admin/specialties/**
+
+        - id: appointment-specialties
+          uri: ${APPOINTMENT_SERVICE_URL:http://localhost:8082}
+          predicates:
+            - Path=/api/v1/specialties/**
+
+        - id: appointment-doctors
+          uri: ${APPOINTMENT_SERVICE_URL:http://localhost:8082}
+          predicates:
+            - Path=/api/v1/doctors/**
+
+        - id: appointment-slots
+          uri: ${APPOINTMENT_SERVICE_URL:http://localhost:8082}
+          predicates:
+            - Path=/api/v1/slots/**
+
+        - id: appointment-admin-appointments
+          uri: ${APPOINTMENT_SERVICE_URL:http://localhost:8082}
+          predicates:
+            - Path=/api/v1/admin/appointments/**
+
+        - id: appointment-booking
+          uri: ${APPOINTMENT_SERVICE_URL:http://localhost:8082}
+          predicates:
+            - Path=/api/v1/appointments/**
+
+        - id: clinical-intakes
+          uri: ${CLINICAL_SERVICE_URL:http://localhost:8083}
+          predicates:
+            - Path=/api/v1/intakes/**
+
+        - id: clinical-encounters
+          uri: ${CLINICAL_SERVICE_URL:http://localhost:8083}
+          predicates:
+            - Path=/api/v1/encounters/**
+
+        - id: clinical-reports
+          uri: ${CLINICAL_SERVICE_URL:http://localhost:8083}
+          predicates:
+            - Path=/api/v1/reports/**,/api/v1/clinical/**
+
+        - id: billing
+          uri: ${BILLING_SERVICE_URL:http://localhost:8084}
+          predicates:
+            - Path=/api/v1/billing/**
+
+        - id: realtime-ws
+          uri: ${REALTIME_WS_URL:ws://localhost:8085}
+          predicates:
+            - Path=/ws/**
+
+        - id: realtime-rooms
+          uri: ${REALTIME_SERVICE_URL:http://localhost:8085}
+          predicates:
+            - Path=/api/v1/rooms/**
+
+        - id: notifications
+          uri: ${NOTIFICATION_SERVICE_URL:http://localhost:8086}
+          predicates:
+            - Path=/api/v1/notifications/**
+
+jwt:
+  secret: ${JWT_SECRET:telehealth-super-secret-jwt-key-2026-min-32-chars-long!}
+
+logging:
+  level:
+    root: INFO
+    org.springframework.cloud.gateway: INFO

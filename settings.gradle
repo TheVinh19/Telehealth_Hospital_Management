@@ -1,0 +1,10 @@
+rootProject.name = 'telehealth-hospital-management'
+
+include 'common-contracts'
+include 'services:api-gateway'
+include 'services:identity-service'
+include 'services:appointment-service'
+include 'services:clinical-service'
+include 'services:billing-service'
+include 'services:realtime-service'
+include 'services:notification-service'

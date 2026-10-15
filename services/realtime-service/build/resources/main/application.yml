@@ -1,0 +1,44 @@
+server:
+  port: 8085
+
+spring:
+  application:
+    name: realtime-service
+  datasource:
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${REALTIME_DB_NAME:realtime_db}
+    username: ${REALTIME_DB_USER:realtime_user}
+    password: ${REALTIME_DB_PASSWORD:realtime_pass}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    open-in-view: false
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+
+jwt:
+  secret: ${JWT_SECRET:telehealth_jwt_super_secret_key_minimum_256_bits_length_12345}
+
+realtime:
+  encryption-key: ${REALTIME_ENCRYPTION_KEY:telehealth_realtime_aes_gcm_secret_key_32_bytes!}
+
+services:
+  appointment-url: ${APPOINTMENT_SERVICE_URL:http://localhost:8082}
+  internal-token: ${INTERNAL_SERVICE_TOKEN:telehealth-local-internal-token-2026}
+
+webrtc:
+  stun:
+    url: stun:stun.l.google.com:19302
+  turn:
+    url: turn:${TURN_HOST:localhost}:${TURN_PORT:3478}
+    username: telehealth
+    credential: ${TURN_SECRET:telehealth_turn_shared_secret_2026}

@@ -1,0 +1,26 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: identity-service
+  datasource:
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${IDENTITY_DB_NAME:identity_db}
+    username: ${IDENTITY_DB_USER:identity_user}
+    password: ${IDENTITY_DB_PASSWORD:identity_pass}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    open-in-view: false
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+
+jwt:
+  secret: ${JWT_SECRET:telehealth_jwt_super_secret_key_minimum_256_bits_length_12345}
+  access-token-expiration-minutes: 1440
